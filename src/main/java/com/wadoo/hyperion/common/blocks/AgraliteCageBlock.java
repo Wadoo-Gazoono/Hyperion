@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class AgraliteCageBlock extends BaseEntityBlock {
-    protected static final VoxelShape SHAPE = Block.box(5.5D, 3.0D, 5.5D, 23.5D, 15.0D, 23.5D);
+    protected static final VoxelShape SHAPE = Block.box(2.5D, 0.0D, 2.5D, 13.5D, 10.0D, 13.5D);
 
     public AgraliteCageBlock(Properties properties) {
         super(properties);
