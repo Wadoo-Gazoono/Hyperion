@@ -1,9 +1,9 @@
-package com.wadoo.hyperion.client.renderers;
+package com.wadoo.hyperion.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import com.wadoo.hyperion.client.models.CapslingModel;
+import com.wadoo.hyperion.client.models.entity.CapslingModel;
 import com.wadoo.hyperion.common.entities.CapslingEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -42,8 +42,8 @@ public class CapslingRenderer extends GeoEntityRenderer<CapslingEntity> {
         if(bone.getName().equals("item")){
             poseStack.pushPose();
             poseStack.translate(0d,0.55d,0.0d);
-            poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
             poseStack.scale(0.5f, 0.5f, 0.5f);
+            poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
             Minecraft.getInstance().getItemRenderer().renderStatic(entity.getItemBySlot(EquipmentSlot.MAINHAND), ItemTransforms.TransformType.GROUND, packedLight, packedOverlay, poseStack, this.rtb, entity.getId());
             poseStack.popPose();
             buffer = rtb.getBuffer(RenderType.entityTranslucent(whTexture));

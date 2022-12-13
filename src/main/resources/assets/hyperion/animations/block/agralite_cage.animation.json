@@ -2,46 +2,7 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"loop": {
-			"loop": true,
-			"animation_length": 1,
-			"bones": {
-				"capsling": {
-					"position": {
-						"vector": [0, -1, 0]
-					}
-				},
-				"legRight": {
-					"rotation": {
-						"vector": [-92.5, -25, 0]
-					},
-					"position": {
-						"vector": [0, 0.25, 0]
-					}
-				},
-				"legLeft": {
-					"rotation": {
-						"vector": [-90, 25, 0]
-					},
-					"position": {
-						"vector": [0, 0.25, 0]
-					}
-				},
-				"body": {
-					"rotation": {
-						"vector": [-57.5, 0, 0]
-					}
-				},
-				"jaw": {
-					"rotation": {
-						"vector": [42.5, 0, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [10, 0, 0]
-					}
-				}
-			}
+			"loop": true
 		}
 	},
 	"geckolib_format_version": 2

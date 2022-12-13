@@ -11,6 +11,9 @@ public class AgraliteCageModel extends AnimatedGeoModel<AgraliteCageBlockEntity>
 
     @Override
     public ResourceLocation getModelResource(AgraliteCageBlockEntity object) {
+        if(object.getHasCapsling()){
+            return new ResourceLocation(Hyperion.MODID, "geo/block/agralite_cage_capsling.geo.json");
+        }
         return new ResourceLocation(Hyperion.MODID, "geo/block/agralite_cage.geo.json");
     }
 

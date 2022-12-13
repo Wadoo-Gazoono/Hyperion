@@ -1,4 +1,4 @@
-package com.wadoo.hyperion.client.models;
+package com.wadoo.hyperion.client.models.entity;
 
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.entities.CapslingEntity;

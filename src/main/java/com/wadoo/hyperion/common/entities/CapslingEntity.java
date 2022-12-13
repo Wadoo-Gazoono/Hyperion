@@ -1,27 +1,35 @@
 package com.wadoo.hyperion.common.entities;
 
 import com.wadoo.hyperion.common.registry.ItemHandler;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -40,13 +48,16 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
-public class CapslingEntity extends Animal implements IAnimationTickable, IAnimatable {
+public class CapslingEntity extends Animal implements IAnimationTickable, IAnimatable, Bucketable {
     private AnimationFactory factory = GeckoLibUtil.createFactory((IAnimatable) this);
     private static final EntityDataAccessor<Boolean> OPEN = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_ITEM = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ANIM_STATE = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
+
     public static final Predicate<ItemEntity> ALLOWED_ITEMS = (item) -> {
         return !item.hasPickUpDelay() && item.isAlive() && item.isOnGround();
     };
@@ -70,6 +81,7 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 10.0F));
         this.goalSelector.addGoal(3, new CapslingTemptGoal(this, 1.0D, Ingredient.of(Items.MAGMA_CREAM), false));
         this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, Player.class, 6F, 1, 1.2));
+        this.goalSelector.addGoal(9, new CapslingSocializeGoal(this));
 
     }
 
@@ -79,6 +91,17 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
         this.entityData.define(OPEN,false);
         this.entityData.define(HAS_ITEM,false);
         this.entityData.define(ANIM_STATE,0);
+        this.entityData.define(FROM_BUCKET,false);
+    }
+
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("FromBucket", this.fromBucket());
+    }
+
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.setFromBucket(tag.getBoolean("FromBucket"));
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
@@ -107,7 +130,9 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
     @Override
     public void tick() {
         super.tick();
-        System.out.println(getAnimState());
+        if(this.isInWater()){
+            this.setDeltaMovement(this.getDeltaMovement().x,-0.6f,this.getDeltaMovement().y);
+        }
         if(getAnimState() == 2){
             if(this.level.isClientSide()) {
                 if (random.nextFloat() < 0.11F) {
@@ -122,7 +147,10 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
                 }
             }
         }
+
     }
+
+    
 
     @Override
     public void registerControllers(AnimationData data) {
@@ -135,9 +163,12 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
             this.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.MAGMA_CREAM,1));
             player.getItemInHand(hand).shrink(1);
             setHasItem(true);
-
+            return InteractionResult.CONSUME;
         }
-        return super.mobInteract(player, hand);
+        if (player.getItemInHand(hand).is(Items.LAVA_BUCKET)) {
+            return this.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
+        }
+        return InteractionResult.FAIL;
     }
 
     @Nullable
@@ -177,6 +208,57 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
 
     public int getAnimState(){
         return this.entityData.get(ANIM_STATE);
+    }
+
+
+    @Override
+    public boolean fromBucket() {
+        return this.entityData.get(FROM_BUCKET);
+    }
+
+    @Override
+    public void setFromBucket(boolean fromBucket) {
+        this.entityData.set(FROM_BUCKET,fromBucket);
+    }
+
+    @Override
+    public void saveToBucketTag(ItemStack stack) {
+        Bucketable.saveDefaultDataToBucketTag(this, stack);
+    }
+
+    @Override
+    public void loadFromBucketTag(CompoundTag tag) {
+        Bucketable.loadDefaultDataFromBucketTag(this, tag);
+    }
+
+    @Override
+    public ItemStack getBucketItemStack() {
+        return new ItemStack(ItemHandler.CAPSLING_BUCKET.get(), 1);
+    }
+
+    @Override
+    public SoundEvent getPickupSound() {
+        return SoundEvents.BUCKET_FILL_AXOLOTL;
+    }
+
+    static <T extends LivingEntity & Bucketable> Optional<InteractionResult> bucketMobPickup(Player p_148829_, InteractionHand p_148830_, T p_148831_) {
+        ItemStack itemstack = p_148829_.getItemInHand(p_148830_);
+        if (itemstack.getItem() == Items.LAVA_BUCKET && p_148831_.isAlive()) {
+            p_148831_.playSound(p_148831_.getPickupSound(), 1.0F, 1.0F);
+            ItemStack itemstack1 = p_148831_.getBucketItemStack();
+            p_148831_.saveToBucketTag(itemstack1);
+            ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, p_148829_, itemstack1, false);
+            p_148829_.setItemInHand(p_148830_, itemstack2);
+            Level level = p_148831_.level;
+            if (!level.isClientSide) {
+                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)p_148829_, itemstack1);
+            }
+
+            p_148831_.discard();
+            return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
+        } else {
+            return Optional.empty();
+        }
     }
 }
 
@@ -344,3 +426,42 @@ class FindMagmaCreamGoal extends Goal{
         }
     }
 }
+
+class CapslingSocializeGoal extends Goal{
+    public CapslingEntity entity;
+    private static final TargetingConditions LEADER_TARGETING = TargetingConditions.forNonCombat().range(8.0D).ignoreLineOfSight();
+
+    public CapslingSocializeGoal(CapslingEntity entity){
+        this.entity = entity;
+    }
+
+    @Override
+    public boolean canUse() {
+        List<? extends CapslingEntity> list = this.entity.level.getNearbyEntities(CapslingEntity.class, LEADER_TARGETING, this.entity, this.entity.getBoundingBox().inflate(25.0D));
+        return !list.isEmpty() && !this.entity.getHasItem();
+
+    }
+
+
+    @Override
+    public boolean canContinueToUse() {
+        return this.canUse();
+    }
+
+    @Override
+    public void tick() {
+        List<? extends CapslingEntity> list = this.entity.level.getNearbyEntities(CapslingEntity.class, LEADER_TARGETING, this.entity, this.entity.getBoundingBox().inflate(25.0D));
+        if(!list.isEmpty()) {
+            if(this.entity.getRandom().nextFloat() < 0.01f) {
+                this.entity.getNavigation().moveTo(list.get(0), 0.8f);
+            }
+        }
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        this.entity.getNavigation().stop();
+    }
+}
+
