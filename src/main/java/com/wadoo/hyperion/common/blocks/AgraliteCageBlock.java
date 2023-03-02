@@ -4,6 +4,7 @@ import com.wadoo.hyperion.common.blocks.entities.AgraliteCageBlockEntity;
 import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.registry.BlockEntityHandler;
 import com.wadoo.hyperion.common.registry.EntityHandler;
+import com.wadoo.hyperion.common.registry.ItemHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -60,7 +61,7 @@ public class AgraliteCageBlock extends DirectionalBlock implements EntityBlock {
         super.use(state, level, pos, player, hand, result);
         if(level.getBlockEntity(pos) instanceof AgraliteCageBlockEntity){
             AgraliteCageBlockEntity entity = (AgraliteCageBlockEntity) level.getBlockEntity(pos);
-            if(player.getItemInHand(hand).is(Items.MAGMA_CREAM)){
+            if(player.getItemInHand(hand).is(ItemHandler.CAPSLING_BUCKET.get()) || player.getItemInHand(hand).is(ItemHandler.CAPSLING_SPAWN_EGG.get())){
                 entity.setHasCapsling(true);
             }
             else{

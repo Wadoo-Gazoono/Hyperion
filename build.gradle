@@ -22,11 +22,11 @@ minecraft {
     // See more information here: https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md
     //
     // Parchment is an unofficial project maintained by ParchmentMC, separate from MinecraftForge
-    // Additional setup is needed to use their mappings: https://github.com/ParchmentMC/Parchment/wiki/Getting-Started
+    // Additional setup is needed to use their mappings: https://parchmentmc.org/docs/getting-started
     //
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'official', version: '1.19.3'
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -117,14 +117,11 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
-
 }
 
 dependencies {
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.36')
-
-    minecraft 'net.minecraftforge:forge:1.19.2-43.1.52'
-
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19.3:4.0.3')
+    minecraft 'net.minecraftforge:forge:1.19.3-44.1.0'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

@@ -21,38 +21,44 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import org.checkerframework.checker.units.qual.K;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class CapslingEntity extends Animal implements IAnimationTickable, IAnimatable, Bucketable {
-    private AnimationFactory factory = GeckoLibUtil.createFactory((IAnimatable) this);
+public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+
+
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
+    private static final RawAnimation IDLE_OPEN = RawAnimation.begin().thenLoop("idle_open");
+    private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
+    private static final RawAnimation WALK_OPEN = RawAnimation.begin().thenLoop("walk_open");
+    private static final RawAnimation EAT_START = RawAnimation.begin().thenPlay("eat_start");
+    private static final RawAnimation EAT_LOOP = RawAnimation.begin().thenLoop("eat_loop");
+
+
+
     private static final EntityDataAccessor<Boolean> OPEN = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_ITEM = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ANIM_STATE = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.INT);
@@ -104,24 +110,6 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
         this.setFromBucket(tag.getBoolean("FromBucket"));
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        switch(getAnimState()) {
-            case 1:
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("eat_start", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            case 2:
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("eat_loop", ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-            case 0:
-                if (event.isMoving()) {
-                    event.getController().setAnimation(new AnimationBuilder().addAnimation("walk" + (getOpen() ? "_open" : ""), ILoopType.EDefaultLoopTypes.LOOP));
-                    return PlayState.CONTINUE;
-                }
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle" + (getOpen() ? "_open" : ""), ILoopType.EDefaultLoopTypes.LOOP));
-                return PlayState.CONTINUE;
-        }
-        return PlayState.CONTINUE;
-    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes().add(Attributes.MAX_HEALTH, 15.0D).add(Attributes.MOVEMENT_SPEED, 0.3F).add(Attributes.KNOCKBACK_RESISTANCE, 0.7D);
@@ -150,12 +138,6 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
 
     }
 
-    
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<CapslingEntity>(this, "controller", 8, this::predicate));
-    }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
@@ -175,15 +157,6 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
     @Override
     public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
         return null;
-    }
-
-    @Override
-    public int tickTimer() {
-        return tickCount;
-    }
-
-    public AnimationFactory getFactory() {
-        return this.factory;
     }
 
     public void setOpen(boolean open){
@@ -260,6 +233,60 @@ public class CapslingEntity extends Animal implements IAnimationTickable, IAnima
             return Optional.empty();
         }
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "animController", 8, this::predicate));
+    }
+
+    protected PlayState predicate(AnimationState<CapslingEntity> state) {
+        switch(getAnimState()){
+            case 0:
+
+                if(state.isMoving()){
+                    if(getOpen()){
+                        return state.setAndContinue(WALK_OPEN);
+                    }
+                    return state.setAndContinue(WALK);
+                }
+                else{
+                    if(getOpen()){
+                        return state.setAndContinue((IDLE_OPEN));
+                    }
+                    return state.setAndContinue(IDLE);
+                }
+            case 1:
+                return state.setAndContinue(EAT_START);
+            case 2:
+                return state.setAndContinue(EAT_LOOP);
+        }
+        return PlayState.CONTINUE;
+    }
+
+    //OLD PREDICATE CODE, for reference only
+
+    //    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+//        switch(getAnimState()) {
+//            case 1:
+//                event.getController().setAnimation(new AnimationBuilder().addAnimation("eat_start", ILoopType.EDefaultLoopTypes.LOOP));
+//                return PlayState.CONTINUE;
+//            case 2:
+//                event.getController().setAnimation(new AnimationBuilder().addAnimation("eat_loop", ILoopType.EDefaultLoopTypes.LOOP));
+//                return PlayState.CONTINUE;
+//            case 0:
+//                if (event.isMoving()) {
+//                    event.getController().setAnimation(new AnimationBuilder().addAnimation("walk" + (getOpen() ? "_open" : ""), ILoopType.EDefaultLoopTypes.LOOP));
+//                    return PlayState.CONTINUE;
+//                }
+//                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle" + (getOpen() ? "_open" : ""), ILoopType.EDefaultLoopTypes.LOOP));
+//                return PlayState.CONTINUE;
+//        }
+//        return PlayState.CONTINUE;
+//    }
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
 }
 
 class CapslingTemptGoal extends TemptGoal{
@@ -335,7 +362,7 @@ class CapslingEatGoal extends Goal{
             tickTimer++;
             if(tickTimer < 30){
                 this.entity.setAnimState(1);
-                if(tickTimer == 16){
+                if(tickTimer == 12){
                     this.entity.playSound(SoundEvents.STRIDER_EAT,1.0f,1.6f);
                 }
             }
@@ -345,7 +372,6 @@ class CapslingEatGoal extends Goal{
             if(tickTimer %  8 == 0 && tickTimer > 45){
                 this.entity.playSound(SoundEvents.ANVIL_PLACE,0.1f,2.2f);
             }
-
         }
         else{
             this.entity.playSound(SoundEvents.ITEM_PICKUP,1.0f, 1.8f);
@@ -418,7 +444,7 @@ class FindMagmaCreamGoal extends Goal{
             this.entity.getNavigation().moveTo(wantedItem,1.2f);
             if(this.entity.distanceToSqr(wantedItem) <= 1.85d){
                 this.entity.getNavigation().moveTo(wantedItem,1.2f);
-                this.entity.playSound(SoundEvents.STRIDER_EAT);
+                //this.entity.playSound(SoundEvents.STRIDER_EAT);
                 this.entity.setItemInHand(InteractionHand.MAIN_HAND,wantedItem.getItem());
                 this.entity.setHasItem(true);
                 this.wantedItem.getItem().shrink(1);

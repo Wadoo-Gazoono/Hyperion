@@ -3,27 +3,29 @@ package com.wadoo.hyperion.client.models.blocks;
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.blocks.entities.AgraliteCageBlockEntity;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.DefaultedBlockGeoModel;
 
 
-public class AgraliteCageModel extends AnimatedGeoModel<AgraliteCageBlockEntity> {
+public class AgraliteCageModel extends DefaultedBlockGeoModel<AgraliteCageBlockEntity> {
 
+    public AgraliteCageModel() {
+        super(new ResourceLocation(Hyperion.MODID, "agralite_cage"));    }
 
     @Override
     public ResourceLocation getModelResource(AgraliteCageBlockEntity object) {
         if(object.getHasCapsling()){
-            return new ResourceLocation(Hyperion.MODID, "geo/block/agralite_cage_capsling.geo.json");
+            return buildFormattedModelPath(new ResourceLocation(Hyperion.MODID, "agralite_cage_capsling"));
         }
-        return new ResourceLocation(Hyperion.MODID, "geo/block/agralite_cage.geo.json");
+        return buildFormattedModelPath(new ResourceLocation(Hyperion.MODID, "agralite_cage"));
     }
 
     @Override
     public ResourceLocation getTextureResource(AgraliteCageBlockEntity object) {
-        return new ResourceLocation(Hyperion.MODID, "textures/block/agralite_cage.png");
+        return buildFormattedTexturePath(new ResourceLocation(Hyperion.MODID, "agralite_cage"));
     }
 
     @Override
     public ResourceLocation getAnimationResource(AgraliteCageBlockEntity animatable) {
-        return new ResourceLocation(Hyperion.MODID, "animations/block/agralite_cage.animation.json");
+        return buildFormattedAnimationPath(new ResourceLocation(Hyperion.MODID, "agralite_cage"));
     }
 }
