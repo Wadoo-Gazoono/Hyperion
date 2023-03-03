@@ -25,11 +25,18 @@ public class ItemHandler {
 
     public static final RegistryObject<Item> AGRALITE_SHEET = ITEMS.register("agralite_sheet", () -> new Item(new Item.Properties().stacksTo(64).fireResistant()));
     public static final RegistryObject<Item> AGRALITE_CAGE = ITEMS.register("agralite_cage", () -> new BlockItem(BlockHandler.AGRALITE_CAGE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> AGRALITE_BLOCK = ITEMS.register("agralite_block", () -> new BlockItem(BlockHandler.AGRALITE_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CUT_AGRALITE = ITEMS.register("cut_agralite", () -> new BlockItem(BlockHandler.CUT_AGRALITE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> AGRALITE_PIPE = ITEMS.register("agralite_pipe", () -> new BlockItem(BlockHandler.AGRALITE_PIPE.get(), new Item.Properties()));
+
+
+
+
     public static final RegistryObject<Item> CAPSLING_BUCKET = ITEMS.register("capsling_bucket",() -> new HyperionMobBucket(EntityHandler.CAPSLING, Fluids.LAVA, (new Item.Properties()).stacksTo(1)));
     public static final RegistryObject<Item> CAPSLING_SPAWN_EGG = ITEMS.register("capsling_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.CAPSLING, 0x737170, 0x515054, new Item.Properties()));
 
     public static final List<RegistryObject<? extends Item>> HYPERION_ITEMS = List.of(
-        AGRALITE_CAGE,AGRALITE_SHEET,CAPSLING_SPAWN_EGG,CAPSLING_BUCKET
+        AGRALITE_CAGE,AGRALITE_SHEET,CAPSLING_SPAWN_EGG,CAPSLING_BUCKET,AGRALITE_BLOCK,CUT_AGRALITE
     );
 
     public static void registerCreativeModeTab(CreativeModeTabEvent.Register event) {

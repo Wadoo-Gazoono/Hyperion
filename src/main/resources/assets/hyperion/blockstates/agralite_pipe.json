@@ -1,0 +1,41 @@
+{
+  "variants": {
+    "facing=down": [
+      {
+        "model": "hyperion:block/agralite_pipe"
+      }
+    ],
+    "facing=up": [
+      {
+        "model": "hyperion:block/agralite_pipe",
+        "x": 180
+      }
+    ],
+    "facing=north": [
+      {
+        "model": "hyperion:block/agralite_pipe",
+        "x": -90
+      }
+    ],
+    "facing=south": [
+      {
+        "model": "hyperion:block/agralite_pipe",
+        "x": 90
+      }
+    ],
+    "facing=east": [
+      {
+        "model": "hyperion:block/agralite_pipe",
+        "x": -90,
+        "y": 90
+      }
+    ],
+    "facing=west": [
+      {
+        "model": "hyperion:block/agralite_pipe",
+        "x": 90,
+        "y": 90
+      }
+    ]
+  }
+}

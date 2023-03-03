@@ -63,12 +63,10 @@ public class AgraliteCageBlock extends DirectionalBlock implements EntityBlock {
             AgraliteCageBlockEntity entity = (AgraliteCageBlockEntity) level.getBlockEntity(pos);
             if(player.getItemInHand(hand).is(ItemHandler.CAPSLING_BUCKET.get()) || player.getItemInHand(hand).is(ItemHandler.CAPSLING_SPAWN_EGG.get())){
                 entity.setHasCapsling(true);
-            }
-            else{
-                entity.setHasCapsling(false);
+                return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResult.PASS;
     }
 
     @Override

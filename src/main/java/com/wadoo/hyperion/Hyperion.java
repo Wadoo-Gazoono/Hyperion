@@ -2,6 +2,7 @@ package com.wadoo.hyperion;
 
 import com.mojang.logging.LogUtils;
 import com.wadoo.hyperion.common.entities.CapslingEntity;
+import com.wadoo.hyperion.common.entities.GruskEntity;
 import com.wadoo.hyperion.common.registry.BlockEntityHandler;
 import com.wadoo.hyperion.common.registry.BlockHandler;
 import com.wadoo.hyperion.common.registry.EntityHandler;
@@ -39,6 +40,7 @@ public class Hyperion {
 
     private void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(EntityHandler.CAPSLING.get(), CapslingEntity.createAttributes().build());
+        event.put(EntityHandler.GRUSK.get(), GruskEntity.createAttributes().build());
 
     }
 
