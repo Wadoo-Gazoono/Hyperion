@@ -4,6 +4,8 @@ import com.wadoo.hyperion.common.registry.BlockEntityHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -22,12 +24,15 @@ public class AgraliteCageBlockEntity extends BlockEntity implements GeoBlockEnti
 
     public AgraliteCageBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityHandler.AGRALITE_CAGE.get(), pos, state);
+
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "loop", 5, state -> state.setAndContinue(LOOP)));
     }
+
+
 
     public boolean getHasCapsling(){
         return this.has_capsling;

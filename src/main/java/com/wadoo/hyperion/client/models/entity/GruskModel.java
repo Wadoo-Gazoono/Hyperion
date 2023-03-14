@@ -5,7 +5,12 @@ import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.GruskEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import software.bernie.geckolib.constant.DataTickets;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
+import software.bernie.geckolib.model.data.EntityModelData;
 
 public class GruskModel extends DefaultedEntityGeoModel<GruskEntity> {
 
@@ -15,7 +20,7 @@ public class GruskModel extends DefaultedEntityGeoModel<GruskEntity> {
 
     @Override
     public ResourceLocation getModelResource(GruskEntity entity) {
-        return new ResourceLocation(Hyperion.MODID, "geo/entity/grusk.geo.json");
+        return new ResourceLocation(Hyperion.MODID, "geo/entity/grusk" + (entity.getHasHead() ? "" : "_headless")+".geo.json");
     }
 
     @Override
@@ -31,5 +36,10 @@ public class GruskModel extends DefaultedEntityGeoModel<GruskEntity> {
     @Override
     public RenderType getRenderType(GruskEntity animatable, ResourceLocation texture) {
         return RenderType.entityTranslucent(getTextureResource(animatable));
+    }
+
+    @Override
+    public void setCustomAnimations(GruskEntity animatable, long instanceId, AnimationState<GruskEntity> animationState) {
+        super.setCustomAnimations(animatable, instanceId, animationState);
     }
 }

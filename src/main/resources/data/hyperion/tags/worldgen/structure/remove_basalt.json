@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "hyperion:mining_rig",
+    "hyperion:mining_storage"
+  ]
+}

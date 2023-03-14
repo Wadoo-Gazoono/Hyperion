@@ -1,0 +1,33 @@
+{
+  "grusk.ambient": {
+    "subtitle": "hyperion.grusk.ambient",
+    "sounds": [
+      {
+        "name": "hyperion:grusk/grusk_ambient1",
+        "stream": true
+      },
+      {
+        "name": "hyperion:grusk/grusk_ambient2",
+        "stream": true
+      }
+    ]
+  },
+  "grusk.damage": {
+    "subtitle": "hyperion.grusk.damage",
+    "sounds": [
+      {
+        "name": "hyperion:grusk/grusk_damage",
+        "stream": true
+      }
+    ]
+  },
+  "grusk.death": {
+    "subtitle": "hyperion.grusk.death",
+    "sounds": [
+      {
+        "name": "hyperion:grusk/grusk_death",
+        "stream": true
+      }
+    ]
+  }
+}

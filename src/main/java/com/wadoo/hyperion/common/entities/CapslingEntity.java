@@ -13,10 +13,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -60,7 +57,6 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
 
 
     private static final EntityDataAccessor<Boolean> OPEN = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> HAS_ITEM = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ANIM_STATE = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
 
@@ -95,7 +91,6 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(OPEN,false);
-        this.entityData.define(HAS_ITEM,false);
         this.entityData.define(ANIM_STATE,0);
         this.entityData.define(FROM_BUCKET,false);
     }
@@ -103,11 +98,16 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("FromBucket", this.fromBucket());
+        tag.putBoolean("isOpen", this.getOpen());
+        tag.putInt("animState", this.getAnimState());
+
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.setFromBucket(tag.getBoolean("FromBucket"));
+        this.setAnimState(tag.getInt("animState"));
+        this.setOpen(tag.getBoolean("isOpen"));
     }
 
 
@@ -144,7 +144,6 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
         if (player.getItemInHand(hand).is(Items.MAGMA_CREAM)){
             this.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.MAGMA_CREAM,1));
             player.getItemInHand(hand).shrink(1);
-            setHasItem(true);
             return InteractionResult.CONSUME;
         }
         if (player.getItemInHand(hand).is(Items.LAVA_BUCKET)) {
@@ -165,14 +164,6 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
 
     public boolean getOpen(){
         return this.entityData.get(OPEN);
-    }
-
-    public void setHasItem(boolean hasItem){
-        this.entityData.set(HAS_ITEM,hasItem);
-    }
-
-    public boolean getHasItem(){
-        return this.entityData.get(HAS_ITEM);
     }
 
     public void setAnimState(int AnimState){
@@ -298,7 +289,7 @@ class CapslingTemptGoal extends TemptGoal{
 
     @Override
     public boolean canUse() {
-        if(!this.entity.getHasItem()) {
+        if(this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR)) {
             return super.canUse();
         }
         return false;
@@ -332,12 +323,12 @@ class CapslingEatGoal extends Goal{
 
     @Override
     public boolean canUse() {
-        return this.entity.getHasItem() && this.entity.isOnGround();
+        return !this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR) && this.entity.isOnGround();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.entity.getHasItem();
+        return !this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR);
     }
 
     @Override
@@ -375,9 +366,8 @@ class CapslingEatGoal extends Goal{
         }
         else{
             this.entity.playSound(SoundEvents.ITEM_PICKUP,1.0f, 1.8f);
-            this.entity.level.addFreshEntity(new ItemEntity(this.entity.level,this.entity.getX(),this.entity.getY(),this.entity.getZ(),new ItemStack(ItemHandler.AGRALITE_SHEET.get(),1)));
-            this.entity.setHasItem(false);
             this.entity.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);
+            this.entity.level.addFreshEntity(new ItemEntity(this.entity.level,this.entity.getX(),this.entity.getY(),this.entity.getZ(),new ItemStack(ItemHandler.AGRALITE_SHEET.get(),1)));
         }
     }
 }
@@ -396,7 +386,7 @@ class FindMagmaCreamGoal extends Goal{
         if(!list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getItem().is(Items.MAGMA_CREAM)) {
-                    return !this.entity.getHasItem();
+                    return this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR);
                 }
             }
         }
@@ -409,7 +399,7 @@ class FindMagmaCreamGoal extends Goal{
         if(!list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getItem().is(Items.MAGMA_CREAM)) {
-                    return !this.entity.getHasItem() && this.entity.getAnimState() == 0;
+                    return this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR) && this.entity.getAnimState() == 0;
                 }
             }
         }
@@ -446,7 +436,6 @@ class FindMagmaCreamGoal extends Goal{
                 this.entity.getNavigation().moveTo(wantedItem,1.2f);
                 //this.entity.playSound(SoundEvents.STRIDER_EAT);
                 this.entity.setItemInHand(InteractionHand.MAIN_HAND,wantedItem.getItem());
-                this.entity.setHasItem(true);
                 this.wantedItem.getItem().shrink(1);
             }
         }
@@ -464,7 +453,7 @@ class CapslingSocializeGoal extends Goal{
     @Override
     public boolean canUse() {
         List<? extends CapslingEntity> list = this.entity.level.getNearbyEntities(CapslingEntity.class, LEADER_TARGETING, this.entity, this.entity.getBoundingBox().inflate(25.0D));
-        return !list.isEmpty() && !this.entity.getHasItem();
+        return !list.isEmpty() && this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR);
 
     }
 

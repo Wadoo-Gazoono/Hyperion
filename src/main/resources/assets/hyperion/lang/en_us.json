@@ -1,10 +1,25 @@
 {
   "item.hyperion.agralite_sheet": "Agralite Sheet",
+  "item.hyperion.capsling_spawn_egg": "Capsling Spawn Egg",
+  "item.hyperion.capsling_bucket": "Bucket of Capsling",
+  "item.hyperion.grusk_spawn_egg": "Grusk Spawn Egg",
+  "item.hyperion.volatile_goop": "Volatile Goop",
+  "item.hyperion.crucible_spawn_egg": "Crucible Spawn Egg",
 
   "block.hyperion.agralite_cage": "Agralite Cage",
+  "block.hyperion.agralite_block": "Agralite Block",
+  "block.hyperion.agralite_pipe": "Agralite Pipe",
+  "block.hyperion.basalt_spire_bricks": "Basalt Spire Bricks",
+  "block.hyperion.cut_basalt_spire_bricks": " Cut Basalt Spire Bricks",
+  "block.hyperion.checkered_spire_bricks": "Checkered Spire Bricks",
+  "block.hyperion.cut_agralite": "Cut Agralite",
 
 
   "entity.hyperion.capsling": "Capsling",
-  "entity.hyperion.grusk": "Grusk"
+  "entity.hyperion.grusk": "Grusk",
+  "entity.hyperion.crucible": "Crucible",
 
+  "hyperion.grusk.ambient": "Grusk groans",
+  "hyperion.grusk.damage": "Grusk hurts",
+  "hyperion.grusk.death": "Grusk dies"
 }
