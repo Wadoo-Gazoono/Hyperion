@@ -106,8 +106,17 @@ public class CrucibleEntity extends Monster implements GeoEntity {
     }
 
     @Override
+    public void onAddedToWorld() {
+        super.onAddedToWorld();
+        getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").setTransitionLength(0);
+    }
+
+    @Override
     public void tick() {
         super.tick();
+        if(tickCount > 2) {
+            getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").setTransitionLength(5);
+        }
             Vec3 projectilePos = new Vec3(0D,0D,2D).yRot((float)Math.toRadians(-getYRot())).add(this.position());
         if(level.isClientSide && this.getRandom().nextFloat() < 0.06f){
             for (int i = 0; i < random.nextInt(8); ++i) {
@@ -128,11 +137,15 @@ public class CrucibleEntity extends Monster implements GeoEntity {
                 .triggerableAnim("throwLeft", THROWL)
         );
 
+
+
         controllers.add(new AnimationController<>(this, "rightArmController", 3, this::rightArm));
 
         controllers.add(new AnimationController<>(this, "leftArmController", 3, this::leftArm));
 
     }
+
+
 
     private <ENTITY extends GeoEntity> void instructionListener(CustomInstructionKeyframeEvent<ENTITY> event) {
         if(event.getKeyframeData().getInstructions().contains("boom")){
@@ -169,6 +182,7 @@ public class CrucibleEntity extends Monster implements GeoEntity {
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
         return state.isMoving() ? state.setAndContinue(WALK) : state.setAndContinue(IDLE);
+
     }
 
     private <T extends GeoAnimatable> PlayState rightArm(AnimationState<T> state) {

@@ -38,8 +38,4 @@ public class GruskModel extends DefaultedEntityGeoModel<GruskEntity> {
         return RenderType.entityTranslucent(getTextureResource(animatable));
     }
 
-    @Override
-    public void setCustomAnimations(GruskEntity animatable, long instanceId, AnimationState<GruskEntity> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
-    }
 }

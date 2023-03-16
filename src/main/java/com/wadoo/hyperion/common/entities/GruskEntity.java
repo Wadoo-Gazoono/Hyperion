@@ -114,7 +114,8 @@ public class GruskEntity extends Monster implements GeoEntity {
                 this.decapitateTimer = 40;
                 BlockPos blockpos = this.blockPosition().offset(0, 1, 0);
                 GruskHeadEntity head = EntityHandler.GRUSK_HEAD.get().create(this.level);
-                if (head != null) {
+                setHasHead(false);
+            if (head != null) {
                     head.moveTo(blockpos, 0.0F, 0.0F);
                     head.owner = this;
                     this.level.addFreshEntity(head);
@@ -135,9 +136,7 @@ public class GruskEntity extends Monster implements GeoEntity {
     public void tick() {
         super.tick();
         if(this.decapitateTimer > 0){
-            if(this.decapitateTimer == 36){
-                setHasHead(false);
-            }
+
             this.decapitateTimer--;
             this.getNavigation().stop();
             this.setDeltaMovement(0d,this.getDeltaMovement().y(),0d);

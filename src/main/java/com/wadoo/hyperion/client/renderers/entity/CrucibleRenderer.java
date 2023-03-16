@@ -79,6 +79,11 @@ public class CrucibleRenderer extends GeoEntityRenderer<CrucibleEntity> {
     }
 
     @Override
+    protected float getDeathMaxRotation(CrucibleEntity animatable) {
+        return 2f;
+    }
+
+    @Override
     public void postRender(PoseStack poseStack, CrucibleEntity animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         super.postRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }

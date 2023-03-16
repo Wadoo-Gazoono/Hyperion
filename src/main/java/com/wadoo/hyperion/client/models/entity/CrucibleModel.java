@@ -13,7 +13,6 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
 public class CrucibleModel extends DefaultedEntityGeoModel<CrucibleEntity> {
-
     public CrucibleModel() {
         super(new ResourceLocation(Hyperion.MODID, "crucible"));
     }
@@ -52,8 +51,15 @@ public class CrucibleModel extends DefaultedEntityGeoModel<CrucibleEntity> {
 
             if (entity != null) {
                 Vec3 vec3 = entity.getEyePosition(0.0F);
-                Vec3 vec31 = animatable.getEyePosition(0.0F).add(0d,-0.5d,0d);
-
+                Vec3 vec31 = animatable.getPosition(0.0F).add(0d,0.2d,0d);
+                if(vec3.y > vec31.y){
+                    rightEye.setPosY(0.95f);
+                    leftEye.setPosY(0.95f);
+                }
+                else{
+                    rightEye.setPosY(0.05f);
+                    leftEye.setPosY(0.05f);
+                }
 
                 Vec3 vec32 = animatable.getViewVector(0.0F);
                 vec32 = new Vec3(vec32.x, 0.0D, vec32.z);
