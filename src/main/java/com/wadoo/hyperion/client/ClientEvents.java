@@ -19,6 +19,7 @@ public class ClientEvents {
         event.registerEntityRenderer(EntityHandler.GRUSK.get(), GruskRenderer::new);
         event.registerEntityRenderer(EntityHandler.GRUSK_HEAD.get(), GruskHeadRenderer::new);
         event.registerEntityRenderer(EntityHandler.CRUCIBLE.get(), CrucibleRenderer::new);
+        event.registerEntityRenderer(EntityHandler.AUTOMININGDROID.get(), AutoMiningDroidRenderer::new);
         event.registerEntityRenderer(EntityHandler.VOLATILE_GOOP.get(), VolatileGoopRenderer::new);
 
         event.registerEntityRenderer(EntityHandler.CAMERA.get(), RenderNothing::new);

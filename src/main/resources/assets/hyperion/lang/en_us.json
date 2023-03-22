@@ -6,6 +6,12 @@
   "item.hyperion.volatile_goop": "Volatile Goop",
   "item.hyperion.crucible_spawn_egg": "Crucible Spawn Egg",
 
+  "item.hyperion.agralite_armet": "Agralite Armet",
+  "item.hyperion.agralite_cuirass": "Agralite Cuirass",
+  "item.hyperion.agralite_greaves": "Agralite Greaves",
+  "item.hyperion.agralite_sabatons": "Agralite Sabatons",
+
+
   "block.hyperion.agralite_cage": "Agralite Cage",
   "block.hyperion.agralite_block": "Agralite Block",
   "block.hyperion.agralite_pipe": "Agralite Pipe",
@@ -21,5 +27,11 @@
 
   "hyperion.grusk.ambient": "Grusk groans",
   "hyperion.grusk.damage": "Grusk hurts",
-  "hyperion.grusk.death": "Grusk dies"
+  "hyperion.grusk.death": "Grusk dies",
+
+  "item.hyperion.item_lore_description.desc": "Press [SHIFT] for more info",
+  "item.hyperion.agralite_armor.desc": "Set Bonus: Increases Melee Speed",
+  "item.hyperion.agralite_armor_lore.desc": "Armour designed at the peak of the Grimspire by the heart of the forge..."
+
+
 }

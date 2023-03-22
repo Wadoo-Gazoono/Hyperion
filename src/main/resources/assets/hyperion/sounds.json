@@ -29,5 +29,14 @@
         "stream": true
       }
     ]
+  },
+  "weapon.parry": {
+    "subtitle": "hyperion.weapon.parry",
+    "sounds": [
+      {
+        "name": "hyperion:weapon/parry",
+        "stream": true
+      }
+    ]
   }
 }

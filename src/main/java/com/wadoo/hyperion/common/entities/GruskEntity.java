@@ -1,7 +1,7 @@
 package com.wadoo.hyperion.common.entities;
 
 import com.wadoo.hyperion.common.registry.EntityHandler;
-import com.wadoo.hyperion.common.registry.SoundRegistry;
+import com.wadoo.hyperion.common.registry.SoundsRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -9,7 +9,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -19,19 +19,14 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.monster.Evoker;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -89,6 +84,7 @@ public class GruskEntity extends Monster implements GeoEntity {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+
         tag.putBoolean("hasHead", this.getHasHead());
     }
 
@@ -126,15 +122,22 @@ public class GruskEntity extends Monster implements GeoEntity {
         return super.hurt(source, amount);
     }
 
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor accessor, DifficultyInstance instance, MobSpawnType spawnType, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
+        this.setHasHead(true);
+        return super.finalizeSpawn(accessor, instance, spawnType, data, tag);
+    }
+
     @Override
     public void onAddedToWorld() {
         super.onAddedToWorld();
-        this.setHasHead(true);
     }
 
     @Override
     public void tick() {
         super.tick();
+        //System.out.println(this.getHasHead());
         if(this.decapitateTimer > 0){
 
             this.decapitateTimer--;
@@ -153,7 +156,7 @@ public class GruskEntity extends Monster implements GeoEntity {
     }
 
     protected PlayState predicate(AnimationState<GruskEntity> state) {
-        return state.isMoving() ? (this.isAggressive()) ? state.setAndContinue(RUN) : state.setAndContinue(WALK) : state.setAndContinue(IDLE);
+        return state.isMoving() ? ((state.getAnimatable().entityData.get(state.getAnimatable().DATA_SHARED_FLAGS_ID) & 4) != 0) ? state.setAndContinue(RUN) : state.setAndContinue(WALK) : state.setAndContinue(IDLE);
     }
 
     @Override
@@ -172,17 +175,17 @@ public class GruskEntity extends Monster implements GeoEntity {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundRegistry.GRUSK_AMBIENCE.get();
+        return SoundsRegistry.GRUSK_AMBIENCE.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource p_33034_) {
-        return SoundRegistry.GRUSK_HURT.get();
+        return SoundsRegistry.GRUSK_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundRegistry.GRUSK_DEATH.get();
+        return SoundsRegistry.GRUSK_DEATH.get();
     }
 }
 

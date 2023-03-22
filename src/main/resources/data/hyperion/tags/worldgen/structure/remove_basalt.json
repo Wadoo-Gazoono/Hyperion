@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "hyperion:mining_rig",
-    "hyperion:mining_storage"
+    "hyperion:mining_storage",
+    "hyperion:refinery"
   ]
 }

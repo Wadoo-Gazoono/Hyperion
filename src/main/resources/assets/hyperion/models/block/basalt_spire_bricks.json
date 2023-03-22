@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "minecraft:block/smooth_basalt",
+    "end": "hyperion:block/cut_basalt_spire_bricks",
     "side": "hyperion:block/basalt_spire_bricks"
   }
 }

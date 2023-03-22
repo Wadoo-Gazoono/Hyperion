@@ -7,7 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class SoundRegistry {
+public class SoundsRegistry {
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Hyperion.MODID);
 
     public static final RegistryObject<SoundEvent> GRUSK_AMBIENCE = SOUNDS.register("grusk.ambient",
@@ -17,4 +17,6 @@ public class SoundRegistry {
     public static final RegistryObject<SoundEvent> GRUSK_DEATH = SOUNDS.register("grusk.death",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Hyperion.MODID, "grusk.death")));
 
+    public static final RegistryObject<SoundEvent> PARRY = SOUNDS.register("weapon.parry",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Hyperion.MODID, "weapon.parry")));
 }

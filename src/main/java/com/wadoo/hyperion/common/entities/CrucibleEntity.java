@@ -241,7 +241,6 @@ class CrucibleSlamGoal extends Goal {
             this.entity.slamCoolDown--;
             return false;
         }
-        System.out.println(this.entity.getTarget() != null && this.entity.getTarget().isAlive() &&this.entity.getLeftArmed() && this.entity.getRightArmed()&& this.entity.distanceTo(this.entity.getTarget()) < 5f && this.entity.slamCoolDown <= 0 && (this.entity.getAnimState() == 0 || this.entity.getAnimState() == 2));
 
         return this.entity.getTarget() != null && this.entity.getTarget().isAlive() &&this.entity.getLeftArmed() && this.entity.getRightArmed()&& this.entity.distanceTo(this.entity.getTarget()) < 5f && this.entity.slamCoolDown <= 0 && (this.entity.getAnimState() == 0 || this.entity.getAnimState() == 2);
     }
@@ -267,7 +266,6 @@ class CrucibleSlamGoal extends Goal {
     public void tick() {
         super.tick();
         if (tickTimer < 80) {
-            System.out.println(tickTimer);
             if(this.entity.getTarget() != null) {
                 this.entity.getLookControl().setLookAt(this.entity.getTarget());
             }

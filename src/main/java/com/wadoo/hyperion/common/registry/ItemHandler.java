@@ -1,18 +1,14 @@
 package com.wadoo.hyperion.common.registry;
 
 import com.wadoo.hyperion.Hyperion;
-import com.wadoo.hyperion.common.items.GigaHammerItem;
-import com.wadoo.hyperion.common.items.HyperionMobBucket;
-import com.wadoo.hyperion.common.items.VolatileGoopItem;
+import com.wadoo.hyperion.common.items.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.CreativeModeTabEvent;
-import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -41,13 +37,30 @@ public class ItemHandler {
     public static final RegistryObject<Item> CAPSLING_SPAWN_EGG = ITEMS.register("capsling_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.CAPSLING, 0x737170, 0x515054, new Item.Properties()));
 
     public static final RegistryObject<Item> GRUSK_SPAWN_EGG = ITEMS.register("grusk_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.GRUSK, 0x575757, 0x141210, new Item.Properties()));
-
     public static final RegistryObject<Item> CRUCIBLE_SPAWN_EGG = ITEMS.register("crucible_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.CRUCIBLE, 0x4d494c, 0x1b2632, new Item.Properties()));
+    public static final RegistryObject<Item> AMD_SPAWN_EGG = ITEMS.register("auto_mining_droid_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.AUTOMININGDROID, 0x3a3b48, 0x794934, new Item.Properties()));
 
     public static final RegistryObject<VolatileGoopItem> VOLATILE_GOOP = ITEMS.register("volatile_goop",() -> new VolatileGoopItem((new Item.Properties()).stacksTo(16).fireResistant()));
-    public static final RegistryObject<GigaHammerItem> GIGA_HAMMER = ITEMS.register("giga_hammer",() -> new GigaHammerItem((new Item.Properties()).defaultDurability(1300).fireResistant().rarity(Rarity.RARE)));
+    public static final RegistryObject<ZweihanderItem> ZWEIHANDER = ITEMS.register("zweihander",() -> new ZweihanderItem(HyperionTiers.AGRALITE, 3, -2.4F, new Item.Properties()));
+
+    public static final RegistryObject<AgraliteArmorItem> AGRALITE_HELMET = ITEMS.register("agralite_armet",
+            () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.HEAD, new Item.Properties()));
+    public static final RegistryObject<AgraliteArmorItem> AGRALITE_CHESTPLATE = ITEMS.register("agralite_cuirass",
+            () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.CHEST, new Item.Properties()));
+    public static final RegistryObject<AgraliteArmorItem> AGRALITE_LEGGINGS = ITEMS.register("agralite_greaves",
+            () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.LEGS, new Item.Properties()));
+    public static final RegistryObject<AgraliteArmorItem> AGRALITE_BOOTS = ITEMS.register("agralite_sabatons",
+            () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.FEET, new Item.Properties()));
+
+
+
+
+
     public static final List<RegistryObject<? extends Item>> HYPERION_ITEMS = List.of(
-        AGRALITE_CAGE,AGRALITE_SHEET,AGRALITE_BLOCK,CUT_AGRALITE,SPIRE_BRICKS,CUT_SPIRE_BRICKS,CHECKERED_SPIRE_BRICKS,CAPSLING_BUCKET,VOLATILE_GOOP,CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG, GIGA_HAMMER
+        AGRALITE_CAGE,AGRALITE_SHEET,AGRALITE_BLOCK,CUT_AGRALITE,SPIRE_BRICKS,
+            CUT_SPIRE_BRICKS,CHECKERED_SPIRE_BRICKS,CAPSLING_BUCKET,VOLATILE_GOOP,
+            CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG, ZWEIHANDER,
+            AGRALITE_HELMET,AGRALITE_CHESTPLATE,AGRALITE_LEGGINGS,AGRALITE_BOOTS
     );
 
     public static void registerCreativeModeTab(CreativeModeTabEvent.Register event) {
