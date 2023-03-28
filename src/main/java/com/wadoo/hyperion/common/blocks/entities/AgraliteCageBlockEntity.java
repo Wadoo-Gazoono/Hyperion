@@ -2,6 +2,7 @@ package com.wadoo.hyperion.common.blocks.entities;
 
 import com.wadoo.hyperion.common.registry.BlockEntityHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,7 +21,7 @@ public class AgraliteCageBlockEntity extends BlockEntity implements GeoBlockEnti
 
     //Animations
     private static final RawAnimation LOOP = RawAnimation.begin().thenLoop("loop");
-    private boolean has_capsling = false;
+    public boolean isFull = false;
 
     public AgraliteCageBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityHandler.AGRALITE_CAGE.get(), pos, state);
@@ -32,14 +33,29 @@ public class AgraliteCageBlockEntity extends BlockEntity implements GeoBlockEnti
         controllers.add(new AnimationController<>(this, "loop", 5, state -> state.setAndContinue(LOOP)));
     }
 
-
-
-    public boolean getHasCapsling(){
-        return this.has_capsling;
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        this.isFull = tag.getBoolean("isFull");
+        System.out.println("loading:" + this.isFull);
     }
 
-    public void setHasCapsling(boolean has_capsling){
-        this.has_capsling = has_capsling;
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putBoolean("isFull", this.isFull);
+        System.out.println("saving:" + this.isFull);
+
+    }
+
+
+
+    public boolean getFull(){
+        return this.isFull;
+    }
+
+    public void setFull(boolean has_capsling){
+        this.isFull = has_capsling;
     }
 
 

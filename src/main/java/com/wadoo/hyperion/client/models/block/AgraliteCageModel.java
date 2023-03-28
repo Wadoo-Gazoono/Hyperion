@@ -1,4 +1,4 @@
-package com.wadoo.hyperion.client.models.blocks;
+package com.wadoo.hyperion.client.models.block;
 
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.blocks.entities.AgraliteCageBlockEntity;
@@ -13,7 +13,7 @@ public class AgraliteCageModel extends DefaultedBlockGeoModel<AgraliteCageBlockE
 
     @Override
     public ResourceLocation getModelResource(AgraliteCageBlockEntity object) {
-        if(object.getHasCapsling()){
+        if(object.isFull){
             return buildFormattedModelPath(new ResourceLocation(Hyperion.MODID, "agralite_cage_capsling"));
         }
         return buildFormattedModelPath(new ResourceLocation(Hyperion.MODID, "agralite_cage"));

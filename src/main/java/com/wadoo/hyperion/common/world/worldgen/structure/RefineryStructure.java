@@ -65,37 +65,31 @@ public class RefineryStructure extends Structure{
         int lastSolidBlock = 0;
         for (int curChunkX = chunkPos.x - 1; curChunkX <= chunkPos.x + 1; curChunkX++) {
             for (int curChunkZ = chunkPos.z - 1; curChunkZ <= chunkPos.z + 1; curChunkZ++) {
-                mutable.set(curChunkX << 4, 128, curChunkZ << 4);
+                mutable.set(curChunkX << 2, 128, curChunkZ << 2);
                 NoiseColumn blockView = context.chunkGenerator().getBaseColumn(mutable.getX(), mutable.getZ(), context.heightAccessor(), context.randomState());
-                int minHeight = 70;
+                int min = 90;
 
-                while(mutable.getY() > minHeight) {
+                while(mutable.getY() < min) {
                     BlockState state = blockView.getBlock(mutable.getY());
-                    if(state.isAir()) {
-                        airBlocks++;
-                    }
-                    else{
-                        //lastSolidBlock = mutable.getY();
-                        airBlocks = 0;
-                    }
-                    if(airBlocks >= 12 ){
-                        return true;
+                    if(!state.isAir()) {
+                        return false;
                     }
                     mutable.move(Direction.DOWN);
                 }
             }
         }
-        return false;
+
+        return true;
     }
 
     @Override
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
 
 
+
         if (!RefineryStructure.extraSpawningChecks(context)) {
             return Optional.empty();
         }
-
 
         int startY = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
 
@@ -117,18 +111,11 @@ public class RefineryStructure extends Structure{
                         // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
                         this.maxDistanceFromCenter); // Maximum limit for how far pieces can spawn from center. You cannot set this bigger than 128 or else pieces gets cutoff.
 
-        /*
-         * Note, you are always free to make your own JigsawPlacement class and implementation of how the structure
-         * should generate. It is tricky but extremely powerful if you are doing something that vanilla's jigsaw system cannot do.
-         * Such as for example, forcing 3 pieces to always spawn every time, limiting how often a piece spawns, or remove the intersection limitation of pieces.
-         */
-
-        // Return the pieces generator that is now set up so that the game runs it when it needs to create the layout of structure pieces.
         return structurePiecesGenerator;
     }
 
     @Override
     public StructureType<?> type() {
-        return StructureHandler.REFINERY.get(); // Helps the game know how to turn this structure back to json to save to chunks
+        return StructureHandler.REFINERY.get();
     }
 }

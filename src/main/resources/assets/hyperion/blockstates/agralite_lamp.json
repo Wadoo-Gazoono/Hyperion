@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "hyperion:block/agralite_lamp"
+    },
+    "hanging=true": {
+      "model": "hyperion:block/agralite_lamp_hanging"
+    }
+  }
+}

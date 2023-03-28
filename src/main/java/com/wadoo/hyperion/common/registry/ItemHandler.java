@@ -24,13 +24,26 @@ public class ItemHandler {
     public static final RegistryObject<Item> AGRALITE_SHEET = ITEMS.register("agralite_sheet", () -> new Item(new Item.Properties().stacksTo(64).fireResistant()));
     public static final RegistryObject<Item> AGRALITE_CAGE = ITEMS.register("agralite_cage", () -> new BlockItem(BlockHandler.AGRALITE_CAGE.get(), new Item.Properties()));
     public static final RegistryObject<Item> AGRALITE_BLOCK = ITEMS.register("agralite_block", () -> new BlockItem(BlockHandler.AGRALITE_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> AGRALITE_SLAB = ITEMS.register("agralite_slab", () -> new BlockItem(BlockHandler.AGRALITE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> AGRALITE_STAIRS = ITEMS.register("agralite_stairs", () -> new BlockItem(BlockHandler.AGRALITE_STAIRS.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> CUT_AGRALITE = ITEMS.register("cut_agralite", () -> new BlockItem(BlockHandler.CUT_AGRALITE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CUT_AGRALITE_STAIRS = ITEMS.register("cut_agralite_stairs", () -> new BlockItem(BlockHandler.CUT_AGRALITE_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CUT_AGRALITE_SLAB = ITEMS.register("cut_agralite_slab", () -> new BlockItem(BlockHandler.CUT_AGRALITE_SLAB.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> AGRALITE_PIPE = ITEMS.register("agralite_pipe", () -> new BlockItem(BlockHandler.AGRALITE_PIPE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> AGRALITE_CHAIN = ITEMS.register("agralite_chain", () -> new BlockItem(BlockHandler.AGRALITE_CHAIN.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> AGRALITE_LAMP = ITEMS.register("agralite_lamp", () -> new BlockItem(BlockHandler.AGRALITE_LAMP.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> SPIRE_BRICKS = ITEMS.register("basalt_spire_bricks", () -> new BlockItem(BlockHandler.SPIRE_BRICKS.get(), new Item.Properties()));
     public static final RegistryObject<Item> CUT_SPIRE_BRICKS = ITEMS.register("cut_basalt_spire_bricks", () -> new BlockItem(BlockHandler.CUT_SPIRE_BRICKS.get(), new Item.Properties()));
     public static final RegistryObject<Item> CHECKERED_SPIRE_BRICKS = ITEMS.register("checkered_spire_bricks", () -> new BlockItem(BlockHandler.CHECKERED_SPIRE_BRICKS.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> BASALT_WALL = ITEMS.register("basalt_wall", () -> new BlockItem(BlockHandler.BASALT_WALL.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> KILN = ITEMS.register("kiln", () -> new BlockItem(BlockHandler.KILN.get(), new Item.Properties()));
 
 
     public static final RegistryObject<Item> CAPSLING_BUCKET = ITEMS.register("capsling_bucket",() -> new HyperionMobBucket(EntityHandler.CAPSLING, Fluids.LAVA, (new Item.Properties()).stacksTo(1)));
@@ -42,6 +55,9 @@ public class ItemHandler {
 
     public static final RegistryObject<VolatileGoopItem> VOLATILE_GOOP = ITEMS.register("volatile_goop",() -> new VolatileGoopItem((new Item.Properties()).stacksTo(16).fireResistant()));
     public static final RegistryObject<ZweihanderItem> ZWEIHANDER = ITEMS.register("zweihander",() -> new ZweihanderItem(HyperionTiers.AGRALITE, 3, -2.4F, new Item.Properties()));
+
+
+
 
     public static final RegistryObject<AgraliteArmorItem> AGRALITE_HELMET = ITEMS.register("agralite_armet",
             () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.HEAD, new Item.Properties()));
@@ -57,8 +73,10 @@ public class ItemHandler {
 
 
     public static final List<RegistryObject<? extends Item>> HYPERION_ITEMS = List.of(
-        AGRALITE_CAGE,AGRALITE_SHEET,AGRALITE_BLOCK,CUT_AGRALITE,SPIRE_BRICKS,
-            CUT_SPIRE_BRICKS,CHECKERED_SPIRE_BRICKS,CAPSLING_BUCKET,VOLATILE_GOOP,
+        AGRALITE_CAGE,AGRALITE_PIPE,AGRALITE_LAMP,AGRALITE_CHAIN,AGRALITE_SHEET,AGRALITE_BLOCK,AGRALITE_SLAB,AGRALITE_STAIRS,
+            CUT_AGRALITE,CUT_AGRALITE_STAIRS,
+            CUT_AGRALITE_SLAB,SPIRE_BRICKS,
+            CUT_SPIRE_BRICKS,BASALT_WALL,CHECKERED_SPIRE_BRICKS,KILN,CAPSLING_BUCKET,VOLATILE_GOOP,
             CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG, ZWEIHANDER,
             AGRALITE_HELMET,AGRALITE_CHESTPLATE,AGRALITE_LEGGINGS,AGRALITE_BOOTS
     );

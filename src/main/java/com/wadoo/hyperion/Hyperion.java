@@ -7,6 +7,7 @@ import com.wadoo.hyperion.common.registry.*;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.particles.ParticleGroup;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -49,13 +50,17 @@ public class Hyperion {
         BlockEntityHandler.BLOCK_ENTITIES.register(bus);
         SoundsRegistry.SOUNDS.register(bus);
         StructureHandler.STRUCTURES.register(bus);
-
+        ParticleHandler.PARTICLES.register(bus);
 
 
         TagHandler.registerTags();
         bus.addListener(EventPriority.NORMAL, ItemHandler::registerCreativeModeTab);
         bus.addListener(this::registerEntityAttributes);
-        MinecraftForge.EVENT_BUS.addListener(this::onSetupCamera);
+
+        //TODO fix this
+        //TODO add pipes to creative inv
+        //TODO fix mobs no spawning
+        //MinecraftForge.EVENT_BUS.addListener(this::onSetupCamera);
 
 
     }

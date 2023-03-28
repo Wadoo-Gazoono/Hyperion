@@ -474,7 +474,7 @@
 			}
 		},
 		"swing_left": {
-			"animation_length": 4,
+			"animation_length": 3.1667,
 			"bones": {
 				"base": {
 					"rotation": {

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hyperion:block/cut_agralite_slab"
+    },
+    "type=double": {
+      "model": "hyperion:block/cut_agralite"
+    },
+    "type=top": {
+      "model": "hyperion:block/cut_agralite_slab_top"
+    }
+  }
+}

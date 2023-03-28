@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hyperion:block/agralite_slab"
+    },
+    "type=double": {
+      "model": "hyperion:block/agralite_block"
+    },
+    "type=top": {
+      "model": "hyperion:block/agralite_slab_top"
+    }
+  }
+}

@@ -2,6 +2,7 @@ package com.wadoo.hyperion.common.registry;
 
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.entities.*;
+import com.wadoo.hyperion.common.entities.effects.BasaltSpikeEntity;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import net.minecraft.world.entity.Entity;
@@ -24,6 +25,7 @@ public class EntityHandler {
 
     public static final RegistryObject<EntityType<VolatileGoopProjectile>> VOLATILE_GOOP = create("volatile_goop", EntityType.Builder.<VolatileGoopProjectile>of(VolatileGoopProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
     public static final RegistryObject<EntityType<CameraShakeEntity>> CAMERA = create("camera_shake", EntityType.Builder.<CameraShakeEntity>of(CameraShakeEntity::new, MobCategory.MISC).sized(1F, 1F).updateInterval(Integer.MAX_VALUE));
+    public static final RegistryObject<EntityType<BasaltSpikeEntity>> BASALT_SPIKE = create("basalt_spike", EntityType.Builder.<BasaltSpikeEntity>of(BasaltSpikeEntity::new, MobCategory.MISC).sized(1F, 2.5F));
 
     private static <T extends Entity> RegistryObject<EntityType<T>> create(String name, EntityType.Builder<T> builder) {
         return ENTITIES.register(name, () -> builder.build(Hyperion.MODID + "." + name));

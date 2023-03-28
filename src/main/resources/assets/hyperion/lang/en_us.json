@@ -13,6 +13,7 @@
 
 
   "block.hyperion.agralite_cage": "Agralite Cage",
+  "block.hyperion.kiln": "Kiln",
   "block.hyperion.agralite_block": "Agralite Block",
   "block.hyperion.agralite_pipe": "Agralite Pipe",
   "block.hyperion.basalt_spire_bricks": "Basalt Spire Bricks",
@@ -31,7 +32,7 @@
 
   "item.hyperion.item_lore_description.desc": "Press [SHIFT] for more info",
   "item.hyperion.agralite_armor.desc": "Set Bonus: Increases Melee Speed",
-  "item.hyperion.agralite_armor_lore.desc": "Armour designed at the peak of the Grimspire by the heart of the forge..."
+  "item.hyperion.agralite_armor_lore.desc": "Armour designed at the peak of the Grimspire by the heart of the forge...",
 
-
+  "container.hyperion.kiln": "Kiln"
 }

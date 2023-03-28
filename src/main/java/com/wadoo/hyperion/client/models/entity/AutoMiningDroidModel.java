@@ -11,9 +11,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
+import software.bernie.geckolib.model.data.EntityModelData;
 
 public class AutoMiningDroidModel extends DefaultedEntityGeoModel<AutoMiningDroidEntity> {
 
@@ -45,6 +47,19 @@ public class AutoMiningDroidModel extends DefaultedEntityGeoModel<AutoMiningDroi
         CoreGeoBone rightTopEye = getAnimationProcessor().getBone("rightTopPupil");
         CoreGeoBone leftBottomEye = getAnimationProcessor().getBone("leftBottomPupil");
         CoreGeoBone rightBottomEye = getAnimationProcessor().getBone("rightBottomPupil");
+
+        CoreGeoBone root = getAnimationProcessor().getBone("root");
+        CoreGeoBone head = getAnimationProcessor().getBone("head");
+
+        EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+
+        if (root != null) {
+            root.setRotY(entityData.netHeadYaw() * ((float) Math.PI / 180F));
+        }
+        if(head != null){
+            head.setRotX((entityData.headPitch() -25) * ((float) Math.PI / 360F));
+           // head.setRotY(entityData.netHeadYaw() * ((float) Math.PI / 180F));
+        }
 
         if (leftTopEye != null && leftTopEye.getInitialSnapshot() != null && rightTopEye != null && rightTopEye.getInitialSnapshot() != null) {
 

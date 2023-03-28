@@ -25,7 +25,7 @@ public class GruskHeadModel extends DefaultedEntityGeoModel<GruskHeadEntity> {
 
     @Override
     public ResourceLocation getTextureResource(GruskHeadEntity entity) {
-        return new ResourceLocation(Hyperion.MODID, "textures/entity/grusk.png");
+        return new ResourceLocation(Hyperion.MODID, "textures/entity/grusk_head.png");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class GruskHeadModel extends DefaultedEntityGeoModel<GruskHeadEntity> {
 
         if (!animatable.isOnGround() && head != null && head.getInitialSnapshot() != null) {
 
-            head.setRotX(head.getRotX() + 0.1f);
+           // head.setRotX(head.getRotX() + 0.1f);
         }
     }
 }

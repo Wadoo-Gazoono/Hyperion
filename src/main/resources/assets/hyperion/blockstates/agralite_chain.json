@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "hyperion:block/agralite_chain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "hyperion:block/agralite_chain"
+    },
+    "axis=z": {
+      "model": "hyperion:block/agralite_chain",
+      "x": 90
+    }
+  }
+}
