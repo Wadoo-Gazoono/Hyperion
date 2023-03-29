@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.wadoo.hyperion.client.models.block.AgraliteCageModel;
 import com.wadoo.hyperion.common.blocks.entities.AgraliteCageBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
@@ -21,5 +22,10 @@ public class AgraliteCageRenderer extends GeoBlockRenderer<AgraliteCageBlockEnti
         poseStack.translate(0, -0.01D, 0);
         poseStack.popPose();
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public boolean shouldRender(AgraliteCageBlockEntity p_173568_, Vec3 p_173569_) {
+        return true;
     }
 }

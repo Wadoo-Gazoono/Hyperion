@@ -1,0 +1,48 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 512,
+				"texture_height": 256,
+				"visible_bounds_width": 9,
+				"visible_bounds_height": 9,
+				"visible_bounds_offset": [0, -3.5, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-64, 0, -8], "size": [128, 128, 16], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "keyHole",
+					"parent": "root",
+					"pivot": [0, 22.5, -10],
+					"cubes": [
+						{"origin": [-6, 14, -12], "size": [12, 17, 4], "uv": [0, 145]}
+					]
+				},
+				{
+					"name": "leftPupil",
+					"parent": "root",
+					"pivot": [32, 84, -8],
+					"cubes": [
+						{"origin": [31, 83, -9], "size": [2, 2, 2], "uv": [0, 5]}
+					]
+				},
+				{
+					"name": "rightPupil",
+					"parent": "root",
+					"pivot": [-32, 84, -8],
+					"cubes": [
+						{"origin": [-33, 83, -9], "size": [2, 2, 2], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -41,7 +41,7 @@ public class AgraliteCageBlock extends DirectionalBlock implements EntityBlock {
 
     public AgraliteCageBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH).setValue(FULL, Boolean.valueOf(true)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH).setValue(FULL, Boolean.valueOf(false)));
 
     }
 

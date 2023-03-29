@@ -2,6 +2,7 @@ package com.wadoo.hyperion.common.registry;
 
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.blocks.*;
+import com.wadoo.hyperion.common.blocks.grimspire_door.GrimSpireDoorBlock;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -25,10 +26,6 @@ public class BlockHandler {
     public static final RegistryObject<Block> AGRALITE_STAIRS = BLOCKS.register("agralite_stairs", () -> new StairBlock(AGRALITE_BLOCK.get().defaultBlockState(),BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
     public static final RegistryObject<Block> AGRALITE_SLAB = BLOCKS.register("agralite_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
 
-    public static final RegistryObject<Block> BASALT_WALL = BLOCKS.register("basalt_wall", () -> new WallBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
-    public static final RegistryObject<Block> POLISHED_BASALT_WALL = BLOCKS.register("polished_basalt_wall", () -> new WallBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
-
-
 
     public static final RegistryObject<Block> AGRALITE_PIPE = BLOCKS.register("agralite_pipe", () -> new AgralitePipeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL).noOcclusion()));
     public static final RegistryObject<Block> AGRALITE_LAMP = BLOCKS.register("agralite_lamp", () -> new AgraliteLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN).lightLevel(level -> {
@@ -46,5 +43,6 @@ public class BlockHandler {
     public static final RegistryObject<Block> CHECKERED_SPIRE_BRICKS = BLOCKS.register("checkered_spire_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.POLISHED_BASALT)));
 
     public static final RegistryObject<Block> KILN = BLOCKS.register("kiln", () -> new KilnBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE).randomTicks().noOcclusion()));
+    public static final RegistryObject<Block> GRIMSPIRE_DOOR = BLOCKS.register("grimspire_door", () -> new GrimSpireDoorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).randomTicks().noOcclusion()));
 
 }
