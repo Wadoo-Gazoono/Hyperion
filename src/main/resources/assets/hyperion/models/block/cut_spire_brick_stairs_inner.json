@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "hyperion:block/cut_basalt_spire_bricks",
+    "side": "hyperion:block/cut_basalt_spire_bricks",
+    "top": "hyperion:block/cut_basalt_spire_bricks"
+  }
+}

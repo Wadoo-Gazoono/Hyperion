@@ -2,6 +2,7 @@ package com.wadoo.hyperion.common.registry;
 
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.client.particles.AgraliteFlameParticle;
+import com.wadoo.hyperion.client.particles.KilnFlameParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.particles.ParticleType;
@@ -24,10 +25,13 @@ public class ParticleHandler {
     public static final RegistryObject<SimpleParticleType> AGRALITE_FLAME = PARTICLES.register("agralite_flame",
             () -> new SimpleParticleType(true));
 
+    public static final RegistryObject<SimpleParticleType> KILN_FLAME = PARTICLES.register("kiln_flame",
+            () -> new SimpleParticleType(true));
+
     @SubscribeEvent
     public static void registry(RegisterParticleProvidersEvent event) {
         event.register(AGRALITE_FLAME.get(), AgraliteFlameParticle.Factory::new);
-
+        event.register(KILN_FLAME.get(), KilnFlameParticle.Factory::new);
     }
 
 }

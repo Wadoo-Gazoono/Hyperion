@@ -2,6 +2,7 @@ package com.wadoo.hyperion.client;
 
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.client.renderers.block.AgraliteCageRenderer;
+import com.wadoo.hyperion.client.renderers.block.GrimSpireDoorRenderer;
 import com.wadoo.hyperion.client.renderers.block.KilnRenderer;
 import com.wadoo.hyperion.client.renderers.entity.*;
 import com.wadoo.hyperion.client.renderers.entity.effect.BasaltSpikeRenderer;
@@ -30,6 +31,7 @@ public class ClientEvents {
 
         event.registerBlockEntityRenderer(BlockEntityHandler.AGRALITE_CAGE.get(), context -> new AgraliteCageRenderer());
         event.registerBlockEntityRenderer(BlockEntityHandler.KILN.get(), context -> new KilnRenderer());
+        event.registerBlockEntityRenderer(BlockEntityHandler.GRIMSPIRE_DOOR.get(), context -> new GrimSpireDoorRenderer());
 
     }
 

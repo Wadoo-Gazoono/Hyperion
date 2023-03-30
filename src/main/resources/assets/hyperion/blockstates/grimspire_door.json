@@ -1,323 +1,1475 @@
 {
   "variants": {
-    "x_pos=1,y_pos=1": [
+    "x_pos=1,y_pos=1,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_01"
       }
     ],
-    "x_pos=2,y_pos=1": [
+    "x_pos=2,y_pos=1,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_02"
       }
     ],
-    "x_pos=3,y_pos=1": [
+    "x_pos=3,y_pos=1,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_03"
       }
     ],
-    "x_pos=4,y_pos=1": [
+    "x_pos=4,y_pos=1,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_04"
       }
     ],
-    "x_pos=5,y_pos=1": [
+    "x_pos=5,y_pos=1,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_05"
       }
     ],
-    "x_pos=6,y_pos=1": [
+    "x_pos=6,y_pos=1,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_06"
       }
     ],
-    "x_pos=7,y_pos=1": [
+    "x_pos=7,y_pos=1,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_07"
       }
     ],
-    "x_pos=8,y_pos=1": [
+    "x_pos=8,y_pos=1,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_08"
       }
     ],
-    "x_pos=1,y_pos=2": [
+    "x_pos=1,y_pos=2,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_09"
       }
     ],
-    "x_pos=2,y_pos=2": [
+    "x_pos=2,y_pos=2,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_10"
       }
     ],
-    "x_pos=3,y_pos=2": [
+    "x_pos=3,y_pos=2,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_11"
       }
     ],
-    "x_pos=4,y_pos=2": [
+    "x_pos=4,y_pos=2,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_12"
       }
     ],
-    "x_pos=5,y_pos=2": [
+    "x_pos=5,y_pos=2,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_13"
       }
     ],
-    "x_pos=6,y_pos=2": [
+    "x_pos=6,y_pos=2,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_14"
       }
     ],
-    "x_pos=7,y_pos=2": [
+    "x_pos=7,y_pos=2,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_15"
       }
     ],
-    "x_pos=8,y_pos=2": [
+    "x_pos=8,y_pos=2,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_16"
       }
     ],
-    "x_pos=1,y_pos=3": [
+    "x_pos=1,y_pos=3,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_17"
       }
     ],
-    "x_pos=2,y_pos=3": [
+    "x_pos=2,y_pos=3,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_18"
       }
     ],
-    "x_pos=3,y_pos=3": [
+    "x_pos=3,y_pos=3,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_19"
       }
     ],
-    "x_pos=4,y_pos=3": [
+    "x_pos=4,y_pos=3,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_20"
       }
     ],
-    "x_pos=5,y_pos=3": [
+    "x_pos=5,y_pos=3,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_21"
       }
     ],
-    "x_pos=6,y_pos=3": [
+    "x_pos=6,y_pos=3,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_22"
       }
     ],
-    "x_pos=7,y_pos=3": [
+    "x_pos=7,y_pos=3,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_23"
       }
     ],
-    "x_pos=8,y_pos=3": [
+    "x_pos=8,y_pos=3,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_24"
       }
     ],
-    "x_pos=1,y_pos=4": [
+    "x_pos=1,y_pos=4,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_25"
       }
     ],
-    "x_pos=2,y_pos=4": [
+    "x_pos=2,y_pos=4,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_26"
       }
     ],
-    "x_pos=3,y_pos=4": [
+    "x_pos=3,y_pos=4,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_27"
       }
     ],
-    "x_pos=4,y_pos=4": [
+    "x_pos=4,y_pos=4,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_28"
       }
     ],
-    "x_pos=5,y_pos=4": [
+    "x_pos=5,y_pos=4,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_29"
       }
     ],
-    "x_pos=6,y_pos=4": [
+    "x_pos=6,y_pos=4,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_30"
       }
     ],
-    "x_pos=7,y_pos=4": [
+    "x_pos=7,y_pos=4,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_31"
       }
     ],
-    "x_pos=8,y_pos=4": [
+    "x_pos=8,y_pos=4,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_32"
       }
     ],
-    "x_pos=1,y_pos=5": [
+    "x_pos=1,y_pos=5,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_33"
       }
     ],
-    "x_pos=2,y_pos=5": [
+    "x_pos=2,y_pos=5,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_34"
       }
     ],
-    "x_pos=3,y_pos=5": [
+    "x_pos=3,y_pos=5,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_35"
       }
     ],
-    "x_pos=4,y_pos=5": [
+    "x_pos=4,y_pos=5,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_36"
       }
     ],
-    "x_pos=5,y_pos=5": [
+    "x_pos=5,y_pos=5,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_37"
       }
     ],
-    "x_pos=6,y_pos=5": [
+    "x_pos=6,y_pos=5,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_38"
       }
     ],
-    "x_pos=7,y_pos=5": [
+    "x_pos=7,y_pos=5,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_39"
       }
     ],
-    "x_pos=8,y_pos=5": [
+    "x_pos=8,y_pos=5,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_40"
       }
     ],
-    "x_pos=1,y_pos=6": [
+    "x_pos=1,y_pos=6,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_41"
       }
     ],
-    "x_pos=2,y_pos=6": [
+    "x_pos=2,y_pos=6,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_42"
       }
     ],
-    "x_pos=3,y_pos=6": [
+    "x_pos=3,y_pos=6,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_43"
       }
     ],
-    "x_pos=4,y_pos=6": [
+    "x_pos=4,y_pos=6,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_44"
       }
     ],
-    "x_pos=5,y_pos=6": [
+    "x_pos=5,y_pos=6,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_45"
       }
     ],
-    "x_pos=6,y_pos=6": [
+    "x_pos=6,y_pos=6,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_46"
       }
     ],
-    "x_pos=7,y_pos=6": [
+    "x_pos=7,y_pos=6,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_47"
       }
     ],
-    "x_pos=8,y_pos=6": [
+    "x_pos=8,y_pos=6,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_48"
       }
     ],
-    "x_pos=1,y_pos=7": [
+    "x_pos=1,y_pos=7,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_49"
       }
     ],
-    "x_pos=2,y_pos=7": [
+    "x_pos=2,y_pos=7,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_50"
       }
     ],
-    "x_pos=3,y_pos=7": [
+    "x_pos=3,y_pos=7,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_51"
       }
     ],
-    "x_pos=4,y_pos=7": [
+    "x_pos=4,y_pos=7,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_52"
       }
     ],
-    "x_pos=5,y_pos=7": [
+    "x_pos=5,y_pos=7,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_53"
       }
     ],
-    "x_pos=6,y_pos=7": [
+    "x_pos=6,y_pos=7,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_54"
       }
     ],
-    "x_pos=7,y_pos=7": [
+    "x_pos=7,y_pos=7,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_55"
       }
     ],
-    "x_pos=8,y_pos=7": [
+    "x_pos=8,y_pos=7,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_56"
       }
     ],
-    "x_pos=1,y_pos=8": [
+    "x_pos=1,y_pos=8,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_57"
       }
     ],
-    "x_pos=2,y_pos=8": [
+    "x_pos=2,y_pos=8,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_58"
       }
     ],
-    "x_pos=3,y_pos=8": [
+    "x_pos=3,y_pos=8,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_59"
       }
     ],
-    "x_pos=4,y_pos=8": [
+    "x_pos=4,y_pos=8,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_60"
       }
     ],
-    "x_pos=5,y_pos=8": [
+    "x_pos=5,y_pos=8,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_61"
       }
     ],
-    "x_pos=6,y_pos=8": [
+    "x_pos=6,y_pos=8,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_62"
       }
     ],
-    "x_pos=7,y_pos=8": [
+    "x_pos=7,y_pos=8,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_63"
       }
     ],
-    "x_pos=8,y_pos=8": [
+    "x_pos=8,y_pos=8,facing=south": [
       {
         "model": "hyperion:block/grimspire/grimspire_64"
+      }
+    ],
+    "x_pos=1,y_pos=1,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_01",
+        "y": 180
+      }
+    ],
+    "x_pos=2,y_pos=1,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_02",
+        "y": 180
+      }
+    ],
+    "x_pos=3,y_pos=1,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_03",
+        "y": 180
+      }
+    ],
+    "x_pos=4,y_pos=1,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_04",
+        "y": 180
+      }
+    ],
+    "x_pos=5,y_pos=1,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_05",
+        "y": 180
+      }
+    ],
+    "x_pos=6,y_pos=1,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_06",
+        "y": 180
+      }
+    ],
+    "x_pos=7,y_pos=1,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_07",
+        "y": 180
+      }
+    ],
+    "x_pos=8,y_pos=1,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_08",
+        "y": 180
+      }
+    ],
+    "x_pos=1,y_pos=2,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_09",
+        "y": 180
+      }
+    ],
+    "x_pos=2,y_pos=2,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_10",
+        "y": 180
+      }
+    ],
+    "x_pos=3,y_pos=2,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_11",
+        "y": 180
+      }
+    ],
+    "x_pos=4,y_pos=2,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_12",
+        "y": 180
+      }
+    ],
+    "x_pos=5,y_pos=2,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_13",
+        "y": 180
+      }
+    ],
+    "x_pos=6,y_pos=2,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_14",
+        "y": 180
+      }
+    ],
+    "x_pos=7,y_pos=2,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_15",
+        "y": 180
+      }
+    ],
+    "x_pos=8,y_pos=2,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_16",
+        "y": 180
+      }
+    ],
+    "x_pos=1,y_pos=3,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_17",
+        "y": 180
+      }
+    ],
+    "x_pos=2,y_pos=3,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_18",
+        "y": 180
+      }
+    ],
+    "x_pos=3,y_pos=3,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_19",
+        "y": 180
+      }
+    ],
+    "x_pos=4,y_pos=3,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_20",
+        "y": 180
+      }
+    ],
+    "x_pos=5,y_pos=3,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_21",
+        "y": 180
+      }
+    ],
+    "x_pos=6,y_pos=3,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_22",
+        "y": 180
+      }
+    ],
+    "x_pos=7,y_pos=3,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_23",
+        "y": 180
+      }
+    ],
+    "x_pos=8,y_pos=3,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_24",
+        "y": 180
+      }
+    ],
+    "x_pos=1,y_pos=4,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_25",
+        "y": 180
+      }
+    ],
+    "x_pos=2,y_pos=4,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_26",
+        "y": 180
+      }
+    ],
+    "x_pos=3,y_pos=4,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_27",
+        "y": 180
+      }
+    ],
+    "x_pos=4,y_pos=4,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_28",
+        "y": 180
+      }
+    ],
+    "x_pos=5,y_pos=4,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_29",
+        "y": 180
+      }
+    ],
+    "x_pos=6,y_pos=4,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_30",
+        "y": 180
+      }
+    ],
+    "x_pos=7,y_pos=4,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_31",
+        "y": 180
+      }
+    ],
+    "x_pos=8,y_pos=4,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_32",
+        "y": 180
+      }
+    ],
+    "x_pos=1,y_pos=5,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_33",
+        "y": 180
+      }
+    ],
+    "x_pos=2,y_pos=5,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_34",
+        "y": 180
+      }
+    ],
+    "x_pos=3,y_pos=5,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_35",
+        "y": 180
+      }
+    ],
+    "x_pos=4,y_pos=5,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_36",
+        "y": 180
+      }
+    ],
+    "x_pos=5,y_pos=5,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_37",
+        "y": 180
+      }
+    ],
+    "x_pos=6,y_pos=5,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_38",
+        "y": 180
+      }
+    ],
+    "x_pos=7,y_pos=5,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_39",
+        "y": 180
+      }
+    ],
+    "x_pos=8,y_pos=5,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_40",
+        "y": 180
+      }
+    ],
+    "x_pos=1,y_pos=6,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_41",
+        "y": 180
+      }
+    ],
+    "x_pos=2,y_pos=6,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_42",
+        "y": 180
+      }
+    ],
+    "x_pos=3,y_pos=6,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_43",
+        "y": 180
+      }
+    ],
+    "x_pos=4,y_pos=6,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_44",
+        "y": 180
+      }
+    ],
+    "x_pos=5,y_pos=6,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_45",
+        "y": 180
+      }
+    ],
+    "x_pos=6,y_pos=6,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_46",
+        "y": 180
+      }
+    ],
+    "x_pos=7,y_pos=6,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_47",
+        "y": 180
+      }
+    ],
+    "x_pos=8,y_pos=6,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_48",
+        "y": 180
+      }
+    ],
+    "x_pos=1,y_pos=7,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_49",
+        "y": 180
+      }
+    ],
+    "x_pos=2,y_pos=7,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_50",
+        "y": 180
+      }
+    ],
+    "x_pos=3,y_pos=7,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_51",
+        "y": 180
+      }
+    ],
+    "x_pos=4,y_pos=7,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_52",
+        "y": 180
+      }
+    ],
+    "x_pos=5,y_pos=7,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_53",
+        "y": 180
+      }
+    ],
+    "x_pos=6,y_pos=7,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_54",
+        "y": 180
+      }
+    ],
+    "x_pos=7,y_pos=7,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_55",
+        "y": 180
+      }
+    ],
+    "x_pos=8,y_pos=7,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_56",
+        "y": 180
+      }
+    ],
+    "x_pos=1,y_pos=8,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_57",
+        "y": 180
+      }
+    ],
+    "x_pos=2,y_pos=8,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_58",
+        "y": 180
+      }
+    ],
+    "x_pos=3,y_pos=8,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_59",
+        "y": 180
+      }
+    ],
+    "x_pos=4,y_pos=8,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_60",
+        "y": 180
+      }
+    ],
+    "x_pos=5,y_pos=8,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_61",
+        "y": 180
+      }
+    ],
+    "x_pos=6,y_pos=8,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_62",
+        "y": 180
+      }
+    ],
+    "x_pos=7,y_pos=8,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_63",
+        "y": 180
+      }
+    ],
+    "x_pos=8,y_pos=8,facing=north": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_64",
+        "y": 180
+      }
+    ],
+    "x_pos=1,y_pos=1,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_01",
+        "y": -90
+      }
+    ],
+    "x_pos=2,y_pos=1,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_02",
+        "y": -90
+      }
+    ],
+    "x_pos=3,y_pos=1,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_03",
+        "y": -90
+      }
+    ],
+    "x_pos=4,y_pos=1,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_04",
+        "y": -90
+      }
+    ],
+    "x_pos=5,y_pos=1,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_05",
+        "y": -90
+      }
+    ],
+    "x_pos=6,y_pos=1,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_06",
+        "y": -90
+      }
+    ],
+    "x_pos=7,y_pos=1,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_07",
+        "y": -90
+      }
+    ],
+    "x_pos=8,y_pos=1,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_08",
+        "y": -90
+      }
+    ],
+    "x_pos=1,y_pos=2,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_09",
+        "y": -90
+      }
+    ],
+    "x_pos=2,y_pos=2,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_10",
+        "y": -90
+      }
+    ],
+    "x_pos=3,y_pos=2,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_11",
+        "y": -90
+      }
+    ],
+    "x_pos=4,y_pos=2,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_12",
+        "y": -90
+      }
+    ],
+    "x_pos=5,y_pos=2,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_13",
+        "y": -90
+      }
+    ],
+    "x_pos=6,y_pos=2,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_14",
+        "y": -90
+      }
+    ],
+    "x_pos=7,y_pos=2,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_15",
+        "y": -90
+      }
+    ],
+    "x_pos=8,y_pos=2,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_16",
+        "y": -90
+      }
+    ],
+    "x_pos=1,y_pos=3,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_17",
+        "y": -90
+      }
+    ],
+    "x_pos=2,y_pos=3,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_18",
+        "y": -90
+      }
+    ],
+    "x_pos=3,y_pos=3,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_19",
+        "y": -90
+      }
+    ],
+    "x_pos=4,y_pos=3,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_20",
+        "y": -90
+      }
+    ],
+    "x_pos=5,y_pos=3,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_21",
+        "y": -90
+      }
+    ],
+    "x_pos=6,y_pos=3,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_22",
+        "y": -90
+      }
+    ],
+    "x_pos=7,y_pos=3,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_23",
+        "y": -90
+      }
+    ],
+    "x_pos=8,y_pos=3,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_24",
+        "y": -90
+      }
+    ],
+    "x_pos=1,y_pos=4,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_25",
+        "y": -90
+      }
+    ],
+    "x_pos=2,y_pos=4,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_26",
+        "y": -90
+      }
+    ],
+    "x_pos=3,y_pos=4,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_27",
+        "y": -90
+      }
+    ],
+    "x_pos=4,y_pos=4,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_28",
+        "y": -90
+      }
+    ],
+    "x_pos=5,y_pos=4,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_29",
+        "y": -90
+      }
+    ],
+    "x_pos=6,y_pos=4,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_30",
+        "y": -90
+      }
+    ],
+    "x_pos=7,y_pos=4,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_31",
+        "y": -90
+      }
+    ],
+    "x_pos=8,y_pos=4,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_32",
+        "y": -90
+      }
+    ],
+    "x_pos=1,y_pos=5,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_33",
+        "y": -90
+      }
+    ],
+    "x_pos=2,y_pos=5,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_34",
+        "y": -90
+      }
+    ],
+    "x_pos=3,y_pos=5,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_35",
+        "y": -90
+      }
+    ],
+    "x_pos=4,y_pos=5,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_36",
+        "y": -90
+      }
+    ],
+    "x_pos=5,y_pos=5,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_37",
+        "y": -90
+      }
+    ],
+    "x_pos=6,y_pos=5,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_38",
+        "y": -90
+      }
+    ],
+    "x_pos=7,y_pos=5,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_39",
+        "y": -90
+      }
+    ],
+    "x_pos=8,y_pos=5,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_40",
+        "y": -90
+      }
+    ],
+    "x_pos=1,y_pos=6,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_41",
+        "y": -90
+      }
+    ],
+    "x_pos=2,y_pos=6,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_42",
+        "y": -90
+      }
+    ],
+    "x_pos=3,y_pos=6,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_43",
+        "y": -90
+      }
+    ],
+    "x_pos=4,y_pos=6,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_44",
+        "y": -90
+      }
+    ],
+    "x_pos=5,y_pos=6,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_45",
+        "y": -90
+      }
+    ],
+    "x_pos=6,y_pos=6,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_46",
+        "y": -90
+      }
+    ],
+    "x_pos=7,y_pos=6,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_47",
+        "y": -90
+      }
+    ],
+    "x_pos=8,y_pos=6,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_48",
+        "y": -90
+      }
+    ],
+    "x_pos=1,y_pos=7,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_49",
+        "y": -90
+      }
+    ],
+    "x_pos=2,y_pos=7,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_50",
+        "y": -90
+      }
+    ],
+    "x_pos=3,y_pos=7,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_51",
+        "y": -90
+      }
+    ],
+    "x_pos=4,y_pos=7,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_52",
+        "y": -90
+      }
+    ],
+    "x_pos=5,y_pos=7,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_53",
+        "y": -90
+      }
+    ],
+    "x_pos=6,y_pos=7,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_54",
+        "y": -90
+      }
+    ],
+    "x_pos=7,y_pos=7,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_55",
+        "y": -90
+      }
+    ],
+    "x_pos=8,y_pos=7,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_56",
+        "y": -90
+      }
+    ],
+    "x_pos=1,y_pos=8,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_57",
+        "y": -90
+      }
+    ],
+    "x_pos=2,y_pos=8,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_58",
+        "y": -90
+      }
+    ],
+    "x_pos=3,y_pos=8,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_59",
+        "y": -90
+      }
+    ],
+    "x_pos=4,y_pos=8,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_60",
+        "y": -90
+      }
+    ],
+    "x_pos=5,y_pos=8,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_61",
+        "y": -90
+      }
+    ],
+    "x_pos=6,y_pos=8,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_62",
+        "y": -90
+      }
+    ],
+    "x_pos=7,y_pos=8,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_63",
+        "y": -90
+      }
+    ],
+    "x_pos=8,y_pos=8,facing=east": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_64",
+        "y": -90
+      }
+    ],
+    "x_pos=1,y_pos=1,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_01",
+        "y": 90
+      }
+    ],
+    "x_pos=2,y_pos=1,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_02",
+        "y": 90
+      }
+    ],
+    "x_pos=3,y_pos=1,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_03",
+        "y": 90
+      }
+    ],
+    "x_pos=4,y_pos=1,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_04",
+        "y": 90
+      }
+    ],
+    "x_pos=5,y_pos=1,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_05",
+        "y": 90
+      }
+    ],
+    "x_pos=6,y_pos=1,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_06",
+        "y": 90
+      }
+    ],
+    "x_pos=7,y_pos=1,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_07",
+        "y": 90
+      }
+    ],
+    "x_pos=8,y_pos=1,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_08",
+        "y": 90
+      }
+    ],
+    "x_pos=1,y_pos=2,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_09",
+        "y": 90
+      }
+    ],
+    "x_pos=2,y_pos=2,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_10",
+        "y": 90
+      }
+    ],
+    "x_pos=3,y_pos=2,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_11",
+        "y": 90
+      }
+    ],
+    "x_pos=4,y_pos=2,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_12",
+        "y": 90
+      }
+    ],
+    "x_pos=5,y_pos=2,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_13",
+        "y": 90
+      }
+    ],
+    "x_pos=6,y_pos=2,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_14",
+        "y": 90
+      }
+    ],
+    "x_pos=7,y_pos=2,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_15",
+        "y": 90
+      }
+    ],
+    "x_pos=8,y_pos=2,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_16",
+        "y": 90
+      }
+    ],
+    "x_pos=1,y_pos=3,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_17",
+        "y": 90
+      }
+    ],
+    "x_pos=2,y_pos=3,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_18",
+        "y": 90
+      }
+    ],
+    "x_pos=3,y_pos=3,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_19",
+        "y": 90
+      }
+    ],
+    "x_pos=4,y_pos=3,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_20",
+        "y": 90
+      }
+    ],
+    "x_pos=5,y_pos=3,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_21",
+        "y": 90
+      }
+    ],
+    "x_pos=6,y_pos=3,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_22",
+        "y": 90
+      }
+    ],
+    "x_pos=7,y_pos=3,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_23",
+        "y": 90
+      }
+    ],
+    "x_pos=8,y_pos=3,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_24",
+        "y": 90
+      }
+    ],
+    "x_pos=1,y_pos=4,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_25",
+        "y": 90
+      }
+    ],
+    "x_pos=2,y_pos=4,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_26",
+        "y": 90
+      }
+    ],
+    "x_pos=3,y_pos=4,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_27",
+        "y": 90
+      }
+    ],
+    "x_pos=4,y_pos=4,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_28",
+        "y": 90
+      }
+    ],
+    "x_pos=5,y_pos=4,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_29",
+        "y": 90
+      }
+    ],
+    "x_pos=6,y_pos=4,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_30",
+        "y": 90
+      }
+    ],
+    "x_pos=7,y_pos=4,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_31",
+        "y": 90
+      }
+    ],
+    "x_pos=8,y_pos=4,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_32",
+        "y": 90
+      }
+    ],
+    "x_pos=1,y_pos=5,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_33",
+        "y": 90
+      }
+    ],
+    "x_pos=2,y_pos=5,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_34",
+        "y": 90
+      }
+    ],
+    "x_pos=3,y_pos=5,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_35",
+        "y": 90
+      }
+    ],
+    "x_pos=4,y_pos=5,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_36",
+        "y": 90
+      }
+    ],
+    "x_pos=5,y_pos=5,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_37",
+        "y": 90
+      }
+    ],
+    "x_pos=6,y_pos=5,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_38",
+        "y": 90
+      }
+    ],
+    "x_pos=7,y_pos=5,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_39",
+        "y": 90
+      }
+    ],
+    "x_pos=8,y_pos=5,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_40",
+        "y": 90
+      }
+    ],
+    "x_pos=1,y_pos=6,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_41",
+        "y": 90
+      }
+    ],
+    "x_pos=2,y_pos=6,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_42",
+        "y": 90
+      }
+    ],
+    "x_pos=3,y_pos=6,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_43",
+        "y": 90
+      }
+    ],
+    "x_pos=4,y_pos=6,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_44",
+        "y": 90
+      }
+    ],
+    "x_pos=5,y_pos=6,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_45",
+        "y": 90
+      }
+    ],
+    "x_pos=6,y_pos=6,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_46",
+        "y": 90
+      }
+    ],
+    "x_pos=7,y_pos=6,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_47",
+        "y": 90
+      }
+    ],
+    "x_pos=8,y_pos=6,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_48",
+        "y": 90
+      }
+    ],
+    "x_pos=1,y_pos=7,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_49",
+        "y": 90
+      }
+    ],
+    "x_pos=2,y_pos=7,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_50",
+        "y": 90
+      }
+    ],
+    "x_pos=3,y_pos=7,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_51",
+        "y": 90
+      }
+    ],
+    "x_pos=4,y_pos=7,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_52",
+        "y": 90
+      }
+    ],
+    "x_pos=5,y_pos=7,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_53",
+        "y": 90
+      }
+    ],
+    "x_pos=6,y_pos=7,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_54",
+        "y": 90
+      }
+    ],
+    "x_pos=7,y_pos=7,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_55",
+        "y": 90
+      }
+    ],
+    "x_pos=8,y_pos=7,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_56",
+        "y": 90
+      }
+    ],
+    "x_pos=1,y_pos=8,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_57",
+        "y": 90
+      }
+    ],
+    "x_pos=2,y_pos=8,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_58",
+        "y": 90
+      }
+    ],
+    "x_pos=3,y_pos=8,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_59",
+        "y": 90
+      }
+    ],
+    "x_pos=4,y_pos=8,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_60",
+        "y": 90
+      }
+    ],
+    "x_pos=5,y_pos=8,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_61",
+        "y": 90
+      }
+    ],
+    "x_pos=6,y_pos=8,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_62",
+        "y": 90
+      }
+    ],
+    "x_pos=7,y_pos=8,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_63",
+        "y": 90
+      }
+    ],
+    "x_pos=8,y_pos=8,facing=west": [
+      {
+        "model": "hyperion:block/grimspire/grimspire_64",
+        "y": 90
       }
     ]
   }

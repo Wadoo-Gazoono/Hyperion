@@ -3,6 +3,7 @@ package com.wadoo.hyperion.common.registry;
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.blocks.*;
 import com.wadoo.hyperion.common.blocks.grimspire_door.GrimSpireDoorBlock;
+import com.wadoo.hyperion.common.blocks.grimspire_door.GrimspireDoorAnimatedBlock;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -35,7 +36,9 @@ public class BlockHandler {
 
 
     public static final RegistryObject<RotatedPillarBlock> SPIRE_BRICKS = BLOCKS.register("basalt_spire_bricks", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
+    public static final RegistryObject<RotatedPillarBlock> CRACKED_SPIRE_BRICKS = BLOCKS.register("cracked_basalt_spire_bricks", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
     public static final RegistryObject<Block> CUT_SPIRE_BRICKS = BLOCKS.register("cut_basalt_spire_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.POLISHED_BASALT)));
+    public static final RegistryObject<Block> CHISELED_CUT_SPIRE_BRICKS = BLOCKS.register("chiseled_cut_basalt_spire_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.POLISHED_BASALT)));
     public static final RegistryObject<Block> CUT_SPIRE_BRICK_STAIRS = BLOCKS.register("cut_spire_brick_stairs", () -> new StairBlock(CUT_SPIRE_BRICKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.BASALT)));
     public static final RegistryObject<Block> CUT_SPIRE_BRICK_SLAB = BLOCKS.register("cut_spire_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
     public static final RegistryObject<Block> CUT_SPIRE_BRICK_WALL = BLOCKS.register("cut_spire_brick_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
@@ -44,5 +47,6 @@ public class BlockHandler {
 
     public static final RegistryObject<Block> KILN = BLOCKS.register("kiln", () -> new KilnBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE).randomTicks().noOcclusion()));
     public static final RegistryObject<Block> GRIMSPIRE_DOOR = BLOCKS.register("grimspire_door", () -> new GrimSpireDoorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).randomTicks().noOcclusion()));
+    public static final RegistryObject<Block> GRIMSPIRE_DOOR_ENTITY = BLOCKS.register("grimspire_door_entity", () -> new GrimspireDoorAnimatedBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).randomTicks().noOcclusion()));
 
 }

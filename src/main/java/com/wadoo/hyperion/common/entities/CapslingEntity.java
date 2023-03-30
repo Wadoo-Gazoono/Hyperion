@@ -118,6 +118,7 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     @Override
     public void tick() {
         super.tick();
+
         if(this.isInWater()){
             this.setDeltaMovement(this.getDeltaMovement().x,-0.6f,this.getDeltaMovement().y);
         }

@@ -28,6 +28,7 @@ import static net.minecraft.world.level.block.AbstractFurnaceBlock.LIT;
 
 public class KilnModel extends DefaultedBlockGeoModel<KilnBlockEntity> {
     public Vec3 faceVector = new Vec3(0d,0d,0d);
+    public int ticksLit = 0;
     public KilnModel() {
         super(new ResourceLocation(Hyperion.MODID, "kiln"));    }
 
@@ -38,7 +39,25 @@ public class KilnModel extends DefaultedBlockGeoModel<KilnBlockEntity> {
 
     @Override
     public ResourceLocation getTextureResource(KilnBlockEntity object) {
-        return buildFormattedTexturePath(new ResourceLocation(Hyperion.MODID, "kiln"));
+        if(object.getBlockState().getValue(LIT)){
+            ticksLit++;
+            if(ticksLit<60){
+                return buildFormattedTexturePath(new ResourceLocation(Hyperion.MODID, "kiln/kiln_1"));
+            }
+            if(ticksLit<120){
+                return buildFormattedTexturePath(new ResourceLocation(Hyperion.MODID, "kiln/kiln_2"));
+            }
+            if(ticksLit<180){
+                return buildFormattedTexturePath(new ResourceLocation(Hyperion.MODID, "kiln/kiln_3"));
+            }
+            if(ticksLit<240){
+                return buildFormattedTexturePath(new ResourceLocation(Hyperion.MODID, "kiln/kiln_4"));
+            }
+            else{
+                ticksLit = 0;
+            }
+        }
+        return buildFormattedTexturePath(new ResourceLocation(Hyperion.MODID, "kiln/kiln_0"));
     }
 
     @Override
@@ -71,8 +90,8 @@ public class KilnModel extends DefaultedBlockGeoModel<KilnBlockEntity> {
         d6 = animatable.getLevel().random.nextDouble() * 5.0D / 16.0D;
         Vec3 shootVec = new Vec3(direction.getStepX(),0,direction.getStepZ()).multiply(0.1f + animatable.getLevel().random.nextDouble()/10,0.0f,0.1f + animatable.getLevel().random.nextDouble()/10);
         if(animatable.getBlockState().getValue(LIT) && animatable.getLevel().random.nextFloat() < 0.25 && !mc.isPaused()) {
-            animatable.getLevel().addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, shootVec.x, 0.0D, shootVec.z);
-            animatable.getLevel().addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, shootVec.x, 0.0D, shootVec.z);
+            animatable.getLevel().addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6 - 0.2f, d2 + d7, shootVec.x, 0.0D, shootVec.z);
+            animatable.getLevel().addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6 - 0.2f, d2 + d7, shootVec.x + (animatable.getLevel().random.nextFloat()/10 -0.05f), 0.01D, shootVec.z+ (animatable.getLevel().random.nextFloat()/10 -0.05f));
         }
 
     }

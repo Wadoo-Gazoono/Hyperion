@@ -2,11 +2,11 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "minecraft:block/polished_basalt_top",
-    "east": "hyperion:block/grimspire/grimspire_door_17",
-    "north": "hyperion:block/grimspire/grimspire_door_17",
+    "east": "hyperion:block/basalt_spire_bricks",
+    "north": "hyperion:block/basalt_spire_bricks",
     "particle": "hyperion:block/grimspire/grimspire_door_17",
     "south": "hyperion:block/grimspire/grimspire_door_17",
     "up": "minecraft:block/polished_basalt_top",
-    "west": "hyperion:block/grimspire/grimspire_door_17"
+    "west": "hyperion:block/basalt_spire_bricks"
   }
 }

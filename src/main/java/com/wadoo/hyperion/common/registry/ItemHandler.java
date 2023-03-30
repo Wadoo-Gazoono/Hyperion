@@ -38,7 +38,14 @@ public class ItemHandler {
     public static final RegistryObject<BlockItem> AGRALITE_LAMP = ITEMS.register("agralite_lamp", () -> new BlockItem(BlockHandler.AGRALITE_LAMP.get(), new Item.Properties()));
 
     public static final RegistryObject<BlockItem> SPIRE_BRICKS = ITEMS.register("basalt_spire_bricks", () -> new BlockItem(BlockHandler.SPIRE_BRICKS.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> CRACKED_SPIRE_BRICKS = ITEMS.register("cracked_basalt_spire_bricks", () -> new BlockItem(BlockHandler.CRACKED_SPIRE_BRICKS.get(), new Item.Properties()));
+
     public static final RegistryObject<BlockItem> CUT_SPIRE_BRICKS = ITEMS.register("cut_basalt_spire_bricks", () -> new BlockItem(BlockHandler.CUT_SPIRE_BRICKS.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> CUT_SPIRE_BRICK_STAIRS = ITEMS.register("cut_spire_brick_stairs", () -> new BlockItem(BlockHandler.CUT_SPIRE_BRICK_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> CUT_SPIRE_BRICK_SLAB = ITEMS.register("cut_spire_brick_slab", () -> new BlockItem(BlockHandler.CUT_SPIRE_BRICK_SLAB.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> CHISELED_CUT_SPIRE_BRICKS = ITEMS.register("chiseled_cut_basalt_spire_bricks", () -> new BlockItem(BlockHandler.CHISELED_CUT_SPIRE_BRICKS.get(), new Item.Properties()));
+
     public static final RegistryObject<BlockItem> CHECKERED_SPIRE_BRICKS = ITEMS.register("checkered_spire_bricks", () -> new BlockItem(BlockHandler.CHECKERED_SPIRE_BRICKS.get(), new Item.Properties()));
 
     public static final RegistryObject<BlockItem> KILN = ITEMS.register("kiln", () -> new BlockItem(BlockHandler.KILN.get(), new Item.Properties()));
@@ -74,7 +81,8 @@ public class ItemHandler {
     public static final List<RegistryObject<? extends Item>> HYPERION_ITEMS = List.of(
         AGRALITE_CAGE,AGRALITE_PIPE,AGRALITE_LAMP,AGRALITE_CHAIN,AGRALITE_SHEET,AGRALITE_BLOCK,AGRALITE_SLAB,AGRALITE_STAIRS,
             CUT_AGRALITE,CUT_AGRALITE_STAIRS,
-            CUT_AGRALITE_SLAB,SPIRE_BRICKS, CUT_SPIRE_BRICKS,CHECKERED_SPIRE_BRICKS,
+            CUT_AGRALITE_SLAB,SPIRE_BRICKS,CRACKED_SPIRE_BRICKS, CUT_SPIRE_BRICKS,CHISELED_CUT_SPIRE_BRICKS,CUT_SPIRE_BRICK_STAIRS, CUT_SPIRE_BRICK_SLAB,
+            CHECKERED_SPIRE_BRICKS,
             KILN, CAPSLING_BUCKET,VOLATILE_GOOP,
             CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG,AMD_SPAWN_EGG, ZWEIHANDER,
             AGRALITE_HELMET,AGRALITE_CHESTPLATE,AGRALITE_LEGGINGS,AGRALITE_BOOTS
