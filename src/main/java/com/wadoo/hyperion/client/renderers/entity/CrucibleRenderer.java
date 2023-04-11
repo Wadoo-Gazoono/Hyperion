@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.example.client.renderer.entity.layer.CoolKidGlassesLayer;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
@@ -70,6 +71,54 @@ public class CrucibleRenderer extends GeoEntityRenderer<CrucibleEntity> {
                 poseStack.mulPose(Axis.ZP.rotationDegrees(0));
                 poseStack.scale(1.3f,1.3f,1.3f);
                 poseStack.translate(-0.05D, 0.01D, -0.05D);
+                super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight,
+                        packedOverlay);
+            }
+
+        });
+        this.addRenderLayer(new BlockAndItemGeoLayer<>(this) {
+            @Nullable
+            @Override
+            protected ItemStack getStackForBone(GeoBone bone, CrucibleEntity animatable) {
+                return bone.getName().equals("pick") ? animatable.getItemBySlot(EquipmentSlot.HEAD) : null;
+            }
+
+            @Override
+            protected ItemTransforms.TransformType getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
+                return ItemTransforms.TransformType.GROUND;
+            }
+
+            @Override
+            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, CrucibleEntity animatable, MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+                poseStack.mulPose(Axis.XP.rotationDegrees(40));
+                poseStack.mulPose(Axis.YP.rotationDegrees(30));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(70));
+                poseStack.scale(1.8f,1.8f,1.8f);
+                //poseStack.translate(-0.05D, 0.01D, -0.05D);
+                super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight,
+                        packedOverlay);
+            }
+
+        });
+        this.addRenderLayer(new BlockAndItemGeoLayer<>(this) {
+            @Nullable
+            @Override
+            protected ItemStack getStackForBone(GeoBone bone, CrucibleEntity animatable) {
+                return bone.getName().equals("pick2") ? animatable.getItemBySlot(EquipmentSlot.CHEST) : null;
+            }
+
+            @Override
+            protected ItemTransforms.TransformType getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
+                return ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND;
+            }
+
+            @Override
+            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, CrucibleEntity animatable, MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+                poseStack.mulPose(Axis.XP.rotationDegrees(0));
+                poseStack.mulPose(Axis.YP.rotationDegrees(0));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(0));
+                poseStack.scale(1.2f,1.2f,1.2f);
+                poseStack.translate(0D, -0.05D, 0D);
                 super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight,
                         packedOverlay);
             }

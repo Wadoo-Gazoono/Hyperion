@@ -53,6 +53,7 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     private static final RawAnimation WALK_OPEN = RawAnimation.begin().thenLoop("walk_open");
     private static final RawAnimation EAT_START = RawAnimation.begin().thenPlay("eat_start");
     private static final RawAnimation EAT_LOOP = RawAnimation.begin().thenLoop("eat_loop");
+    private static final RawAnimation EATEN = RawAnimation.begin().thenLoop("eaten");
 
 
 
@@ -223,13 +224,17 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
             return Optional.of(InteractionResult.sidedSuccess(level.isClientSide));
         } else {
             return Optional.empty();
+
         }
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "animController", 8, this::predicate));
+        controllers.add(new AnimationController<>(this, "animController", 8, this::predicate)
+                .triggerableAnim("eaten",EATEN));
     }
+
+
 
     protected PlayState predicate(AnimationState<CapslingEntity> state) {
         switch(getAnimState()){

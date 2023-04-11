@@ -1,0 +1,83 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 124,
+				"texture_height": 80,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-8, 0, -8], "size": [16, 9, 16], "uv": [0, 0]},
+						{"origin": [-9, 9, -9], "size": [18, 7, 18], "uv": [0, 29]}
+					]
+				},
+				{
+					"name": "pressurePlate",
+					"parent": "root",
+					"pivot": [0, 16.5, 0],
+					"cubes": [
+						{"origin": [-8, 16, -8], "size": [16, 1, 16], "uv": [0, 62]}
+					]
+				},
+				{
+					"name": "leftPupil",
+					"parent": "root",
+					"pivot": [5, 8, -7.1],
+					"cubes": [
+						{"origin": [4, 8, -8.1], "size": [1, 1, 0], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "rightPupil",
+					"parent": "root",
+					"pivot": [-5, 8, -7.1],
+					"cubes": [
+						{"origin": [-5, 8, -8.1], "size": [1, 1, 0], "uv": [0, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "leftFist",
+					"parent": "root",
+					"pivot": [16, 8, 1.5],
+					"cubes": [
+						{"origin": [11.5, 8, -4], "size": [4, 6, 7], "uv": [70, 51]},
+						{"origin": [12.5, 3, 0], "size": [7, 10, 4], "uv": [51, 1]}
+					]
+				},
+				{
+					"name": "leftFingers",
+					"parent": "leftFist",
+					"pivot": [19.5, 8, 0],
+					"cubes": [
+						{"origin": [12.5, 3, -3], "size": [7, 10, 3], "uv": [75, 2]}
+					]
+				},
+				{
+					"name": "rightFist",
+					"parent": "root",
+					"pivot": [-16, 8, 1.5],
+					"cubes": [
+						{"origin": [-15.5, 8, -4], "size": [4, 6, 7], "uv": [70, 51], "mirror": true},
+						{"origin": [-19.5, 3, 0], "size": [7, 10, 4], "uv": [51, 1], "mirror": true}
+					]
+				},
+				{
+					"name": "rightFingers",
+					"parent": "rightFist",
+					"pivot": [-19.5, 8, 0],
+					"cubes": [
+						{"origin": [-19.5, 3, -3], "size": [7, 10, 3], "uv": [75, 2], "mirror": true}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,6 +1,7 @@
 package com.wadoo.hyperion.common.items;
 
 import com.wadoo.hyperion.client.renderers.item.ZweihanderRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -73,11 +74,11 @@ public class ZweihanderItem extends SwordItem implements GeoItem {
         }
         else{
             if(hand == InteractionHand.MAIN_HAND){
-                triggerAnim(user, GeoItem.getOrAssignId(user.getItemInHand(hand), (ServerLevel)user.level), "controller", "blockRight");
+                //triggerAnim(user, GeoItem.getOrAssignId(user.getItemInHand(hand), (ServerLevel)user.level), "controller", "blockRight");
 
             }
             else {
-                triggerAnim(user, GeoItem.getOrAssignId(user.getItemInHand(hand), (ServerLevel) user.level), "controller", "blockLeft");
+                //triggerAnim(user, GeoItem.getOrAssignId(user.getItemInHand(hand), (ServerLevel) user.level), "controller", "blockLeft");
             }
         }
         return InteractionResultHolder.consume(itemstack);

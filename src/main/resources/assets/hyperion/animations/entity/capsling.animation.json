@@ -825,17 +825,104 @@
 				}
 			}
 		},
-		"turn_test": {
+		"eaten": {
 			"loop": true,
-			"animation_length": 1,
+			"animation_length": 2,
 			"bones": {
 				"root": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"1.0": {
-							"vector": [0, -360, 0]
+						"0.2917": {
+							"vector": [-2.5, 0, 180],
+							"easing": "easeOutCubic"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.0417": {
+							"vector": [0, 4.07, 5]
+						},
+						"0.0833": {
+							"vector": [0, 6.99, 4.89]
+						},
+						"0.1667": {
+							"vector": [0, 12.13, 1.06]
+						},
+						"0.2083": {
+							"vector": [0, 13.33, 0.31]
+						},
+						"0.2917": {
+							"vector": [0, 11, 0],
+							"easing": "easeOutCubic"
+						}
+					}
+				},
+				"legRight": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.2917": {
+							"vector": ["Math.sin(query.anim_time * 1500) * 20", 0, 0],
+							"easing": "easeOutCubic"
+						}
+					}
+				},
+				"legLeft": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.2917": {
+							"vector": ["Math.sin(query.anim_time * 1500) * -20", 0, 0],
+							"easing": "easeOutCubic"
+						}
+					}
+				},
+				"body": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.125": {
+							"vector": [2.79584, 7.19813, -18.23834]
+						},
+						"0.2917": {
+							"vector": [10, 0, "Math.sin(query.anim_time * 1580) * 5"],
+							"easing": "easeOutCubic"
+						}
+					}
+				},
+				"jaw": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.0417": {
+							"vector": [1.85, 0, -32.5]
+						},
+						"0.1667": {
+							"vector": [5, 0, 17.5],
+							"easing": "linear"
+						},
+						"0.3333": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutCubic"
+						}
+					}
+				},
+				"head": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.2917": {
+							"vector": ["-37.5 + Math.sin(query.anim_time * 1400) * 5", 0, 0],
+							"easing": "easeOutCubic"
 						}
 					}
 				}

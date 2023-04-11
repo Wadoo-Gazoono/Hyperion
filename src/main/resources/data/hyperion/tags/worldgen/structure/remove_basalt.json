@@ -3,6 +3,8 @@
   "values": [
     "hyperion:mining_rig",
     "hyperion:mining_storage",
-    "hyperion:refinery"
+    "hyperion:refinery",
+    "hyperion:grimspire_main_floor",
+    "hyperion:grimspire_main_stairs"
   ]
 }

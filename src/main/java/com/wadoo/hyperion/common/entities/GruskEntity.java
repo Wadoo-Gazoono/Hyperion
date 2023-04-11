@@ -2,6 +2,8 @@ package com.wadoo.hyperion.common.entities;
 
 import com.wadoo.hyperion.common.registry.EntityHandler;
 import com.wadoo.hyperion.common.registry.SoundsRegistry;
+import com.wadoo.hyperion.common.util.GrabAnimation;
+import com.wadoo.hyperion.common.util.GrabKeyframe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,36 +21,39 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class GruskEntity extends Monster implements GeoEntity {
+import java.util.EnumSet;
+
+public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     private static final EntityDataAccessor<Boolean> HAS_HEAD = SynchedEntityData.defineId(GruskEntity.class, EntityDataSerializers.BOOLEAN);
 
-
-
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
     private static final RawAnimation ROAR = RawAnimation.begin().thenPlay("roar");
     private static final RawAnimation RUN = RawAnimation.begin().thenLoop("run");
     private static final RawAnimation DECAPITATE = RawAnimation.begin().thenPlay("decapitate");
     private static final RawAnimation LEAP = RawAnimation.begin().thenPlay("leap");
+    private static final RawAnimation EAT = RawAnimation.begin().thenPlay("grab_test");
 
     public int roarCoolDown = 20;
+    public int leapCoolDown = 10;
+    public int eatCoolDown = 10;
+
     public int decapitateTimer = 0;
     public GruskEntity(EntityType<? extends GruskEntity> monster, Level level) {
         super(monster, level);
@@ -66,12 +71,21 @@ public class GruskEntity extends Monster implements GeoEntity {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8d));
+        this.goalSelector.addGoal(8, new RandomStrollGoal(this,1.0f) {
+            @Override
+            public boolean canUse(){
+                if(mob instanceof GruskEntity){
+                    return ((GruskEntity) mob).getAnimation().equals("Standby") && super.canUse();
+                }
+                return false;
+            }
+        });
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
 
         this.goalSelector.addGoal(6, new GruskRoarGoal(this));
-        this.goalSelector.addGoal(8, new GruskLeapGoal(this));
+        //this.goalSelector.addGoal(3, new GruskAttackAIGoal(this));
+        //this.goalSelector.addGoal(2, new GruskLeapGoal(this));
 
 
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, GruskEntity.class)).setAlertOthers());
@@ -122,22 +136,20 @@ public class GruskEntity extends Monster implements GeoEntity {
         return super.hurt(source, amount);
     }
 
+
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor accessor, DifficultyInstance instance, MobSpawnType spawnType, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor accessor, DifficultyInstance instance, MobSpawnType type, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
+        if(this.getRandom().nextFloat() < 0.6f){
+            this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_PICKAXE));
+        }
         this.setHasHead(true);
-        return super.finalizeSpawn(accessor, instance, spawnType, data, tag);
-    }
 
-    @Override
-    public void onAddedToWorld() {
-        super.onAddedToWorld();
+        return super.finalizeSpawn(accessor, instance, type, data, tag);
     }
-
     @Override
     public void tick() {
         super.tick();
-        //System.out.println(this.getHasHead());
         if(this.decapitateTimer > 0){
 
             this.decapitateTimer--;
@@ -147,21 +159,19 @@ public class GruskEntity extends Monster implements GeoEntity {
         if(this.getTarget() == null){
             this.setAggressive(false);
         }
-
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 5, this::predicate).triggerableAnim("roar", ROAR).triggerableAnim("decapitate", DECAPITATE).triggerableAnim("leap",LEAP));
+        controllers.add(new AnimationController<>(this, "controller", 5, this::predicate)
+                .triggerableAnim("roar", ROAR)
+                .triggerableAnim("decapitate", DECAPITATE)
+                .triggerableAnim("leap",LEAP)
+                .triggerableAnim("eat",EAT));
     }
 
     protected PlayState predicate(AnimationState<GruskEntity> state) {
-        return state.isMoving() ? ((state.getAnimatable().entityData.get(state.getAnimatable().DATA_SHARED_FLAGS_ID) & 4) != 0) ? state.setAndContinue(RUN) : state.setAndContinue(WALK) : state.setAndContinue(IDLE);
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.cache;
+        return state.isMoving() && this.getAnimation().equals("Standby") ? ((state.getAnimatable().entityData.get(state.getAnimatable().DATA_SHARED_FLAGS_ID) & 4) != 0) ? state.setAndContinue(RUN) : state.setAndContinue(WALK) : state.setAndContinue(IDLE);
     }
 
     public void setHasHead(boolean hasHead){
@@ -193,9 +203,24 @@ public class GruskEntity extends Monster implements GeoEntity {
 class GruskRoarGoal extends Goal {
     public GruskEntity entity;
     public int tickTimer = 0;
+    GrabAnimation grabAnim = new GrabAnimation();
+    protected Vec3 lookVec = new Vec3(0,0,0);
 
     public GruskRoarGoal(GruskEntity entity){
         this.entity = entity;
+        grabAnim.addKeyFrame(0,new GrabKeyframe(0, 6.25, -19.75));
+        grabAnim.addKeyFrame(3,new GrabKeyframe(0, 6.25, -19.75));
+        grabAnim.addKeyFrame(7,new GrabKeyframe(0, 6.25, -19.75));
+        grabAnim.addKeyFrame(10,new GrabKeyframe(0, 17.75, -17.75));
+        grabAnim.addKeyFrame(13,new GrabKeyframe(2, 25.75, -0.75));
+        grabAnim.addKeyFrame(17,new GrabKeyframe(2, 25.75, -0.75));
+        grabAnim.addKeyFrame(20,new GrabKeyframe(2, 25.75, -0.75));
+        grabAnim.addKeyFrame(23,new GrabKeyframe(2, 25.75, -0.75));
+        grabAnim.addKeyFrame(27,new GrabKeyframe(2, 25.75, -0.75));
+        grabAnim.addKeyFrame(30,new GrabKeyframe(2, 25.75, -0.75));
+        grabAnim.addKeyFrame(33,new GrabKeyframe(4.75, 26.25, -2.75));
+        grabAnim.addKeyFrame(37,new GrabKeyframe(4.75, 21.25, -14.25));
+        grabAnim.addKeyFrame(40,new GrabKeyframe(10, 4, -3));
     }
 
     @Override
@@ -224,17 +249,36 @@ class GruskRoarGoal extends Goal {
     @Override
     public void start() {
         super.start();
-        this.entity.triggerAnim("controller", "roar");
+        lookVec = grabAnim.getKeyframes().get(0).toWorldCoords(this.entity);
+        this.entity.triggerAnim("controller", "eat");
     }
 
     @Override
     public void tick() {
         super.tick();
-//        float angle = (float) Math.acos((this.entity.getTarget().position().x -  this.entity.position().x)/(this.entity.distanceTo(this.entity.getTarget())));
-//        this.entity.setYBodyRot(angle);
-        this.entity.getLookControl().setLookAt(this.entity.getTarget());
-        if (tickTimer < 38) {
-            this.entity.getLookControl().setLookAt(this.entity.getTarget());
+        LivingEntity target = this.entity.getTarget();
+        this.entity.getLookControl().setLookAt(target);
+        if (tickTimer < 40) {
+
+            if(tickTimer % 6 == 0 && tickTimer > 15) this.entity.playSound(SoundEvents.GENERIC_EAT,4.0f,0.9f);
+
+            this.entity.setDeltaMovement(0d,0d,0d);
+            if(grabAnim.isOnKeyframe(tickTimer) != null){
+                if(target instanceof CapslingEntity){
+                    target.noPhysics = true;
+                    //target.playSound(SoundEvents.ALLAY_DEATH);
+                    if(tickTimer >= 35){
+                        target.kill();
+                    }
+                    if(tickTimer > 2) {
+                        ((CapslingEntity) target).triggerAnim("animController", "eaten");
+                    }
+                }
+                target.setDeltaMovement(0d,0d,0d);
+                target.setPos(grabAnim.getKeyframes().get(tickTimer).toWorldCoords(this.entity));
+            }
+
+            //this.entity.getLookControl().setLookAt(target);
             tickTimer++;
             this.entity.getNavigation().stop();
             if(tickTimer == 5){
@@ -251,22 +295,22 @@ class GruskRoarGoal extends Goal {
     @Override
     public void stop() {
         super.stop();
-        this.entity.roarCoolDown = this.entity.getRandom().nextInt(200) + 100;
+        this.entity.roarCoolDown = this.entity.getRandom().nextInt(15) + 15;
         tickTimer = 0;
     }
 }
 
-class GruskLeapGoal extends Goal{
+class GruskAttackAIGoal extends Goal{
     public GruskEntity entity;
     public int rePathTime = 0;
-    public int leapCoolDown = 0;
-    public GruskLeapGoal(GruskEntity entity) {
+    public GruskAttackAIGoal(GruskEntity entity) {
         this.entity = entity;
+        setFlags(EnumSet.of(Flag.LOOK,Flag.MOVE));
     }
 
     @Override
     public boolean canUse() {
-        if(entity.getTarget() != null && this.entity.roarCoolDown > 10 && this.entity.decapitateTimer == 0){
+        if(entity.getTarget() != null && this.entity.getAnimation().equals("Standby")  && this.entity.decapitateTimer == 0){
             if(rePathTime > 0){
                 rePathTime--;
                 return false;
@@ -277,7 +321,6 @@ class GruskLeapGoal extends Goal{
                 return path != null;
             }
         }
-        this.entity.setAggressive(false);
         return false;
     }
 
@@ -288,15 +331,13 @@ class GruskLeapGoal extends Goal{
 
     @Override
     public boolean canContinueToUse() {
-        return this.entity.getTarget() != null && this.entity.getTarget().isAlive() && this.entity.roarCoolDown > 10 && this.entity.decapitateTimer == 0;
+        return this.entity.getTarget() != null && this.entity.getTarget().isAlive() && this.entity.decapitateTimer == 0&& this.entity.getAnimation().equals("Standby") ;
     }
 
     @Override
     public void tick() {
         super.tick();
         LivingEntity target = this.entity.getTarget();
-//        float angle = (float) Math.acos((target.position().x -  this.entity.position().x)/(this.entity.distanceTo(target)));
-//        this.entity.setYBodyRot(angle);
         this.entity.getLookControl().setLookAt(this.entity.getTarget());
         this.entity.setAggressive(true);
         if(rePathTime > 0){
@@ -306,15 +347,20 @@ class GruskLeapGoal extends Goal{
             Path path = this.entity.getNavigation().createPath(this.entity.getTarget(), 0);
             this.entity.getNavigation().moveTo(path, 1f);
         }
-
-        if(this.entity.distanceTo(target) < 10f){
-            if(leapCoolDown > 0){
-                leapCoolDown--;
+//        if(this.entity.distanceTo(target) < 15f){
+//            if(this.entity.roarCoolDown > 0){
+//                this.entity.roarCoolDown--;
+//            }
+//            else {
+//                this.entity.setAnimation("Roar");
+//            }
+//        }
+        if(this.entity.distanceTo(target) < 8f){
+            if(this.entity.leapCoolDown > 0){
+                this.entity.leapCoolDown--;
             }
             else {
-                attack(target);
-                this.entity.triggerAnim("controller", "leap");
-                leapCoolDown = 35;
+                this.entity.setAnimation("Leap");
             }
         }
     }
@@ -322,8 +368,57 @@ class GruskLeapGoal extends Goal{
     public void attack(LivingEntity target){
         this.entity.setDeltaMovement(this.entity.position().vectorTo(this.entity.getTarget().position()).normalize().multiply(1.2f,1f,1.2f).add(0d,0.2d,0d));
         this.entity.getLookControl().setLookAt(target);
-        if(this.entity.distanceTo(target) < 4.5f){
+        if(this.entity.distanceToSqr(target) < 5.5f){
             this.entity.doHurtTarget(target);
         }
     }
 }
+
+class GruskLeapGoal extends Goal{
+    public GruskEntity entity;
+    private int tickTimer = 0;
+
+    public GruskLeapGoal(GruskEntity entity){
+        this.entity = entity;
+        setFlags(EnumSet.of(Flag.LOOK,Flag.MOVE));
+    }
+
+    @Override
+    public boolean canUse() {
+        return this.entity.getAnimation().equals("Leap") && this.entity.getTarget() != null && this.entity.getTarget().isAlive();
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+        return this.entity.getAnimation().equals("Leap");
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        this.entity.triggerAnim("controller","leap");
+        LivingEntity target = this.entity.getTarget();
+        this.entity.setDeltaMovement(this.entity.position().vectorTo(this.entity.getTarget().position()).normalize().multiply(1.7f,0.6f,1.7f).add(0d,0.2d,0d));
+        this.entity.getLookControl().setLookAt(target);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if(tickTimer <= 15){
+            if(this.entity.getTarget() != null) {
+                LivingEntity target = this.entity.getTarget();
+                this.entity.getLookControl().setLookAt(target);
+                if(this.entity.distanceTo(target) < 2.5f){
+                    this.entity.doHurtTarget(target);
+                }
+            }
+            tickTimer++;
+        }
+        else{
+            this.entity.setAnimation("Standby");
+            this.entity.leapCoolDown = 10 + this.entity.getRandom().nextInt(10);
+        }
+    }
+}
+

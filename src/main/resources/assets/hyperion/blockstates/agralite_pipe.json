@@ -7,8 +7,7 @@
     ],
     "facing=up": [
       {
-        "model": "hyperion:block/agralite_pipe",
-        "x": 180
+        "model": "hyperion:block/agralite_pipe"
       }
     ],
     "facing=north": [
@@ -20,7 +19,7 @@
     "facing=south": [
       {
         "model": "hyperion:block/agralite_pipe",
-        "x": 90
+        "x": -90
       }
     ],
     "facing=east": [
@@ -33,7 +32,7 @@
     "facing=west": [
       {
         "model": "hyperion:block/agralite_pipe",
-        "x": 90,
+        "x": -90,
         "y": 90
       }
     ]

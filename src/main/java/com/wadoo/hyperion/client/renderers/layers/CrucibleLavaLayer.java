@@ -15,7 +15,6 @@ import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 public class CrucibleLavaLayer<T extends CrucibleEntity> extends GeoRenderLayer<CrucibleEntity> {
     private ResourceLocation texture = new ResourceLocation(Hyperion.MODID, "textures/entity/crucible/crucible_lava_01.png");
-    private int texture_frame = 1;
     public CrucibleLavaLayer(GeoRenderer<CrucibleEntity> entityRenderer) {
         super(entityRenderer);
     }
@@ -23,10 +22,10 @@ public class CrucibleLavaLayer<T extends CrucibleEntity> extends GeoRenderLayer<
     @Override
     public void render(PoseStack poseStack, CrucibleEntity animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
         if(animatable.tickCount % 4 == 0){
-            if (texture_frame < 20) texture_frame++;
-            else texture_frame = 1;
+            if (animatable.texture_frame < 20) animatable.texture_frame++;
+            else animatable.texture_frame = 1;
         }
-        texture = new ResourceLocation(Hyperion.MODID, "textures/entity/crucible/crucible_lava_" + texture_frame + ".png");
+        texture = new ResourceLocation(Hyperion.MODID, "textures/entity/crucible/crucible_lava_" + animatable.texture_frame + ".png");
         RenderType armorRenderType = RenderType.eyes(texture);
         getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                 bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.NO_OVERLAY,

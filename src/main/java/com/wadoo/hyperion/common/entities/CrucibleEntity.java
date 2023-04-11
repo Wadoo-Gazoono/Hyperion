@@ -4,10 +4,12 @@ import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import com.wadoo.hyperion.common.registry.ItemHandler;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,8 +26,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -43,12 +47,13 @@ public class CrucibleEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private static final EntityDataAccessor<Integer> ANIMSTATE = SynchedEntityData.defineId(CrucibleEntity.class, EntityDataSerializers.INT);
-
+    public int texture_frame = 1;
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
     private static final RawAnimation SLAM = RawAnimation.begin().thenPlay("slam");
     private static final RawAnimation RELOAD = RawAnimation.begin().thenPlay("reload");
+    private static final RawAnimation DIE = RawAnimation.begin().thenPlay("die");
 
     private static final RawAnimation THROWR = RawAnimation.begin().thenPlay("throwRight");
     private static final RawAnimation THROWL = RawAnimation.begin().thenPlay("throwLeft");
@@ -109,6 +114,7 @@ public class CrucibleEntity extends Monster implements GeoEntity {
     public void onAddedToWorld() {
         super.onAddedToWorld();
         getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").setTransitionLength(0);
+
     }
 
     @Override
@@ -126,6 +132,41 @@ public class CrucibleEntity extends Monster implements GeoEntity {
             this.level.addParticle(ParticleTypes.SMOKE, this.getRandomX(0.45D), this.getY() + 2D, this.getRandomZ(0.45D), 0, 0.1D + this.getRandom().nextFloat()/3, 0);
 
         }
+
+        if(this.isDeadOrDying()){
+            triggerAnim("controller","die");
+        }
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor accessor, DifficultyInstance instance, MobSpawnType type, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
+        if(this.getRandom().nextFloat() < 0.6f){
+            if(this.getRandom().nextFloat() < 0.6f){
+                    if(this.getRandom().nextFloat() < 0.5f) {
+                        this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.GOLDEN_PICKAXE));
+
+                    }
+                    else{
+                        this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.STONE_PICKAXE));
+
+                    }
+                }
+            }
+            else {
+                float rand = this.getRandom().nextFloat();
+                if(rand < 0.3f) {
+                    this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.OBSIDIAN));
+                }
+                else if(rand > 0.5f && rand < 0.7f){
+                    this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.BLACKSTONE));
+                }
+                else{
+                    this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.NETHERRACK));
+
+                }
+            }
+        return super.finalizeSpawn(accessor, instance, type, data, tag);
     }
 
     @Override
@@ -135,6 +176,7 @@ public class CrucibleEntity extends Monster implements GeoEntity {
                 .triggerableAnim("reload", RELOAD)
                 .triggerableAnim("throwRight", THROWR)
                 .triggerableAnim("throwLeft", THROWL)
+                .triggerableAnim("die", DIE)
         );
 
 
@@ -181,8 +223,10 @@ public class CrucibleEntity extends Monster implements GeoEntity {
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
-        return state.isMoving() ? state.setAndContinue(WALK) : state.setAndContinue(IDLE);
-
+        if(!state.isMoving()){
+            return state.setAndContinue(IDLE);
+        }
+        return state.setAndContinue(WALK);
     }
 
     private <T extends GeoAnimatable> PlayState rightArm(AnimationState<T> state) {
@@ -247,7 +291,7 @@ class CrucibleSlamGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return super.canContinueToUse() && this.tickTimer < 80 && (this.entity.getAnimState() == 0 || this.entity.getAnimState() == 2);
+        return this.tickTimer < 80;
     }
 
     @Override

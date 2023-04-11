@@ -1,6 +1,7 @@
 package com.wadoo.hyperion;
 
 import com.mojang.logging.LogUtils;
+import com.wadoo.hyperion.client.ClientEventHandler;
 import com.wadoo.hyperion.common.entities.*;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
 import com.wadoo.hyperion.common.registry.*;
@@ -8,6 +9,8 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleGroup;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -36,7 +39,7 @@ import java.util.UUID;
 @Mod(Hyperion.MODID)
 public class Hyperion {
     public static final String MODID = "hyperion";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     private static final UUID AGRALITE_ARMOR_MODIFIER_UUID = UUID.fromString("7E0292F2-9434-48D5-A29F-9583AF7DF27F");
     private static final AttributeModifier AGRALITE_ARMOUR_MODIFIER = new AttributeModifier(AGRALITE_ARMOR_MODIFIER_UUID, "Weapon modifier", 3.0D, AttributeModifier.Operation.ADDITION);
 
@@ -51,9 +54,10 @@ public class Hyperion {
         SoundsRegistry.SOUNDS.register(bus);
         StructureHandler.STRUCTURES.register(bus);
         ParticleHandler.PARTICLES.register(bus);
+        TagHandler.initTags();
 
+        MinecraftForge.EVENT_BUS.addListener(ClientEventHandler::onSetupCamera);
 
-        TagHandler.registerTags();
         bus.addListener(EventPriority.NORMAL, ItemHandler::registerCreativeModeTab);
         bus.addListener(this::registerEntityAttributes);
 
@@ -74,31 +78,9 @@ public class Hyperion {
 
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public void onSetupCamera(ViewportEvent.ComputeCameraAngles event) {
-        Player player = Minecraft.getInstance().player;
-        float delta = Minecraft.getInstance().getFrameTime();
-        float ticksExistedDelta = player.tickCount + delta;
-        if (player != null) {
-            if (!Minecraft.getInstance().isPaused()) {
-                float shakeAmplitude = 0;
-                for (CameraShakeEntity cameraShake : player.level.getEntitiesOfClass(CameraShakeEntity.class, player.getBoundingBox().inflate(20, 20, 20))) {
-                    if (cameraShake.distanceTo(player) < cameraShake.getRadius()) {
-                        shakeAmplitude += cameraShake.getShakeAmount(player, delta);
-                    }
-                }
-                if (shakeAmplitude > 1.0f) shakeAmplitude = 1.0f;
-                event.setPitch((float) (event.getPitch() + shakeAmplitude * Math.cos(ticksExistedDelta * 3 + 2) * 25));
-                event.setYaw((float) (event.getYaw() + shakeAmplitude * Math.cos(ticksExistedDelta * 5 + 1) * 25));
-                event.setRoll((float) (event.getRoll() + shakeAmplitude * Math.cos(ticksExistedDelta * 4) * 25));
-            }
-        }
-    }
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-
-        //Agralite armor buff
         Player player = event.player;
         Set<Item> armor = new ObjectOpenHashSet<>();
         for (ItemStack stack : player.getArmorSlots()) {
@@ -137,4 +119,7 @@ public class Hyperion {
         }
     }
 
+    public static ResourceLocation id(String name) {
+        return new ResourceLocation(MODID, name);
+    }
 }

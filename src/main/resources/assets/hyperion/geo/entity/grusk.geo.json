@@ -40,6 +40,11 @@
 					]
 				},
 				{
+					"name": "item",
+					"parent": "rightArm",
+					"pivot": [-9, 3, 0]
+				},
+				{
 					"name": "Head",
 					"parent": "body",
 					"pivot": [0, 16, 0],

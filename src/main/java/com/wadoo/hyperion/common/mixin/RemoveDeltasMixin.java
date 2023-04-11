@@ -24,13 +24,13 @@ public class RemoveDeltasMixin {
             at = @At(value = "HEAD"),
             cancellable = true
     )
-    private void hyperion_removeBasaltInStructures(FeaturePlaceContext<DeltaFeatureConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
+    private void hyperion_noDeltasInStructures(FeaturePlaceContext<DeltaFeatureConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
         if(!(context.level() instanceof WorldGenRegion)) {
             return;
         }
 
         Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registries.STRUCTURE);
-        StructureManager structureManager = context.level().getLevel().structureManager();
+        StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
         for (Holder<Structure> configuredStructureFeature : configuredStructureFeatureRegistry.getOrCreateTag(TagHandler.REMOVE_BASALT)) {
             if (structureManager .getStructureAt(context.origin(), configuredStructureFeature.value()).isValid()) {
                 cir.setReturnValue(false);

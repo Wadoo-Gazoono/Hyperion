@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 
 
 @Mod.EventBusSubscriber(modid = Hyperion.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ClientEvents {
+public class ClientEventBusSubscriber {
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityHandler.CAPSLING.get(), CapslingRenderer::new);

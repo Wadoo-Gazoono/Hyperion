@@ -25,7 +25,7 @@ public class GruskHeadModel extends DefaultedEntityGeoModel<GruskHeadEntity> {
 
     @Override
     public ResourceLocation getTextureResource(GruskHeadEntity entity) {
-        return new ResourceLocation(Hyperion.MODID, "textures/entity/grusk_head.png");
+        return new ResourceLocation(Hyperion.MODID, "textures/entity/grusk.png");
     }
 
     @Override

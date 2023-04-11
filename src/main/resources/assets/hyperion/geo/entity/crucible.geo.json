@@ -179,6 +179,18 @@
 					]
 				},
 				{
+					"name": "pick",
+					"parent": "body",
+					"pivot": [5.75, 25, 1.5],
+					"rotation": [0, 0, 0]
+				},
+				{
+					"name": "pick2",
+					"parent": "body",
+					"pivot": [-7.25, 25, 9.5],
+					"rotation": [0, 37.5, -15]
+				},
+				{
 					"name": "leftLeg",
 					"parent": "root",
 					"pivot": [7.5, 7, 0],
