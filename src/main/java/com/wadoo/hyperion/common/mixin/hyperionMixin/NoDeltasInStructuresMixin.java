@@ -1,5 +1,6 @@
-package com.wadoo.hyperion.common.mixin;
+package com.wadoo.hyperion.common.mixin.hyperionMixin;
 
+import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.registry.TagHandler;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -15,20 +16,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-//Credit to Telepathic Grunt
 @Mixin(DeltaFeature.class)
-public class RemoveDeltasMixin {
+public class NoDeltasInStructuresMixin {
 
     @Inject(
             method = "place(Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z",
             at = @At(value = "HEAD"),
             cancellable = true
     )
-    private void hyperion_noDeltasInStructures(FeaturePlaceContext<DeltaFeatureConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
+    private void repurposedstructures_noDeltasInStructures(FeaturePlaceContext<DeltaFeatureConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
         if(!(context.level() instanceof WorldGenRegion)) {
             return;
         }
-
         Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registries.STRUCTURE);
         StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
         for (Holder<Structure> configuredStructureFeature : configuredStructureFeatureRegistry.getOrCreateTag(TagHandler.REMOVE_BASALT)) {

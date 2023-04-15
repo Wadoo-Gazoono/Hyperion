@@ -4,12 +4,15 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "hyperion.refmap.json",
   "mixins": [
-    "PlayerMixin"
+    "hyperionMixin.NoBasaltColumnsInStructuresMixin",
+    "hyperionMixin.NoDeltasInStructuresMixin",
+    "hyperionMixin.WorldGenRegionAccessor",
+    "vigoremMixin.PlayerMixin"
   ],
   "client": [
   ],
   "injectors": {
     "defaultRequire": 1
   },
-  "minVersion": "0.8.5"
+  "minVersion": "0.8"
 }

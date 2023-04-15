@@ -21,7 +21,6 @@
   "step": "top_layer_modification",
 
 
-  "terrain_adaptation": "beard_thin",
   "project_start_to_heightmap": "WORLD_SURFACE_WG",
   "start_height": {
     "absolute": -33
