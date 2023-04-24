@@ -1,9 +1,14 @@
 package com.wadoo.hyperion.common.entities;
 
+import com.wadoo.hyperion.common.entities.ai.util.Attack;
+import com.wadoo.hyperion.common.entities.ai.util.AttackChooser;
 import com.wadoo.hyperion.common.registry.EntityHandler;
 import com.wadoo.hyperion.common.registry.SoundsRegistry;
 import com.wadoo.hyperion.common.util.GrabAnimation;
 import com.wadoo.hyperion.common.util.GrabKeyframe;
+import net.minecraft.client.Camera;
+import net.minecraft.client.CameraType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -30,6 +35,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.injection.At;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -38,9 +44,11 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
+import java.util.LinkedList;
 
 public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     private static final EntityDataAccessor<Boolean> HAS_HEAD = SynchedEntityData.defineId(GruskEntity.class, EntityDataSerializers.BOOLEAN);
+    private LinkedList<Attack> attacks = new LinkedList<Attack>();
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
@@ -61,6 +69,7 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
         this.setPathfindingMalus(BlockPathTypes.LAVA, -0.2F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.2F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.2F);
+
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -70,26 +79,26 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(8, new RandomStrollGoal(this,1.0f) {
-            @Override
-            public boolean canUse(){
-                if(mob instanceof GruskEntity){
-                    return ((GruskEntity) mob).getAnimation().equals("Standby") && super.canUse();
-                }
-                return false;
-            }
-        });
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
+        //this.goalSelector.addGoal(1, new FloatGoal(this));
+       // this.goalSelector.addGoal(8, new RandomStrollGoal(this,1.0f) {
+        //    @Override
+         //   public boolean canUse(){
+          //      if(mob instanceof GruskEntity){
+          //          return ((GruskEntity) mob).getAnimation() == 0 && super.canUse();
+          //      }
+          //      return false;
+         //   }
+       // });
+        //this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        //this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
 
-        this.goalSelector.addGoal(6, new GruskRoarGoal(this));
+        this.goalSelector.addGoal(2, new AttackChooser(this,new Attack("leap", 5f, 1f, 15, 7, 20)));
         //this.goalSelector.addGoal(3, new GruskAttackAIGoal(this));
         //this.goalSelector.addGoal(2, new GruskLeapGoal(this));
 
 
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, GruskEntity.class)).setAlertOthers());
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+       // this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, GruskEntity.class)).setAlertOthers());
+      //  this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, CapslingEntity.class, true));
 
 
@@ -147,9 +156,12 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
 
         return super.finalizeSpawn(accessor, instance, type, data, tag);
     }
+
     @Override
     public void tick() {
         super.tick();
+        //System.out.println(this.getAnimation());
+
         if(this.decapitateTimer > 0){
 
             this.decapitateTimer--;
@@ -360,7 +372,7 @@ class GruskAttackAIGoal extends Goal{
                 this.entity.leapCoolDown--;
             }
             else {
-                this.entity.setAnimation("Leap");
+                //this.entity.setAnimation("Leap");
             }
         }
     }
@@ -416,7 +428,7 @@ class GruskLeapGoal extends Goal{
             tickTimer++;
         }
         else{
-            this.entity.setAnimation("Standby");
+            //this.entity.setAnimation("Standby");
             this.entity.leapCoolDown = 10 + this.entity.getRandom().nextInt(10);
         }
     }

@@ -6,8 +6,7 @@
   "mixins": [
     "hyperionMixin.NoBasaltColumnsInStructuresMixin",
     "hyperionMixin.NoDeltasInStructuresMixin",
-    "hyperionMixin.WorldGenRegionAccessor",
-    "vigoremMixin.PlayerMixin"
+    "hyperionMixin.WorldGenRegionAccessor"
   ],
   "client": [
   ],

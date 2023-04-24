@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -35,20 +36,20 @@ public class HyperionLivingEntity extends Monster implements GeoEntity {
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
 
-    private static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(HyperionLivingEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(HyperionLivingEntity.class, EntityDataSerializers.INT);
 
     public HyperionLivingEntity(EntityType<? extends HyperionLivingEntity> monster, Level level) {
         super(monster, level);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return null;
-    }
+   // public static AttributeSupplier.Builder createAttributes() {
+   //     return null;
+   // }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ANIMATION, "Standby");
+        this.entityData.define(ANIMATION, 0);
     }
 
     @Override
@@ -64,17 +65,18 @@ public class HyperionLivingEntity extends Monster implements GeoEntity {
     }
 
 
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
     }
 
 
-    public void setAnimation(String animation){
+    public void setAnimation(Integer animation){
         this.entityData.set(ANIMATION,animation);
     }
 
-    public String getAnimation(){
+    public Integer getAnimation(){
         return this.entityData.get(ANIMATION);
     }
 
