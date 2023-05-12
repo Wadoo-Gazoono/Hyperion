@@ -2,6 +2,7 @@ package com.wadoo.hyperion.common.registry;
 
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.blocks.*;
+import com.wadoo.hyperion.common.blocks.agralite_cage.AgraliteCageBlock;
 import com.wadoo.hyperion.common.blocks.grimspire_door.GrimSpireDoorBlock;
 import com.wadoo.hyperion.common.blocks.grimspire_door.GrimspireDoorAnimatedBlock;
 import net.minecraft.world.level.block.*;

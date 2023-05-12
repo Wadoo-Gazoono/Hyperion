@@ -4,6 +4,8 @@ import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.entities.*;
 import com.wadoo.hyperion.common.entities.effects.BasaltSpikeEntity;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
+import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
+import com.wadoo.hyperion.common.entities.grusk.GruskHeadEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,9 +19,10 @@ public class EntityHandler {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Hyperion.MODID);
 
     public static final RegistryObject<EntityType<CapslingEntity>> CAPSLING = create("capsling", EntityType.Builder.of(CapslingEntity::new, MobCategory.CREATURE).sized(0.45f, 1.0f).fireImmune());
-    public static final RegistryObject<EntityType<GruskEntity>> GRUSK = create("grusk", EntityType.Builder.of(GruskEntity::new, MobCategory.MONSTER).sized(0.95f, 2.0f).fireImmune());
-    public static final RegistryObject<EntityType<GruskHeadEntity>> GRUSK_HEAD = create("grusk_head", EntityType.Builder.of(GruskHeadEntity::new, MobCategory.MONSTER).sized(0.75f, 0.8f).fireImmune());
     public static final RegistryObject<EntityType<CrucibleEntity>> CRUCIBLE = create("crucible", EntityType.Builder.of(CrucibleEntity::new, MobCategory.MONSTER).sized(2.0f, 2.0f).fireImmune());
+    public static final RegistryObject<EntityType<GruskEntity>> GRUSK = create("grusk", EntityType.Builder.of(GruskEntity::new, MobCategory.MONSTER).sized(1f, 1.6f).fireImmune());
+    public static final RegistryObject<EntityType<GruskHeadEntity>> GRUSK_HEAD = create("grusk_head", EntityType.Builder.of(GruskHeadEntity::new, MobCategory.MONSTER).sized(0.8f, 0.6f).fireImmune());
+
     public static final RegistryObject<EntityType<AutoMiningDroidEntity>> AUTOMININGDROID = create("auto_mining_droid", EntityType.Builder.of(AutoMiningDroidEntity::new, MobCategory.MONSTER).sized(1.9f, 3.0f).fireImmune());
 
 

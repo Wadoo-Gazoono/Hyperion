@@ -1,114 +1,18 @@
 {
-  "credit": "Made with Blockbench",
-  "parent": "builtin/entity",
-  "texture_size": [
-    64,
-    64
-  ],
-  "display": {
-    "thirdperson_righthand": {
-      "translation": [
-        0,
-        -6,
-        1.75
-      ],
-      "scale": [
-        0.8,
-        0.8,
-        0.8
-      ]
-    },
-    "thirdperson_lefthand": {
-      "translation": [
-        0,
-        -6,
-        1.75
-      ],
-      "scale": [
-        0.8,
-        0.8,
-        0.8
-      ]
-    },
-    "firstperson_righthand": {
-      "rotation": [
-        -6.82,
-        7.99,
-        -1.5
-      ],
-      "translation": [
-        1,
-        -2.25,
-        -0.25
-      ],
-      "scale": [
-        0.45,
-        0.45,
-        0.45
-      ]
-    },
-    "firstperson_lefthand": {
-      "rotation": [
-        -6.82,
-        7.99,
-        -1.5
-      ],
-      "translation": [
-        1,
-        -2.25,
-        -0.25
-      ],
-      "scale": [
-        0.45,
-        0.45,
-        0.45
-      ]
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "parent": "hyperion:item/zweihander_in_hand"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "hyperion:item/zweihander_in_hand"
     },
     "ground": {
-      "translation": [
-        0,
-        2,
-        0
-      ],
-      "scale": [
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
-    "gui": {
-      "rotation": [
-        30,
-        225,
-        0
-      ],
-      "translation": [
-        0,
-        -7,
-        0
-      ],
-      "scale": [
-        0.4,
-        0.4,
-        0.4
-      ]
+      "parent": "hyperion:item/zweihander_in_hand"
     },
     "fixed": {
-      "rotation": [
-        0,
-        -90,
-        0
-      ],
-      "translation": [
-        0,
-        -7.75,
-        0
-      ],
-      "scale": [
-        0.4,
-        0.4,
-        0.4
-      ]
+      "parent": "hyperion:item/zweihander_in_hand"
     }
   }
 }

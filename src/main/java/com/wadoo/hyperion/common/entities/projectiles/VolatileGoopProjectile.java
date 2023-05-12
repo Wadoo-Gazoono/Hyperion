@@ -105,17 +105,19 @@ public class VolatileGoopProjectile extends AbstractArrow implements GeoEntity {
         }
         if (ticksOnGround == 25){
             explode();
+
         }
         if(ticksOnGround == 30) discard();
 
 
         if (ticksOnGround > 27) discard();
-        if(this.level.isClientSide && this.tickCount % 5 == 0){
+        if(this.level.isClientSide && this.tickCount % 2 == 0){
             for(int i =0; i < 3; i++){
-                this.level.addParticle(ParticleTypes.SMOKE, this.getRandomX(0.1D), this.getY() , this.getRandomZ(0.1D), 0, 0.2, 0);
+                this.level.addParticle(ParticleTypes.LAVA, this.getRandomX(0.1D), this.getY() , this.getRandomZ(0.1D), 0, 0.2, 0);
             }
             this.level.addParticle(ParticleTypes.FLAME, this.getRandomX(0.02D), this.getY() , this.getRandomZ(0.02D), 0, 0, 0);
         }
+
     }
 
     @Override
@@ -135,6 +137,8 @@ public class VolatileGoopProjectile extends AbstractArrow implements GeoEntity {
             livingentity.setSecondsOnFire(8);
         }
         if(this.level.isClientSide){
+            this.level.addParticle(ParticleTypes.EXPLOSION, this.getRandomX(0.02D), this.getY() , this.getRandomZ(0.02D), 0, 0, 0);
+
             for(int i = 0; i < this.random.nextInt(25) + 17; i++){
                 this.level.addParticle(ParticleTypes.LAVA, this.getRandomX(0.31D), this.getY() , this.getRandomZ(0.31D), 0, 0.2, 0);
             }

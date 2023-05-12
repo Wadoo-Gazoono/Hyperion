@@ -1,5 +1,6 @@
 package com.wadoo.hyperion.common.entities;
 
+import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -36,7 +37,7 @@ public class HyperionLivingEntity extends Monster implements GeoEntity {
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
 
-    private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(HyperionLivingEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(HyperionLivingEntity.class, EntityDataSerializers.INT);
 
     public HyperionLivingEntity(EntityType<? extends HyperionLivingEntity> monster, Level level) {
         super(monster, level);
@@ -49,7 +50,7 @@ public class HyperionLivingEntity extends Monster implements GeoEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ANIMATION, 0);
+        this.entityData.define(STATE, 0);
     }
 
     @Override
@@ -72,33 +73,13 @@ public class HyperionLivingEntity extends Monster implements GeoEntity {
     }
 
 
-    public void setAnimation(Integer animation){
-        this.entityData.set(ANIMATION,animation);
+    public void setAnimation(Integer state){
+        this.entityData.set(STATE,state);
     }
 
     public Integer getAnimation(){
-        return this.entityData.get(ANIMATION);
+        return this.entityData.get(STATE);
     }
 
-}
-
-class HyperionStrollGoal extends RandomStrollGoal{
-    HyperionLivingEntity entity;
-
-
-    public HyperionStrollGoal(PathfinderMob mob, double speed) {
-        super(mob, speed);
-        this.entity = (HyperionLivingEntity) mob;
-    }
-
-    @Override
-    public boolean canUse() {
-        return this.entity.getAnimation().equals("Standby") && super.canUse();
-    }
-
-    @Override
-    public boolean canContinueToUse() {
-        return super.canContinueToUse();
-    }
 }
 

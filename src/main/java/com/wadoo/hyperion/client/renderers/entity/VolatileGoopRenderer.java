@@ -2,9 +2,7 @@ package com.wadoo.hyperion.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.wadoo.hyperion.client.models.entity.GruskModel;
 import com.wadoo.hyperion.client.models.entity.VolatileGoopModel;
-import com.wadoo.hyperion.common.entities.GruskEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

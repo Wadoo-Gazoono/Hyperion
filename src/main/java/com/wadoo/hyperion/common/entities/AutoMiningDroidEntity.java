@@ -87,7 +87,6 @@ public class AutoMiningDroidEntity extends Monster implements GeoEntity {
         this.goalSelector.addGoal(4, new AMDSwingGoal(this));
 
 
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this, GruskEntity.class)).setAlertOthers());
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, CapslingEntity.class, true));
 

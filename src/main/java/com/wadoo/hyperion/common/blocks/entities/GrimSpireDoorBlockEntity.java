@@ -43,7 +43,7 @@ public class GrimSpireDoorBlockEntity extends BlockEntity implements GeoBlockEnt
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, GrimSpireDoorBlockEntity entity) {
-         if(++entity.ticksExisted > 160){
+         if(++entity.ticksExisted > 152){
             level.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
         }
     }

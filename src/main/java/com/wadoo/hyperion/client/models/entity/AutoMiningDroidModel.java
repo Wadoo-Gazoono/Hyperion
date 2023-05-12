@@ -3,7 +3,6 @@ package com.wadoo.hyperion.client.models.entity;
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.entities.AutoMiningDroidEntity;
 import com.wadoo.hyperion.common.entities.CrucibleEntity;
-import com.wadoo.hyperion.common.entities.GruskEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleTypes;

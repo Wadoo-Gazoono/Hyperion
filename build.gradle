@@ -24,7 +24,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.0.7'
+version = '1.0.9'
 group = 'com.wadoo.hyperion' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'hyperion'
 

@@ -1,5 +1,6 @@
 package com.wadoo.hyperion.common.entities;
 
+import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import com.wadoo.hyperion.common.registry.ItemHandler;
@@ -324,6 +325,7 @@ class CrucibleSlamGoal extends Goal {
                 for (LivingEntity livingentity : this.entity.level.getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().move(0d,-1d,0d).inflate(7.5D, 1D, 7.5D).move(0d,-1.4d,0d))) {
                     if(livingentity instanceof CrucibleEntity == false){
                        this.entity.doHurtTarget(livingentity);
+                       livingentity.setDeltaMovement(0d,1d,0d);
                     }
                 }
             }

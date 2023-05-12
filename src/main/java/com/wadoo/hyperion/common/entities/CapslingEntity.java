@@ -1,7 +1,10 @@
 package com.wadoo.hyperion.common.entities;
 
+import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import com.wadoo.hyperion.common.registry.ItemHandler;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -11,6 +14,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -21,12 +27,17 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -42,7 +53,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
+public class CapslingEntity extends Monster implements GeoEntity, Bucketable {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
 
@@ -56,7 +67,6 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     private static final RawAnimation EATEN = RawAnimation.begin().thenLoop("eaten");
 
 
-
     private static final EntityDataAccessor<Boolean> OPEN = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ANIM_STATE = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
@@ -66,7 +76,7 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     };
     public final int ITEMCOOLDOWN = 300;
 
-    public CapslingEntity(EntityType<? extends Animal> animal, Level level) {
+    public CapslingEntity(EntityType<? extends Monster> animal, Level level) {
         super(animal, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.LAVA, 0.0F);
@@ -84,6 +94,8 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 10.0F));
         this.goalSelector.addGoal(3, new CapslingTemptGoal(this, 1.0D, Ingredient.of(Items.MAGMA_CREAM), false));
         this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, Player.class, 6F, 1, 1.2));
+        this.goalSelector.addGoal(6, new AvoidEntityGoal<>(this, GruskEntity.class, 6F, 1, 1.2));
+
         this.goalSelector.addGoal(9, new CapslingSocializeGoal(this));
 
     }
@@ -152,12 +164,6 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
             return this.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
         }
         return InteractionResult.FAIL;
-    }
-
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
-        return null;
     }
 
     public void setOpen(boolean open){
@@ -260,29 +266,24 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
         return PlayState.CONTINUE;
     }
 
-    //OLD PREDICATE CODE, for reference only
+    @Override
+    public boolean isPersistenceRequired() {
+        return true;
+    }
 
-    //    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-//        switch(getAnimState()) {
-//            case 1:
-//                event.getController().setAnimation(new AnimationBuilder().addAnimation("eat_start", ILoopType.EDefaultLoopTypes.LOOP));
-//                return PlayState.CONTINUE;
-//            case 2:
-//                event.getController().setAnimation(new AnimationBuilder().addAnimation("eat_loop", ILoopType.EDefaultLoopTypes.LOOP));
-//                return PlayState.CONTINUE;
-//            case 0:
-//                if (event.isMoving()) {
-//                    event.getController().setAnimation(new AnimationBuilder().addAnimation("walk" + (getOpen() ? "_open" : ""), ILoopType.EDefaultLoopTypes.LOOP));
-//                    return PlayState.CONTINUE;
-//                }
-//                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle" + (getOpen() ? "_open" : ""), ILoopType.EDefaultLoopTypes.LOOP));
-//                return PlayState.CONTINUE;
-//        }
-//        return PlayState.CONTINUE;
-//    }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
+    }
+
+    public static boolean checkSpawnRules(EntityType<CapslingEntity> p_219129_, LevelAccessor p_219130_, MobSpawnType p_219131_, BlockPos p_219132_, RandomSource p_219133_) {
+        BlockPos.MutableBlockPos blockpos$mutableblockpos = p_219132_.mutable();
+
+        do {
+            blockpos$mutableblockpos.move(Direction.UP);
+        } while(p_219130_.getFluidState(blockpos$mutableblockpos).is(FluidTags.LAVA));
+
+        return p_219130_.getBlockState(blockpos$mutableblockpos).isAir();
     }
 }
 

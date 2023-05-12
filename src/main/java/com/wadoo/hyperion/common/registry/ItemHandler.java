@@ -60,7 +60,7 @@ public class ItemHandler {
     public static final RegistryObject<Item> AMD_SPAWN_EGG = ITEMS.register("auto_mining_droid_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.AUTOMININGDROID, 0x3a3b48, 0x794934, new Item.Properties()));
 
     public static final RegistryObject<VolatileGoopItem> VOLATILE_GOOP = ITEMS.register("volatile_goop",() -> new VolatileGoopItem((new Item.Properties()).stacksTo(16).fireResistant()));
-    public static final RegistryObject<ZweihanderItem> ZWEIHANDER = ITEMS.register("zweihander",() -> new ZweihanderItem(HyperionTiers.AGRALITE, 3, -2.4F, new Item.Properties()));
+    public static final RegistryObject<BurrowingSlicerItem> BURROWING_SLICER = ITEMS.register("burrowing_slicer",() -> new BurrowingSlicerItem(HyperionTiers.AGRALITE, 3, -2.4F, new Item.Properties()));
 
 
 
@@ -84,7 +84,7 @@ public class ItemHandler {
             CUT_AGRALITE_SLAB,SPIRE_BRICKS,CRACKED_SPIRE_BRICKS, CUT_SPIRE_BRICKS,CHISELED_CUT_SPIRE_BRICKS,CUT_SPIRE_BRICK_STAIRS, CUT_SPIRE_BRICK_SLAB,
             CHECKERED_SPIRE_BRICKS,
             KILN, CAPSLING_BUCKET,VOLATILE_GOOP,
-            CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG,AMD_SPAWN_EGG, ZWEIHANDER,
+            CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG,AMD_SPAWN_EGG, BURROWING_SLICER,
             AGRALITE_HELMET,AGRALITE_CHESTPLATE,AGRALITE_LEGGINGS,AGRALITE_BOOTS
     );
 

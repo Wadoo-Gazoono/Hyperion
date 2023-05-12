@@ -1,12 +1,9 @@
 package com.wadoo.hyperion.client.models.entity;
 
 import com.wadoo.hyperion.Hyperion;
-import com.wadoo.hyperion.common.entities.GruskHeadEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
 public class VolatileGoopModel extends DefaultedEntityGeoModel<VolatileGoopProjectile> {

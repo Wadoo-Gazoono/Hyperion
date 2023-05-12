@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "hyperion:mining_rig",
-    "hyperion:mining_storage",
-    "hyperion:refinery",
+    "hyperion:mining_rig_1",
+    "hyperion:mining_rig_2",
+    "hyperion:mining_rig_3",
     "hyperion:grimspire_main_floor"
   ]
 }
