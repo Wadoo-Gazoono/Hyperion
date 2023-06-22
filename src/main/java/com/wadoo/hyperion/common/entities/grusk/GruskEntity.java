@@ -100,7 +100,6 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
             return super.hurt(source, amount/3f);
         }
         if(this.getHealth() < this.getMaxHealth()/2f && this.random.nextFloat() < 0.9f && hasHead()){
-            System.out.println("hey");
             setState(4);
             setHasHead(false);
             triggerAnim("controller","decapitate");

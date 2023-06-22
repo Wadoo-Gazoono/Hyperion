@@ -8,6 +8,7 @@ import com.wadoo.hyperion.client.renderers.layers.CrucibleEyesLayer;
 import com.wadoo.hyperion.client.renderers.layers.CrucibleLavaLayer;
 import com.wadoo.hyperion.common.entities.CrucibleEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -136,4 +137,6 @@ public class CrucibleRenderer extends GeoEntityRenderer<CrucibleEntity> {
     public void postRender(PoseStack poseStack, CrucibleEntity animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         super.postRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
+
+
 }

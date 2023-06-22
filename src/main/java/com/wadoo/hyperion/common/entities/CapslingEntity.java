@@ -39,6 +39,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -53,7 +54,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class CapslingEntity extends Monster implements GeoEntity, Bucketable {
+public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
 
@@ -76,7 +77,7 @@ public class CapslingEntity extends Monster implements GeoEntity, Bucketable {
     };
     public final int ITEMCOOLDOWN = 300;
 
-    public CapslingEntity(EntityType<? extends Monster> animal, Level level) {
+    public CapslingEntity(EntityType<? extends Animal> animal, Level level) {
         super(animal, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.LAVA, 0.0F);
@@ -98,6 +99,12 @@ public class CapslingEntity extends Monster implements GeoEntity, Bucketable {
 
         this.goalSelector.addGoal(9, new CapslingSocializeGoal(this));
 
+    }
+
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+        return null;
     }
 
     @Override
@@ -285,6 +292,7 @@ public class CapslingEntity extends Monster implements GeoEntity, Bucketable {
 
         return p_219130_.getBlockState(blockpos$mutableblockpos).isAir();
     }
+
 }
 
 class CapslingTemptGoal extends TemptGoal{

@@ -12,6 +12,9 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,12 +23,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -55,9 +60,6 @@ public class Hyperion {
 
         bus.addListener(EventPriority.NORMAL, ItemHandler::registerCreativeModeTab);
         bus.addListener(this::registerEntityAttributes);
-        bus.addListener(this::entitySpawnRestriction);
-
-
     }
 
     private void registerEntityAttributes(EntityAttributeCreationEvent event) {
@@ -95,10 +97,22 @@ public class Hyperion {
     }
 
 
-    public void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
-        event.register(EntityHandler.CAPSLING.get(), SpawnPlacements.Type.IN_LAVA, Heightmap.Types.MOTION_BLOCKING,
-                CapslingEntity::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+    @SubscribeEvent
+    public static void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            SpawnPlacements.register(EntityHandler.CAPSLING.get(),
+                    SpawnPlacements.Type.IN_LAVA, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Animal::checkAnimalSpawnRules);
+        });
     }
 
-
+    @SubscribeEvent
+    public void onEntitySpawn(EntityJoinLevelEvent event){
+        System.out.println(1);
+        if (event.getEntity() instanceof Strider && !event.getEntity().isVehicle() && !event.getLevel().isClientSide()){}
+            var capsling = EntityHandler.CAPSLING.get().create(event.getLevel());
+            capsling.moveTo(event.getEntity().position().add(0d,1d,0d));
+            event.getLevel().addFreshEntity(capsling);
+            capsling.startRiding(event.getEntity());
+    }
 }
