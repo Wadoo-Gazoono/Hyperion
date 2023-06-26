@@ -37,6 +37,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import org.checkerframework.checker.units.qual.A;
@@ -274,6 +275,11 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     }
 
     @Override
+    public float getWalkTargetValue(BlockPos blockPos, LevelReader levelReader) {
+        return levelReader.getPathfindingCostFromLightLevels(blockPos);
+    }
+
+    @Override
     public boolean isPersistenceRequired() {
         return true;
     }
@@ -283,14 +289,8 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
         return this.cache;
     }
 
-    public static boolean checkSpawnRules(EntityType<CapslingEntity> p_219129_, LevelAccessor p_219130_, MobSpawnType p_219131_, BlockPos p_219132_, RandomSource p_219133_) {
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = p_219132_.mutable();
-
-        do {
-            blockpos$mutableblockpos.move(Direction.UP);
-        } while(p_219130_.getFluidState(blockpos$mutableblockpos).is(FluidTags.LAVA));
-
-        return p_219130_.getBlockState(blockpos$mutableblockpos).isAir();
+    public static boolean checkRules(EntityType<CapslingEntity> p_219129_, LevelAccessor p_219130_, MobSpawnType p_219131_, BlockPos p_219132_, RandomSource p_219133_) {
+        return true;
     }
 
 }

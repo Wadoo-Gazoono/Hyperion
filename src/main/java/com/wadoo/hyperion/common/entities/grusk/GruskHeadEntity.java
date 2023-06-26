@@ -60,8 +60,6 @@ public class GruskHeadEntity extends HyperionLivingEntity implements GeoEntity {
         super.registerGoals();
 
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this,1.2f,true));
-
-
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, CapslingEntity.class, 0, true, false, null));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 0, true, false, null));
     }

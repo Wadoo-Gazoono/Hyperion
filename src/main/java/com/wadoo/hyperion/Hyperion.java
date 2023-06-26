@@ -4,11 +4,13 @@ import com.mojang.logging.LogUtils;
 import com.wadoo.hyperion.common.entities.AutoMiningDroidEntity;
 import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.CrucibleEntity;
+import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskHeadEntity;
 import com.wadoo.hyperion.common.registry.*;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -36,7 +38,7 @@ import org.slf4j.Logger;
 
 import java.util.Set;
 import java.util.UUID;
-
+//TODO FIX KILNS DATA SAVING
 @Mod(Hyperion.MODID)
 public class Hyperion {
     public static final String MODID = "hyperion";
@@ -68,6 +70,7 @@ public class Hyperion {
         event.put(EntityHandler.GRUSK_HEAD.get(), GruskHeadEntity.createAttributes().build());
         event.put(EntityHandler.CRUCIBLE.get(), CrucibleEntity.createAttributes().build());
         event.put(EntityHandler.AUTOMININGDROID.get(), AutoMiningDroidEntity.createAttributes().build());
+        event.put(EntityHandler.FEDRAN.get(), FedranEntity.createAttributes().build());
 
     }
 
@@ -97,22 +100,17 @@ public class Hyperion {
     }
 
 
-    @SubscribeEvent
-    public static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            SpawnPlacements.register(EntityHandler.CAPSLING.get(),
-                    SpawnPlacements.Type.IN_LAVA, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    Animal::checkAnimalSpawnRules);
-        });
-    }
+//    @SubscribeEvent
+//    public static void commonSetup(FMLCommonSetupEvent event) {
+//        event.enqueueWork(() -> {
+//            SpawnPlacements.register(EntityHandler.CAPSLING.get(),
+//                    SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+//                    CapslingEntity::checkRules);
+//        });
+//    }
 
     @SubscribeEvent
-    public void onEntitySpawn(EntityJoinLevelEvent event){
-        System.out.println(1);
-        if (event.getEntity() instanceof Strider && !event.getEntity().isVehicle() && !event.getLevel().isClientSide()){}
-            var capsling = EntityHandler.CAPSLING.get().create(event.getLevel());
-            capsling.moveTo(event.getEntity().position().add(0d,1d,0d));
-            event.getLevel().addFreshEntity(capsling);
-            capsling.startRiding(event.getEntity());
+    public void spawns(SpawnPlacementRegisterEvent event){
+        event.register(EntityHandler.CAPSLING.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
     }
 }

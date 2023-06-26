@@ -4,6 +4,7 @@ import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.entities.*;
 import com.wadoo.hyperion.common.entities.effects.BasaltSpikeEntity;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
+import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskHeadEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
@@ -22,6 +23,7 @@ public class EntityHandler {
     public static final RegistryObject<EntityType<CrucibleEntity>> CRUCIBLE = create("crucible", EntityType.Builder.of(CrucibleEntity::new, MobCategory.MONSTER).sized(2.0f, 2.0f).fireImmune());
     public static final RegistryObject<EntityType<GruskEntity>> GRUSK = create("grusk", EntityType.Builder.of(GruskEntity::new, MobCategory.MONSTER).sized(1f, 1.6f).fireImmune());
     public static final RegistryObject<EntityType<GruskHeadEntity>> GRUSK_HEAD = create("grusk_head", EntityType.Builder.of(GruskHeadEntity::new, MobCategory.MONSTER).sized(0.8f, 0.6f).fireImmune());
+    public static final RegistryObject<EntityType<FedranEntity>> FEDRAN = create("fedran", EntityType.Builder.of(FedranEntity::new, MobCategory.MONSTER).sized(1.1f, 4.8f).fireImmune());
 
     public static final RegistryObject<EntityType<AutoMiningDroidEntity>> AUTOMININGDROID = create("auto_mining_droid", EntityType.Builder.of(AutoMiningDroidEntity::new, MobCategory.MONSTER).sized(1.9f, 3.0f).fireImmune());
 
