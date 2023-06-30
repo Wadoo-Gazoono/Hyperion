@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.GeoBone;
@@ -30,8 +31,8 @@ public class CapslingRenderer extends GeoEntityRenderer<CapslingEntity> {
             }
 
             @Override
-            protected ItemTransforms.TransformType getTransformTypeForStack(GeoBone bone, ItemStack stack, CapslingEntity animatable) {
-                return ItemTransforms.TransformType.GROUND;
+            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, CapslingEntity animatable) {
+                return ItemDisplayContext.GROUND;
             }
 
             @Override

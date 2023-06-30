@@ -19,7 +19,7 @@ public class GruskRoarGoal extends AnimatedAttack {
         entity.getNavigation().stop();
         if(currentTick == 5){
             this.entity.playSound(SoundEvents.RAVAGER_ROAR);
-            for (LivingEntity livingentity : this.entity.level.getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().inflate(18.2D, 1.0D, 18.2D))) {
+            for (LivingEntity livingentity : this.entity.level().getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().inflate(18.2D, 1.0D, 18.2D))) {
                 if(livingentity instanceof GruskEntity == false){
                     livingentity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 2, false, true));
                 }

@@ -3,6 +3,7 @@ package com.wadoo.hyperion.client.renderers.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.client.models.entity.CapslingModel;
 import com.wadoo.hyperion.client.models.entity.FedranModel;
 import com.wadoo.hyperion.client.models.entity.GruskModel;
@@ -14,11 +15,13 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -31,4 +34,5 @@ public class FedranRenderer extends GeoEntityRenderer<FedranEntity> {
         super(renderManager, new FedranModel());
         this.shadowRadius = 1.6F;
     }
+
 }

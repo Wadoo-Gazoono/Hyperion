@@ -43,8 +43,6 @@ import java.util.UUID;
 public class Hyperion {
     public static final String MODID = "hyperion";
     public static final Logger LOGGER = LogUtils.getLogger();
-    private static final UUID AGRALITE_ARMOR_MODIFIER_UUID = UUID.fromString("7E0292F2-9434-48D5-A29F-9583AF7DF27F");
-    private static final AttributeModifier AGRALITE_ARMOUR_MODIFIER = new AttributeModifier(AGRALITE_ARMOR_MODIFIER_UUID, "Weapon modifier", 3.0D, AttributeModifier.Operation.ADDITION);
 
     public Hyperion() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -53,6 +51,7 @@ public class Hyperion {
         EntityHandler.ENTITIES.register(bus);
         ItemHandler.ITEMS.register(bus);
         BlockHandler.BLOCKS.register(bus);
+        CreativeTabHandler.TABS.register(bus);
         BlockEntityHandler.BLOCK_ENTITIES.register(bus);
         SoundsRegistry.SOUNDS.register(bus);
         StructureHandler.STRUCTURES.register(bus);
@@ -60,7 +59,6 @@ public class Hyperion {
         TagHandler.initTags();
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> HyperionClient::clientEvents);
 
-        bus.addListener(EventPriority.NORMAL, ItemHandler::registerCreativeModeTab);
         bus.addListener(this::registerEntityAttributes);
     }
 
@@ -74,40 +72,6 @@ public class Hyperion {
 
     }
 
-
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        //TODO Move to Common Events class
-        Player player = event.player;
-        Set<Item> armor = new ObjectOpenHashSet<>();
-        for (ItemStack stack : player.getArmorSlots()) {
-            armor.add(stack.getItem());
-        }
-        boolean wearingAgralite = armor.containsAll(ObjectArrayList.of(
-                ItemHandler.AGRALITE_BOOTS.get(),
-                ItemHandler.AGRALITE_CHESTPLATE.get(),
-                ItemHandler.AGRALITE_HELMET.get(),
-                ItemHandler.AGRALITE_LEGGINGS.get()));
-
-        if (wearingAgralite) {
-            if (player.getAttribute(Attributes.ATTACK_SPEED).getModifier(AGRALITE_ARMOR_MODIFIER_UUID) == null) {
-                player.getAttribute(Attributes.ATTACK_SPEED).addTransientModifier(new AttributeModifier(AGRALITE_ARMOR_MODIFIER_UUID, "Weapon modifier", 0.08d, AttributeModifier.Operation.ADDITION));
-            }
-        }
-        else{
-            player.getAttribute(Attributes.ATTACK_SPEED).removeModifier(AGRALITE_ARMOR_MODIFIER_UUID);
-        }
-    }
-
-
-//    @SubscribeEvent
-//    public static void commonSetup(FMLCommonSetupEvent event) {
-//        event.enqueueWork(() -> {
-//            SpawnPlacements.register(EntityHandler.CAPSLING.get(),
-//                    SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-//                    CapslingEntity::checkRules);
-//        });
-//    }
 
     @SubscribeEvent
     public void spawns(SpawnPlacementRegisterEvent event){

@@ -23,9 +23,9 @@ public class StompAttack extends AnimatedAttack {
         if(entity.getTarget() == null) return;
         entity.getLookControl().setLookAt(this.entity.getTarget(),80f,80f);
         if (currentTick == 34) {
-            CameraShakeEntity.cameraShake(this.entity.level, this.entity.position(), 45, 0.08f, 30, 20);
+            CameraShakeEntity.cameraShake(this.entity.level(), this.entity.position(), 45, 0.08f, 30, 20);
             this.entity.playSound(SoundEvents.GENERIC_EXPLODE);
-            for (LivingEntity livingentity : this.entity.level.getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().move(0d,-1d,0d).inflate(7.5D, 1D, 7.5D).move(0d,-1.4d,0d))) {
+            for (LivingEntity livingentity : this.entity.level().getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().move(0d,-1d,0d).inflate(7.5D, 1D, 7.5D).move(0d,-1.4d,0d))) {
                 if(livingentity instanceof FedranEntity == false){
                     this.entity.doHurtTarget(livingentity);
                     livingentity.setDeltaMovement(0d,1d,0d);

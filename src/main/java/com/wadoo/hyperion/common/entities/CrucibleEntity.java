@@ -125,12 +125,12 @@ public class CrucibleEntity extends Monster implements GeoEntity {
             getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").setTransitionLength(5);
         }
             Vec3 projectilePos = new Vec3(0D,0D,2D).yRot((float)Math.toRadians(-getYRot())).add(this.position());
-        if(level.isClientSide && this.getRandom().nextFloat() < 0.06f){
+        if(level().isClientSide && this.getRandom().nextFloat() < 0.06f){
             for (int i = 0; i < random.nextInt(8); ++i) {
-                this.level.addParticle(ParticleTypes.FLAME, this.getRandomX(0.25D), this.getY() + 2D, this.getRandomZ(0.25D), 0, 0.1D + this.getRandom().nextFloat()/3, 0);
+                this.level().addParticle(ParticleTypes.FLAME, this.getRandomX(0.25D), this.getY() + 2D, this.getRandomZ(0.25D), 0, 0.1D + this.getRandom().nextFloat()/3, 0);
             }
-            this.level.addParticle(ParticleTypes.LAVA, this.getRandomX(0.15D), this.getY() + 2D, this.getRandomZ(0.15D), 0, 0.1D + this.getRandom().nextFloat()/3, 0);
-            this.level.addParticle(ParticleTypes.SMOKE, this.getRandomX(0.45D), this.getY() + 2D, this.getRandomZ(0.45D), 0, 0.1D + this.getRandom().nextFloat()/3, 0);
+            this.level().addParticle(ParticleTypes.LAVA, this.getRandomX(0.15D), this.getY() + 2D, this.getRandomZ(0.15D), 0, 0.1D + this.getRandom().nextFloat()/3, 0);
+            this.level().addParticle(ParticleTypes.SMOKE, this.getRandomX(0.45D), this.getY() + 2D, this.getRandomZ(0.45D), 0, 0.1D + this.getRandom().nextFloat()/3, 0);
 
         }
 
@@ -192,27 +192,27 @@ public class CrucibleEntity extends Monster implements GeoEntity {
 
     private <ENTITY extends GeoEntity> void instructionListener(CustomInstructionKeyframeEvent<ENTITY> event) {
         if(event.getKeyframeData().getInstructions().contains("boom")){
-            if(this.level.isClientSide()){
+            if(this.level().isClientSide()){
                 for (int i = 0; i < random.nextInt(550) + 350; ++i) {
                     Vec3 partSpawn0 = new Vec3(this.getRandomX(5.5d), this.getY(), this.getRandomZ(5.5d));
                     if(Math.sqrt(this.distanceToSqr(partSpawn0)) < 8.0f) {
-                        this.level.addParticle(ParticleTypes.POOF, partSpawn0.x, this.getY(), partSpawn0.z, 0, 0.08d, 0);
+                        this.level().addParticle(ParticleTypes.POOF, partSpawn0.x, this.getY(), partSpawn0.z, 0, 0.08d, 0);
                     }
                 }
                 for (int i = 0; i < random.nextInt(550) + 330; ++i) {
                     Vec3 partSpawn1 = new Vec3(this.getRandomX(5.5d), this.getY(), this.getRandomZ(5.5d));
                     if (Math.sqrt(this.distanceToSqr(partSpawn1)) < 8.0d) {
-                        this.level.addParticle(ParticleTypes.LAVA, partSpawn1.x, this.getY(), partSpawn1.z, 0, 0.08d, 0);
+                        this.level().addParticle(ParticleTypes.LAVA, partSpawn1.x, this.getY(), partSpawn1.z, 0, 0.08d, 0);
                     }
                     Vec3 partSpawn2 = new Vec3(this.getRandomX(5.5d), this.getY(), this.getRandomZ(5.5d));
 
                     if (Math.sqrt(this.distanceToSqr(partSpawn2)) < 8.0d) {
-                        this.level.addParticle(ParticleTypes.FLAME, partSpawn2.x, this.getY(), partSpawn2.z, 0, 0.08d, 0);
+                        this.level().addParticle(ParticleTypes.FLAME, partSpawn2.x, this.getY(), partSpawn2.z, 0, 0.08d, 0);
                     }
                     Vec3 partSpawn3= new Vec3(this.getRandomX(5.5d), this.getY(), this.getRandomZ(5.5d));
 
                     if (Math.sqrt(this.distanceToSqr(partSpawn3)) < 8.0d) {
-                        this.level.addParticle(ParticleTypes.WHITE_ASH, partSpawn3.x, this.getY(), partSpawn3.z, 0, 0.08d, 0);
+                        this.level().addParticle(ParticleTypes.WHITE_ASH, partSpawn3.x, this.getY(), partSpawn3.z, 0, 0.08d, 0);
                     }
 
 //                    this.level.addParticle(ParticleTypes.FLAME, this.getRandomX(5.5D), this.getY(), this.getRandomZ(5.5D), 0, 0.08d, 0);
@@ -318,11 +318,11 @@ class CrucibleSlamGoal extends Goal {
             this.entity.getNavigation().stop();
             this.entity.setDeltaMovement(0d,this.entity.getDeltaMovement().y,0d);
             if(tickTimer == 31){
-                CameraShakeEntity.cameraShake(this.entity.level, this.entity.position(), 45, 0.08f, 30, 20);
+                CameraShakeEntity.cameraShake(this.entity.level(), this.entity.position(), 45, 0.08f, 30, 20);
                 this.entity.playSound(SoundEvents.GENERIC_EXPLODE);
                 this.entity.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.AIR));
                 this.entity.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.AIR));
-                for (LivingEntity livingentity : this.entity.level.getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().move(0d,-1d,0d).inflate(7.5D, 1D, 7.5D).move(0d,-1.4d,0d))) {
+                for (LivingEntity livingentity : this.entity.level().getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().move(0d,-1d,0d).inflate(7.5D, 1D, 7.5D).move(0d,-1.4d,0d))) {
                     if(livingentity instanceof CrucibleEntity == false){
                        this.entity.doHurtTarget(livingentity);
                        livingentity.setDeltaMovement(0d,1d,0d);
@@ -461,7 +461,7 @@ class CrucibleThrowGoal extends Goal {
                 if (hand == 2){
                     this.entity.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.AIR));
                 }
-                VolatileGoopProjectile snowball = new VolatileGoopProjectile(this.entity.level, this.entity);
+                VolatileGoopProjectile snowball = new VolatileGoopProjectile(this.entity.level(), this.entity);
                 double d0 = this.entity.getTarget().getEyeY() - (double)1.1F;
                 double d1 = this.entity.getTarget().getX() - this.entity.getX();
                 double d2 = d0 - snowball.getY();
@@ -469,7 +469,7 @@ class CrucibleThrowGoal extends Goal {
                 double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double)0.5F;
                 snowball.shoot(d1, d2 + d4, d3, 0.8F, 5.0F);
                 this.entity.playSound(SoundEvents.LAVA_POP, 1.0F, 0.4F / (this.entity.getRandom().nextFloat() * 0.4F + 0.8F));
-                this.entity.level.addFreshEntity(snowball);
+                this.entity.level().addFreshEntity(snowball);
             }
         }
     }

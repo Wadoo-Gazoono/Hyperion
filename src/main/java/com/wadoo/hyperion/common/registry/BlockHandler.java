@@ -7,7 +7,6 @@ import com.wadoo.hyperion.common.blocks.grimspire_door.GrimSpireDoorBlock;
 import com.wadoo.hyperion.common.blocks.grimspire_door.GrimspireDoorAnimatedBlock;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -16,20 +15,20 @@ public class BlockHandler {
 
     //TODO, make agralite minable properly
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Hyperion.MODID);
-    public static final RegistryObject<Block> AGRALITE_CAGE = BLOCKS.register("agralite_cage", () -> new AgraliteCageBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL).noOcclusion()));
+    public static final RegistryObject<Block> AGRALITE_CAGE = BLOCKS.register("agralite_cage", () -> new AgraliteCageBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL).noOcclusion()));
 
 
 
-    public static final RegistryObject<Block> CUT_AGRALITE = BLOCKS.register("cut_agralite", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
-    public static final RegistryObject<Block> CUT_AGRALITE_SLAB = BLOCKS.register("cut_agralite_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
-    public static final RegistryObject<Block> CUT_AGRALITE_STAIRS = BLOCKS.register("cut_agralite_stairs", () -> new StairBlock(CUT_AGRALITE.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
+    public static final RegistryObject<Block> CUT_AGRALITE = BLOCKS.register("cut_agralite", () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
+    public static final RegistryObject<Block> CUT_AGRALITE_SLAB = BLOCKS.register("cut_agralite_slab", () -> new SlabBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
+    public static final RegistryObject<Block> CUT_AGRALITE_STAIRS = BLOCKS.register("cut_agralite_stairs", () -> new StairBlock(CUT_AGRALITE.get().defaultBlockState(), BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
 
-    public static final RegistryObject<Block> AGRALITE_BLOCK = BLOCKS.register("agralite_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
-    public static final RegistryObject<Block> AGRALITE_STAIRS = BLOCKS.register("agralite_stairs", () -> new StairBlock(AGRALITE_BLOCK.get().defaultBlockState(),BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
-    public static final RegistryObject<Block> AGRALITE_SLAB = BLOCKS.register("agralite_slab", () -> new SlabBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
+    public static final RegistryObject<Block> AGRALITE_BLOCK = BLOCKS.register("agralite_block", () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
+    public static final RegistryObject<Block> AGRALITE_STAIRS = BLOCKS.register("agralite_stairs", () -> new StairBlock(AGRALITE_BLOCK.get().defaultBlockState(),BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
+    public static final RegistryObject<Block> AGRALITE_SLAB = BLOCKS.register("agralite_slab", () -> new SlabBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL)));
 
 
-    public static final RegistryObject<Block> AGRALITE_PIPE = BLOCKS.register("agralite_pipe", () -> new AgralitePipeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL).noOcclusion()));
+    public static final RegistryObject<Block> AGRALITE_PIPE = BLOCKS.register("agralite_pipe", () -> new AgralitePipeBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(8.0f, 5.0f).randomTicks().sound(SoundType.METAL).noOcclusion()));
     public static final RegistryObject<Block> AGRALITE_LAMP = BLOCKS.register("agralite_lamp", () -> new AgraliteLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN).lightLevel(level -> {
         return 12;
     }).noOcclusion()));

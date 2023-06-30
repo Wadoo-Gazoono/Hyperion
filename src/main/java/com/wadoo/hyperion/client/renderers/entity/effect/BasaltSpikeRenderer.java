@@ -10,7 +10,6 @@ public class BasaltSpikeRenderer extends GeoEntityRenderer<BasaltSpikeEntity> {
 
     public BasaltSpikeRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new BasaltSpikeModel());
-        this.shadowRadius = 0.2788F;
     }
 
 

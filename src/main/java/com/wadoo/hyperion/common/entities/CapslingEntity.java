@@ -74,7 +74,7 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(CapslingEntity.class, EntityDataSerializers.BOOLEAN);
 
     public static final Predicate<ItemEntity> ALLOWED_ITEMS = (item) -> {
-        return !item.hasPickUpDelay() && item.isAlive() && item.isOnGround();
+        return !item.hasPickUpDelay() && item.isAlive() && item.onGround();
     };
     public final int ITEMCOOLDOWN = 300;
 
@@ -144,15 +144,15 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
             this.setDeltaMovement(this.getDeltaMovement().x,-0.6f,this.getDeltaMovement().y);
         }
         if(getAnimState() == 2){
-            if(this.level.isClientSide()) {
+            if(this.level().isClientSide()) {
                 if (random.nextFloat() < 0.11F) {
                     for (int i = 0; i < random.nextInt(2) + 2; ++i) {
-                        this.level.addParticle(ParticleTypes.FLAME, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), 0, 0.08d, 0);
+                        this.level().addParticle(ParticleTypes.FLAME, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), 0, 0.08d, 0);
                     }
                 }
                 if (random.nextFloat() < 0.2F) {
                     for (int i = 0; i < random.nextInt(5) + 2; ++i) {
-                        this.level.addParticle(ParticleTypes.SMOKE, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), 0, 0.08d, 0);
+                        this.level().addParticle(ParticleTypes.SMOKE, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), 0, 0.08d, 0);
                     }
                 }
             }
@@ -229,7 +229,7 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
             p_148831_.saveToBucketTag(itemstack1);
             ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, p_148829_, itemstack1, false);
             p_148829_.setItemInHand(p_148830_, itemstack2);
-            Level level = p_148831_.level;
+            Level level = p_148831_.level();
             if (!level.isClientSide) {
                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)p_148829_, itemstack1);
             }
@@ -338,7 +338,7 @@ class CapslingEatGoal extends Goal{
 
     @Override
     public boolean canUse() {
-        return !this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR) && this.entity.isOnGround();
+        return !this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR) && this.entity.onGround();
     }
 
     @Override
@@ -382,7 +382,7 @@ class CapslingEatGoal extends Goal{
         else{
             this.entity.playSound(SoundEvents.ITEM_PICKUP,1.0f, 1.8f);
             this.entity.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);
-            this.entity.level.addFreshEntity(new ItemEntity(this.entity.level,this.entity.getX(),this.entity.getY(),this.entity.getZ(),new ItemStack(ItemHandler.AGRALITE_SHEET.get(),1)));
+            this.entity.level().addFreshEntity(new ItemEntity(this.entity.level(),this.entity.getX(),this.entity.getY(),this.entity.getZ(),new ItemStack(ItemHandler.AGRALITE_SHEET.get(),1)));
         }
     }
 }
@@ -397,7 +397,7 @@ class FindMagmaCreamGoal extends Goal{
 
     @Override
     public boolean canUse() {
-        List<ItemEntity> list = this.entity.level.getEntitiesOfClass(ItemEntity.class, this.entity.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), CapslingEntity.ALLOWED_ITEMS);
+        List<ItemEntity> list = this.entity.level().getEntitiesOfClass(ItemEntity.class, this.entity.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), CapslingEntity.ALLOWED_ITEMS);
         if(!list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getItem().is(Items.MAGMA_CREAM)) {
@@ -410,7 +410,7 @@ class FindMagmaCreamGoal extends Goal{
 
     @Override
     public boolean canContinueToUse() {
-        List<ItemEntity> list = this.entity.level.getEntitiesOfClass(ItemEntity.class, this.entity.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), CapslingEntity.ALLOWED_ITEMS);
+        List<ItemEntity> list = this.entity.level().getEntitiesOfClass(ItemEntity.class, this.entity.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), CapslingEntity.ALLOWED_ITEMS);
         if(!list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getItem().is(Items.MAGMA_CREAM)) {
@@ -436,7 +436,7 @@ class FindMagmaCreamGoal extends Goal{
     @Override
     public void tick() {
         super.tick();
-        List<ItemEntity> list = this.entity.level.getEntitiesOfClass(ItemEntity.class, this.entity.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), CapslingEntity.ALLOWED_ITEMS);
+        List<ItemEntity> list = this.entity.level().getEntitiesOfClass(ItemEntity.class, this.entity.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), CapslingEntity.ALLOWED_ITEMS);
         for(int i = 0; i < list.size(); i++){
             if(list.get(i).getItem().is(Items.MAGMA_CREAM)){
                 wantedItem = list.get(i);
@@ -467,7 +467,7 @@ class CapslingSocializeGoal extends Goal{
 
     @Override
     public boolean canUse() {
-        List<? extends CapslingEntity> list = this.entity.level.getNearbyEntities(CapslingEntity.class, LEADER_TARGETING, this.entity, this.entity.getBoundingBox().inflate(25.0D));
+        List<? extends CapslingEntity> list = this.entity.level().getNearbyEntities(CapslingEntity.class, LEADER_TARGETING, this.entity, this.entity.getBoundingBox().inflate(25.0D));
         return !list.isEmpty() && this.entity.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR);
 
     }
@@ -480,7 +480,7 @@ class CapslingSocializeGoal extends Goal{
 
     @Override
     public void tick() {
-        List<? extends CapslingEntity> list = this.entity.level.getNearbyEntities(CapslingEntity.class, LEADER_TARGETING, this.entity, this.entity.getBoundingBox().inflate(25.0D));
+        List<? extends CapslingEntity> list = this.entity.level().getNearbyEntities(CapslingEntity.class, LEADER_TARGETING, this.entity, this.entity.getBoundingBox().inflate(25.0D));
         if(!list.isEmpty()) {
             if(this.entity.getRandom().nextFloat() < 0.01f) {
                 this.entity.getNavigation().moveTo(list.get(0), 0.8f);

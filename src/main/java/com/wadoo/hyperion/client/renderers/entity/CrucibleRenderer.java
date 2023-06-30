@@ -6,12 +6,14 @@ import com.mojang.math.Axis;
 import com.wadoo.hyperion.client.models.entity.CrucibleModel;
 import com.wadoo.hyperion.client.renderers.layers.CrucibleEyesLayer;
 import com.wadoo.hyperion.client.renderers.layers.CrucibleLavaLayer;
+import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.CrucibleEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
@@ -37,8 +39,8 @@ public class CrucibleRenderer extends GeoEntityRenderer<CrucibleEntity> {
             }
 
             @Override
-            protected ItemTransforms.TransformType getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
-                return ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND;
+            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
+                return ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
             }
 
             @Override
@@ -61,8 +63,8 @@ public class CrucibleRenderer extends GeoEntityRenderer<CrucibleEntity> {
             }
 
             @Override
-            protected ItemTransforms.TransformType getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
-                return ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND;
+            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
+                return ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
             }
 
             @Override
@@ -85,8 +87,8 @@ public class CrucibleRenderer extends GeoEntityRenderer<CrucibleEntity> {
             }
 
             @Override
-            protected ItemTransforms.TransformType getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
-                return ItemTransforms.TransformType.GROUND;
+            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
+                return ItemDisplayContext.GROUND;
             }
 
             @Override
@@ -109,8 +111,8 @@ public class CrucibleRenderer extends GeoEntityRenderer<CrucibleEntity> {
             }
 
             @Override
-            protected ItemTransforms.TransformType getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
-                return ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND;
+            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, CrucibleEntity animatable) {
+                return ItemDisplayContext.FIRST_PERSON_LEFT_HAND;
             }
 
             @Override

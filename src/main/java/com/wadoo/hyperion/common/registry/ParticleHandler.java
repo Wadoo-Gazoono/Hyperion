@@ -30,8 +30,8 @@ public class ParticleHandler {
 
     @SubscribeEvent
     public static void registry(RegisterParticleProvidersEvent event) {
-        event.register(AGRALITE_FLAME.get(), AgraliteFlameParticle.Factory::new);
-        event.register(KILN_FLAME.get(), KilnFlameParticle.Factory::new);
+        event.registerSpriteSet(AGRALITE_FLAME.get(), AgraliteFlameParticle.Factory::new);
+        event.registerSpriteSet(KILN_FLAME.get(), KilnFlameParticle.Factory::new);
     }
 
 }

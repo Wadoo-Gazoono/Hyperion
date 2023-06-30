@@ -6,22 +6,25 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
+import java.util.function.Supplier;
+
+import static com.wadoo.hyperion.common.registry.CreativeTabHandler.addToTab;
 
 public class ItemHandler {
 
-    public static CreativeModeTab HYPERION_TAB;
-
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Hyperion.MODID);
 
-    public static final RegistryObject<Item> AGRALITE_SHEET = ITEMS.register("agralite_sheet", () -> new Item(new Item.Properties().stacksTo(64).fireResistant()));
+    public static final RegistryObject<Item> AGRALITE_SHEET = addToTab(ITEMS.register("agralite_sheet", () -> new Item(new Item.Properties().stacksTo(64).fireResistant())));
     public static final RegistryObject<Item> AGRALITE_CAGE = ITEMS.register("agralite_cage", () -> new BlockItem(BlockHandler.AGRALITE_CAGE.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> AGRALITE_BLOCK = ITEMS.register("agralite_block", () -> new BlockItem(BlockHandler.AGRALITE_BLOCK.get(), new Item.Properties()));
 
@@ -60,20 +63,6 @@ public class ItemHandler {
     public static final RegistryObject<Item> AMD_SPAWN_EGG = ITEMS.register("auto_mining_droid_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.AUTOMININGDROID, 0x3a3b48, 0x794934, new Item.Properties()));
 
     public static final RegistryObject<VolatileGoopItem> VOLATILE_GOOP = ITEMS.register("volatile_goop",() -> new VolatileGoopItem((new Item.Properties()).stacksTo(16).fireResistant()));
-    public static final RegistryObject<BurrowingSlicerItem> BURROWING_SLICER = ITEMS.register("burrowing_slicer",() -> new BurrowingSlicerItem(HyperionTiers.AGRALITE, 3, -2.4F, new Item.Properties()));
-
-
-
-
-    public static final RegistryObject<AgraliteArmorItem> AGRALITE_HELMET = ITEMS.register("agralite_armet",
-            () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.HEAD, new Item.Properties()));
-    public static final RegistryObject<AgraliteArmorItem> AGRALITE_CHESTPLATE = ITEMS.register("agralite_cuirass",
-            () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.CHEST, new Item.Properties()));
-    public static final RegistryObject<AgraliteArmorItem> AGRALITE_LEGGINGS = ITEMS.register("agralite_greaves",
-            () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.LEGS, new Item.Properties()));
-    public static final RegistryObject<AgraliteArmorItem> AGRALITE_BOOTS = ITEMS.register("agralite_sabatons",
-            () -> new AgraliteArmorItem(HyperionArmourMaterials.AGRALITE, EquipmentSlot.FEET, new Item.Properties()));
-
 
 
 
@@ -84,19 +73,13 @@ public class ItemHandler {
             CUT_AGRALITE_SLAB,SPIRE_BRICKS,CRACKED_SPIRE_BRICKS, CUT_SPIRE_BRICKS,CHISELED_CUT_SPIRE_BRICKS,CUT_SPIRE_BRICK_STAIRS, CUT_SPIRE_BRICK_SLAB,
             CHECKERED_SPIRE_BRICKS,
             KILN, CAPSLING_BUCKET,VOLATILE_GOOP,
-            CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG,AMD_SPAWN_EGG, BURROWING_SLICER,
-            AGRALITE_HELMET,AGRALITE_CHESTPLATE,AGRALITE_LEGGINGS,AGRALITE_BOOTS
+            CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG,AMD_SPAWN_EGG
     );
 
-    public static void registerCreativeModeTab(CreativeModeTabEvent.Register event) {
-        HYPERION_TAB = event.registerCreativeModeTab(new ResourceLocation(Hyperion.MODID, "tab"),
-                builder -> builder.icon(() -> AGRALITE_SHEET.get().getDefaultInstance())
-                        .title(Component.translatable("itemGroup." + Hyperion.MODID + ".tab"))
-                        .withLabelColor(0x333333)
-                        .displayItems((features, output, hasPermissions) ->
-                                output.acceptAll(HYPERION_ITEMS.stream().map(item -> item.get().getDefaultInstance()).toList())
-                        )
-        );
-
+    @SubscribeEvent
+    public static void buildContents(BuildCreativeModeTabContentsEvent event) {
+        if(event.getTabKey() == CreativeTabHandler.HYPERION_TAB.getKey()) {
+            event.accept((Supplier<? extends ItemLike>) HYPERION_ITEMS.stream().map(item -> item.get().getDefaultInstance()).toList());
+        }
     }
 }

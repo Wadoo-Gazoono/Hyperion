@@ -1,10 +1,10 @@
 package com.wadoo.hyperion.common.entities.fedran;
 
-import com.wadoo.hyperion.common.entities.CapslingEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 
 public class FedranAttackAI extends Goal {
     private final FedranEntity fedran;
@@ -14,19 +14,30 @@ public class FedranAttackAI extends Goal {
     private double targetY;
     private double targetZ;
 
-    public int FJ_cooldown = 20;
-    public int HS_cooldown = 20;
-    public int STOMP_cooldown = 20;
-    public int SS_cooldown = 40;
-
+    public int stompCoolDown = 0;
+    public int horizontalStrikeCoolDown = 0;
+    public int forwardJabCoolDown = 0;
+    public int smithingSlamCoolDown = 0;
+    public int kickCoolDown = 0;
 
     public FedranAttackAI(FedranEntity fedran) {
         this.fedran = fedran;
+        this.stompCoolDown = this.fedran.stompCoolDown;
+        this.horizontalStrikeCoolDown = this.fedran.horizontalStrikeCoolDown;
+        this.forwardJabCoolDown = this.fedran.forwardJabCoolDown;
+        this.smithingSlamCoolDown = this.fedran.smithingSlamCoolDown;
+        this.kickCoolDown = this.fedran.kickCoolDown;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP, Flag.LOOK));
     }
 
     @Override
     public boolean canUse() {
+        LivingEntity target = this.fedran.getTarget();
+        return target != null && target.isAlive() && this.fedran.getAnimation() == 0 ;
+    }
+
+    @Override
+    public boolean canContinueToUse() {
         LivingEntity target = this.fedran.getTarget();
         return target != null && target.isAlive() && this.fedran.getAnimation() == 0;
     }
@@ -45,13 +56,14 @@ public class FedranAttackAI extends Goal {
     public void tick() {
         LivingEntity target = this.fedran.getTarget();
         if (target == null) return;
+        //TODO STEAM RELEASE BUGS WITH WARDEN
+        this.stompCoolDown = this.fedran.stompCoolDown;
+        this.horizontalStrikeCoolDown = this.fedran.horizontalStrikeCoolDown;
+        this.forwardJabCoolDown = this.fedran.forwardJabCoolDown;
+        this.smithingSlamCoolDown = this.fedran.smithingSlamCoolDown;
+        this.kickCoolDown = this.fedran.kickCoolDown;
 
-        FJ_cooldown--;
-        HS_cooldown--;
-        STOMP_cooldown--;
-        SS_cooldown--;
-
-        double dist = this.fedran.distanceToSqr(this.targetX, this.targetY, this.targetZ);
+        double distSqr = this.fedran.distanceToSqr(this.targetX, this.targetY, this.targetZ);
         this.fedran.getLookControl().setLookAt(target, 30.0F, 30.0F);
         if (--this.repath <= 0 && (
                 this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D ||
@@ -62,38 +74,58 @@ public class FedranAttackAI extends Goal {
             this.targetY = target.getY();
             this.targetZ = target.getZ();
             this.repath = 4 + this.fedran.getRandom().nextInt(7);
-            if (dist > 32.0D * 32.0D) {
+            if (distSqr > 32.0D * 32.0D) {
                 this.repath += 10;
-            } else if (dist > 16.0D * 16.0D) {
+            } else if (distSqr > 16.0D * 16.0D) {
                 this.repath += 5;
             }
             if (!this.fedran.getNavigation().moveTo(target, 1.3D)) {
                 this.repath += 15;
             }
         }
-        dist = this.fedran.distanceToSqr(this.targetX, this.targetY, this.targetZ);
-        if (Math.sqrt(dist) < 6f) this.fedran.getNavigation().stop();
+        distSqr = this.fedran.distanceToSqr(this.targetX, this.targetY, this.targetZ);
+        double dist = Math.sqrt(this.fedran.distanceToSqr(this.targetX, this.targetY, this.targetZ));
+
+        if (dist < 6f) this.fedran.getNavigation().stop();
         if (target.getY() - this.fedran.getY() >= -1 && target.getY() - this.fedran.getY() <= 3) {
             //Attack Checker
-            if(SS_cooldown <= 0 && Math.sqrt(this.fedran.distanceToSqr(targetX,targetY,targetZ)) < 18.5){
-                this.fedran.setAnimation(5);
-                SS_cooldown = this.fedran.getRandom().nextInt(10) + 10;
-            }
+            if (this.fedran.getHealth() < this.fedran.getHealthThreshold() && !this.fedran.hasTransitioned()) this.fedran.setAnimation(6);
 
-//            if(FJ_cooldown <= 0 && Math.sqrt(this.fedran.distanceToSqr(targetX,targetY,targetZ)) < 11.5){
-//                this.fedran.setAnimation(2);
-//                FJ_cooldown = this.fedran.getRandom().nextInt(10) + 10;
-//            }
-//
-//            if(STOMP_cooldown <= 0 && Math.sqrt(this.fedran.distanceToSqr(targetX,targetY,targetZ)) < 8.5){
-//                this.fedran.setAnimation(3);
-//                STOMP_cooldown = this.fedran.getRandom().nextInt(10) + 10;
-//            }
-//
-//            if(HS_cooldown <= 0 && Math.sqrt(this.fedran.distanceToSqr(targetX,targetY,targetZ)) < 9.5){
-//                this.fedran.setAnimation(4);
-//                HS_cooldown = this.fedran.getRandom().nextInt(15) + 15;
-//            }
+            //if (this.fedran.isReadyToJump() && this.fedran.jumpCoolDown <= 0 && this.fedran.getHealth() < this.fedran.getHealthThreshold() && !this.fedran.hasTransitioned()) this.fedran.setAnimation(8);
+
+            if (dist > 2.8f && dist < 7.5f && this.fedran.forwardJabCoolDown <= 0) handleAttack(2);
+            //FORWARD JAB
+            if (dist < 2f && this.fedran.kickCoolDown <= 0) handleAttack(7);
+            //KICK
+            if (dist < 5f && dist > 2.5f&&  this.fedran.stompCoolDown <= 0) handleAttack(3);
+            //STOMP
+            if (dist > 3f && dist < 7f &&  this.fedran.horizontalStrikeCoolDown <= 0) handleAttack(4);
+            //HORIZONTAL STRIKE
+            if (dist > 5.5f && dist < 18.5f && this.fedran.smithingSlamCoolDown <= 0) handleAttack(5);
+            //SMITHING SLAM
+
+
+        }
+    }
+
+    private void handleAttack(int attackID){
+        this.fedran.setAnimation(attackID);
+        switch (attackID){
+            case 2:
+                this.fedran.forwardJabCoolDown = 50;
+                break;
+            case 3:
+                this.fedran.stompCoolDown = 40;
+                break;
+            case 4:
+                this.fedran.horizontalStrikeCoolDown = 90;
+                break;
+            case 5:
+                this.fedran.smithingSlamCoolDown = 110;
+                break;
+            case 7:
+                this.fedran.kickCoolDown = 55;
+                break;
         }
     }
 }

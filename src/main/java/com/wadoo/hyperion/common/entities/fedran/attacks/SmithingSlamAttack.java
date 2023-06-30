@@ -22,19 +22,17 @@ public class SmithingSlamAttack extends AnimatedAttack {
     public void doEffects(int currentTick) {
         super.doEffects(currentTick);
         entity.getNavigation().stop();
-        if(entity.getTarget() == null) entity.getLookControl().setLookAt(this.entity.getTarget(),80f,80f);
+        if(entity.getTarget() != null) entity.getLookControl().setLookAt(this.entity.getTarget(),80f,80f);
         if (currentTick == 79) {
-            CameraShakeEntity.cameraShake(this.entity.level, this.entity.position(), 45, 0.08f, 20, 10);
+            CameraShakeEntity.cameraShake(this.entity.level(), this.entity.position(), 45, 0.08f, 20, 10);
             for(int i = 0; i < 5; i++){
-                BasaltSpikeEntity spike = EntityHandler.BASALT_SPIKE.get().create(this.entity.level);
+                BasaltSpikeEntity spike = EntityHandler.BASALT_SPIKE.get().create(this.entity.level());
                 spike.setPos(new Vec3(0D,0D,7.5D + (i * 2)).yRot((float)Math.toRadians(-this.entity.yBodyRot)).add(this.entity.position()));
-                this.entity.level.addFreshEntity(spike);
+                this.entity.level().addFreshEntity(spike);
             }
 
-            BasaltSpikeEntity spike = EntityHandler.BASALT_SPIKE.get().create(entity.level);
-            this.entity.level.addFreshEntity(spike);
 
-            List<LivingEntity> entitiesHit = this.entity.level.getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().inflate(7.2D, 1.0D, 7.2D));
+            List<LivingEntity> entitiesHit = this.entity.level().getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().inflate(7.2D, 1.0D, 7.2D));
             float damage = (float)entity.getAttribute(Attributes.ATTACK_DAMAGE).getValue();
             for (LivingEntity entityHit : entitiesHit) {
                 float entityHitAngle = (float) ((Math.atan2(entityHit.getZ() - entity.getZ(), entityHit.getX() - entity.getX()) * (180 / Math.PI) - 90) % 360);
@@ -50,7 +48,7 @@ public class SmithingSlamAttack extends AnimatedAttack {
                 float arc_angle = 20;
                 float entityHitDistance = (float) Math.sqrt((entityHit.getZ() - entity.getZ()) * (entityHit.getZ() - entity.getZ()) + (entityHit.getX() - entity.getX()) * (entityHit.getX() - entity.getX())) - entityHit.getBbWidth() / 2f;
                 if (entityHitDistance <= 8f && (entityRelativeAngle <= arc_angle / 2 && entityRelativeAngle >= -arc_angle / 2) || (entityRelativeAngle >= 360 - arc_angle / 2 || entityRelativeAngle <= -360 + arc_angle / 2)) {
-                    entityHit.hurt(DamageSource.mobAttack(entity), damage);
+                    entityHit.hurt(this.entity.damageSources().mobAttack(entity), damage);
                     if (entityHit.isBlocking())
                         entityHit.getUseItem().hurtAndBreak(400, entityHit, player -> player.broadcastBreakEvent(entityHit.getUsedItemHand()));
                     entityHit.setDeltaMovement(entityHit.getDeltaMovement().x * 2, entityHit.getDeltaMovement().y + 0.2d, entityHit.getDeltaMovement().z * 2);

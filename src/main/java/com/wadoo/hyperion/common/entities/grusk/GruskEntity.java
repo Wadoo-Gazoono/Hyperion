@@ -53,7 +53,7 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     public GruskEntity(EntityType<? extends HyperionLivingEntity> type, Level level) {
         super(type, level);
     }
-
+//TODO GRUSK DOESNT WORK IF HIT WITH BOW
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 3, this::predicate)
@@ -104,12 +104,12 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
             setHasHead(false);
             triggerAnim("controller","decapitate");
             decapitateTimer = 40;
-            if(!this.level.isClientSide) {
-                GruskHeadEntity head = EntityHandler.GRUSK_HEAD.get().create(this.level);
+            if(!this.level().isClientSide) {
+                GruskHeadEntity head = EntityHandler.GRUSK_HEAD.get().create(this.level());
                 head.moveTo(this.position().add(0d,0.7d,0d));
                 head.setDeltaMovement(0d,1d,0d);
                 head.setOwner(this);
-                level.addFreshEntity(head);
+                level().addFreshEntity(head);
             }
         }
 

@@ -26,7 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -206,8 +205,8 @@ class AMDSwingGoal extends Goal{
             this.entity.setDeltaMovement(this.entity.getDeltaMovement().multiply(0d,1d,0d));
             if(animTick == 32){
                 //System.out.println(this.entity.getViewVector(1f).dot(this.entity.position().subtract(livingentity.position())) > 0.5f);
-                CameraShakeEntity.cameraShake(this.entity.level, this.entity.position(), 25, 0.02f, 20, 10);
-                for (LivingEntity livingentity : this.entity.level.getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().move(0d,-1d,0d).inflate(3.5D, 1D, 3.5D).move(0d,-1.4d,0d))) {
+                CameraShakeEntity.cameraShake(this.entity.level(), this.entity.position(), 25, 0.02f, 20, 10);
+                for (LivingEntity livingentity : this.entity.level().getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().move(0d,-1d,0d).inflate(3.5D, 1D, 3.5D).move(0d,-1.4d,0d))) {
                     if(livingentity instanceof AutoMiningDroidEntity == false){
                         this.entity.doHurtTarget(livingentity);
                     }

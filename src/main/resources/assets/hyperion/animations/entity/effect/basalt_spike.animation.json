@@ -11,7 +11,7 @@
 							"vector": [0, -42, 0]
 						},
 						"0.1667": {
-							"vector": ["Math.cos((query.anim_time - 0.0) * 3100) * 0.3", 1, "Math.sin((query.anim_time - 0.0) * 3100) * 0.3"],
+							"vector": ["Math.cos((query.anim_time - 0.0) * 3100) * 2", 1, "Math.sin((query.anim_time - 0.0) * 3100) * 2"],
 							"easing": "easeInQuad"
 						},
 						"0.7917": {
