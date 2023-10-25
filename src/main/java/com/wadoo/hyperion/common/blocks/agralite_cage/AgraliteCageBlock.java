@@ -137,9 +137,10 @@ public class AgraliteCageBlock extends Block {
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos pos2, boolean p_52781_) {
         if (!level.isClientSide) {
             boolean flag = state.getValue(POWERED);
-            if(level.getBlockState(pos2).is(BlockHandler.AGRALITE_CAGE.get()) && pos2.getY() == pos.getY() -1){
-                if(level.getBlockState(pos2).getValue(POWERED) == true)                System.out.println(2);
-
+            if(level.getBlockState(pos2).is(BlockHandler.AGRALITE_CAGE.get())){
+                if(level.getBlockState(pos2).getValue(POWERED) == true) {
+                    level.setBlock(pos, state.setValue(POWERED, true), 2);
+                }
                 System.out.println(1);
             }
             if (level.hasNeighborSignal(pos)) {

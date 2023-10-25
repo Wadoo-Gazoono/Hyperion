@@ -1,0 +1,17 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"blank": {
+			"loop": true,
+			"animation_length": 0.25,
+			"bones": {
+				"root": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

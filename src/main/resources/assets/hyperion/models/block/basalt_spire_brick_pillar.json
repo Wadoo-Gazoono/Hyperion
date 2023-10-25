@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hyperion:block/spire_pillar_top",
+    "side": "hyperion:block/spire_pillar_side"
+  }
+}

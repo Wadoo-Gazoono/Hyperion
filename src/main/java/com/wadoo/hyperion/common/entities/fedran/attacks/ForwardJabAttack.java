@@ -2,9 +2,11 @@ package com.wadoo.hyperion.common.entities.fedran.attacks;
 
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.entities.ai.AnimatedAttack;
+import com.wadoo.hyperion.common.entities.fedran.FedranAttack;
+import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
 
-public class ForwardJabAttack extends AnimatedAttack {
-    public ForwardJabAttack(HyperionLivingEntity entity, int state, String animation, int animLength) {
+public class ForwardJabAttack extends FedranAttack {
+    public ForwardJabAttack(FedranEntity entity, int state, String animation, int animLength) {
         super(entity, state, animation, animLength);
     }
 

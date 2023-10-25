@@ -1,7 +1,7 @@
 package com.wadoo.hyperion.common.entities.effects;
 
-import com.wadoo.hyperion.common.entities.AutoMiningDroidEntity;
 import com.wadoo.hyperion.common.entities.CapslingEntity;
+import com.wadoo.hyperion.common.entities.forgenaut.ForgenautEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -51,7 +51,7 @@ public class BasaltSpikeEntity extends Entity implements GeoEntity {
         super.tick();
         if(tickCount == 3){
             for(LivingEntity livingentity : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(0.5D, 0.0D, 0.5D))) {
-                if(!(livingentity instanceof AutoMiningDroidEntity)) {
+                if(!(livingentity instanceof ForgenautEntity)) {
                     if(this.owner != null){
                         livingentity.hurt(this.damageSources().mobAttack(this.owner), 8f);
                         livingentity.setDeltaMovement(livingentity.getDeltaMovement().add(-0.5 + random.nextDouble(),0.9d,-0.5 + random.nextDouble()));

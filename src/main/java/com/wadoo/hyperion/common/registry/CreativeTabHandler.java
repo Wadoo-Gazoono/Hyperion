@@ -36,8 +36,7 @@ public class CreativeTabHandler {
                     .title(Component.translatable("itemGroup.hyperion_tab"))
                     .icon(ItemHandler.AGRALITE_SHEET.get()::getDefaultInstance)
                     .displayItems((displayParams, output) ->
-                            ITEMS.forEach(itemLike -> output.accept(itemLike.get())))
-                    .withSearchBar()
+                            ItemHandler.HYPERION_ITEMS.forEach(itemLike -> output.accept(itemLike.get())))
                     .build()
     );
 

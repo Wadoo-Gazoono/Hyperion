@@ -1,12 +1,10 @@
 package com.wadoo.hyperion.common.entities.fedran;
 
-import com.wadoo.hyperion.common.entities.CapslingEntity;
-import com.wadoo.hyperion.common.entities.CrucibleEntity;
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.entities.fedran.attacks.*;
-import com.wadoo.hyperion.common.entities.grusk.GruskAttackAI;
-import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
-import com.wadoo.hyperion.common.entities.grusk.GruskLeapGoal;
+import com.wadoo.hyperion.common.util.verlet.VerletLine;
+import com.wadoo.hyperion.common.util.verlet.VerletPoint;
+import com.wadoo.hyperion.common.util.verlet.VerletUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -23,10 +21,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.boss.EnderDragonPart;
-import net.minecraft.world.entity.boss.enderdragon.phases.EnderDragonPhase;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -40,17 +37,16 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 
 public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final ServerBossEvent bossEvent = (new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS));
 
-    private static final EntityDataAccessor<Integer> HEALTH_THRESHOLD = SynchedEntityData.defineId(FedranEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> HAS_TRANSITIONED = SynchedEntityData.defineId(FedranEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> READY_TO_JUMP = SynchedEntityData.defineId(FedranEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> JUMP_STATE = SynchedEntityData.defineId(FedranEntity.class, EntityDataSerializers.BOOLEAN);
+    //DATA
+    private static final EntityDataAccessor<Integer> ATTACK_COOLDOWN = SynchedEntityData.defineId(FedranEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> PHASE = SynchedEntityData.defineId(FedranEntity.class, EntityDataSerializers.INT);
 
+    //MULTIPART
     private final FedranPart[] parts;
     private final FedranPart body;
     private final Vec3 bodyPos = new Vec3(0f,0f,0f);
@@ -61,8 +57,7 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
     private final FedranPart rightShoulder;
     private final Vec3 rightShoulderPos = new Vec3(2.1875f,4.0625f,0.2f);
 
-    public HashMap<Integer,Integer> coolDownMap = new HashMap<Integer,Integer>();
-
+    //ANIMATIONS
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("WALK");
     private static final RawAnimation IDLE_DEACTIVATED = RawAnimation.begin().thenLoop("IDLE_DEACTIVATED");
     private static final RawAnimation IDLE_ACTIVATED = RawAnimation.begin().thenLoop("IDLE_ACTIVATED");
@@ -70,22 +65,43 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
     private static final RawAnimation HORIZONTAL_SWEEP = RawAnimation.begin().thenPlay("HS_FULL_ATTACK_SHORT");
     private static final RawAnimation STOMP_SHORT = RawAnimation.begin().thenPlay("STOMP_FULL_ATTACK_SHORT");
     private static final RawAnimation SMITHING_SLAM = RawAnimation.begin().thenPlay("SS_FULL_ATTACK");
-    private static final RawAnimation STEAM_RELEASE = RawAnimation.begin().thenPlay("SR");
+    private static final RawAnimation STEAM_RELEASE = RawAnimation.begin().thenPlay("STEAM_RELEASE");
     private static final RawAnimation KICK = RawAnimation.begin().thenPlay("KICK");
-    private static final RawAnimation JUMP_START = RawAnimation.begin().thenPlay("REPOSITION_START");
-    private static final RawAnimation JUMP_LOOP = RawAnimation.begin().thenPlay("REPOSITION_LOOP");
-    private static final RawAnimation JUMP_END = RawAnimation.begin().thenPlay("REPOSITION_END");
 
-    public int stompCoolDown = 0;
-    public int horizontalStrikeCoolDown = 0;
-    public int forwardJabCoolDown = 0;
-    public int smithingSlamCoolDown = 0;
-    public int kickCoolDown = 0;
-    public int jumpCoolDown = 0;
 
-//    public int damageTaken =0;
-//    public int lastHurtTime =0;
-//    public int landTimer = 0;
+    //VERLET INTEGRATION
+//    private int attackTimer = 0;
+//
+//    private final int STIFFNESS = 5;
+//
+//    public VerletPoint leftP1 = new VerletPoint( 0.578, 1.093,0.018,true);
+//    public VerletPoint leftP2 = new VerletPoint(0.578, 0.843,0.018,false);
+//    public VerletPoint leftP3 = new VerletPoint(0.578,0.718,0.018,false);
+//    public VerletPoint leftP4 = new VerletPoint(0.578,0.468,0.018,false);
+//    public VerletPoint leftP5 = new VerletPoint(0.578,0.343,0.018,false);
+//    public VerletPoint leftP6 = new VerletPoint(0.578,0.093,0.018,false);
+//    public VerletPoint leftP7 = new VerletPoint(0.578,-0.031,0.018,false);
+//    public VerletPoint leftP8 = new VerletPoint(0.578,-0.281,0.018,false);
+//    public VerletPoint leftP9 = new VerletPoint(0.578,-0.406,0.018,false);
+//    public VerletPoint leftP10 = new VerletPoint(0.578,-0.656,0.018,false);
+//    public VerletPoint leftP11 = new VerletPoint(0.578,-0.906,0.018,false);
+//
+//    public VerletPoint[] leftPoints = {leftP1,leftP2,leftP3,leftP4,leftP5,leftP6,leftP7,leftP8,leftP9,leftP10,leftP11};
+//
+//    public VerletLine leftL1 = new VerletLine(leftP1,leftP2,0.312f);
+//    public VerletLine leftL2 = new VerletLine(leftP2,leftP3,0.312f);
+//    public VerletLine leftL3 = new VerletLine(leftP3,leftP4,0.312f);
+//    public VerletLine leftL4 = new VerletLine(leftP4,leftP5,0.312f);
+//    public VerletLine leftL5 = new VerletLine(leftP5,leftP6,0.312f);
+//    public VerletLine leftL6 = new VerletLine(leftP6,leftP7,0.312f);
+//    public VerletLine leftL7 = new VerletLine(leftP7,leftP8,0.312f);
+//    public VerletLine leftL8 = new VerletLine(leftP8,leftP9,0.312f);
+//    public VerletLine leftL9 = new VerletLine(leftP9,leftP10,0.312f);
+//    public VerletLine leftL10 = new VerletLine(leftP10,leftP11,0.312f);
+//    public VerletLine[] leftLines = {leftL1,leftL2,leftL3,leftL4,leftL5,leftL6,leftL7,leftL8,leftL9,leftL10};
+//
+//    public Vec3 currentPos = position();
+//    public Vec3 oldPos = currentPos;
 
     public FedranEntity(EntityType<? extends HyperionLivingEntity> monster, Level level) {
         super(monster, level);
@@ -95,11 +111,6 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
         this.leftShoulder = new FedranPart(this,"leftShoulder",1.5f,1.5f);
         this.rightShoulder = new FedranPart(this,"rightShoulder",1.5f,1.5f);
         parts = new FedranPart[]{this.body,this.chest,this.rightShoulder,this.leftShoulder};
-        coolDownMap.put(2,forwardJabCoolDown);
-        coolDownMap.put(3,stompCoolDown);
-        coolDownMap.put(4,horizontalStrikeCoolDown);
-        coolDownMap.put(5,smithingSlamCoolDown);
-        coolDownMap.put(7,kickCoolDown);
     }
 
 
@@ -149,6 +160,10 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
     public void push(Entity entity) {
     }
 
+    @Override
+    protected void doPush(Entity entity) {
+    }
+
     public void updatePartPosition(FedranPart part, Vec3 vec){
         Vec3 rotatedVec = position().add((new Vec3(vec.x,vec.y,vec.z).yRot((float)Math.toRadians(-this.yBodyRot))));
         part.moveTo(rotatedVec);
@@ -178,19 +193,12 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
         goalSelector.addGoal(2, new StompAttack(this,3,"STOMP_SHORT",75));
         goalSelector.addGoal(2, new HorizontalSweepAttack(this,4,"HORIZONTAL_SWEEP",100));
         goalSelector.addGoal(2, new SmithingSlamAttack(this,5,"SMITHING_SLAM",130));
-        goalSelector.addGoal(2, new SteamReleaseAttack(this,6,"STEAM_RELEASE",150));
+        goalSelector.addGoal(2, new SteamReleaseAttack(this,6,"STEAM_RELEASE",160));
         goalSelector.addGoal(2, new KickAttack(this,7,"KICK",62));
-        //goalSelector.addGoal(2, new JumpAttack(this,8,"JUMP_START",28));
-
-
 
         targetSelector.addGoal(1, (new HurtByTargetGoal(this, FedranEntity.class)));
         targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
-
-
-
-
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
@@ -200,15 +208,10 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
                 .triggerableAnim("STOMP_SHORT",STOMP_SHORT)
                 .triggerableAnim("SMITHING_SLAM",SMITHING_SLAM)
                 .triggerableAnim("STEAM_RELEASE",STEAM_RELEASE)
-                .triggerableAnim("KICK",KICK)
-                .triggerableAnim("JUMP_START",JUMP_START)
-                .triggerableAnim("JUMP_END",JUMP_END));
+                .triggerableAnim("KICK",KICK));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
-//        if (getJump()){
-//            return state.setAndContinue(JUMP_LOOP);
-//        }
         if(state.isMoving()){
             return state.setAndContinue(WALK);
         }
@@ -224,26 +227,39 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
         setPartPosition(this.leftShoulder,this.leftShoulderPos);
         setPartPosition(this.rightShoulder,this.rightShoulderPos);
         }
-//        this.lastHurtTime++;
-//        if (this.lastHurtTime > 70) damageTaken = 0;
-        if (this.getHealth() < getHealthThreshold() && hasTransitioned()) setTransitioned(false);
-        if (this.getAnimation() == 0){
-            if (stompCoolDown > 0) stompCoolDown--;
-            if (horizontalStrikeCoolDown > 0) horizontalStrikeCoolDown--;
-            if (forwardJabCoolDown > 0) forwardJabCoolDown--;
-            if (smithingSlamCoolDown > 0) smithingSlamCoolDown--;
-            if (kickCoolDown > 0) kickCoolDown--;
-            //if (jumpCoolDown > 0) jumpCoolDown--;
+
+
+        if (getAnimation() == 0){
+            if (getAttackCooldown() > 0){
+                setAttackCooldown(getAttackCooldown()-1);
+            }
+        }
+        else{
         }
 
-//        if (this.isOnGround() && getJump()){
-//            triggerAnim("controller","JUMP_END");
-//            landTimer = 25;
+
+
+        //VERLET
+//        oldPos = currentPos;
+//        currentPos = position();
+//        Vec3 dist = position().subtract(oldPos).normalize();
+//        leftP2.lx += dist.x/30;
+//        leftP2.lz += dist.z/30;
+//        for(VerletPoint p: leftPoints){
+//            VerletUtil.movePoint(p);
+//            VerletUtil.constrainToGround(p,position().y());
 //        }
-//        if (landTimer > 0 && getJump()){landTimer--;}
-//        if (landTimer <=0 && getJump()){
-//            setJump(false);
-//            this.jumpCoolDown = 200 + random.nextInt(100);
+//        for (int i = 0; i < STIFFNESS; i++){
+//            for (VerletLine l: leftLines){
+//                VerletUtil.constrainToLine(l);
+//            }
+//        }
+//        for(VerletPoint p: leftPoints){
+//            if (level().isClientSide){
+//                Vec3 pos = new Vec3(p.x * 1.2,p.y,p.z * 1.2).yRot((float)Math.toRadians(-this.yBodyRot + 180)).add(position());
+//                //System.out.println();
+//                //level().addParticle(ParticleTypes.BUBBLE,pos.x,pos.y,pos.z,0d,0d,0d);
+//            }
 //        }
     }
 
@@ -266,9 +282,6 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (getAnimation() != 6){
-//            lastHurtTime = 0;
-//            damageTaken+= amount;
-//            if (damageTaken > 30) setReadyToJump(true);
             return super.hurt(source, amount);
         }
         return false;
@@ -306,29 +319,14 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(HEALTH_THRESHOLD,450);
-        this.entityData.define(HAS_TRANSITIONED,false);
-        //this.entityData.define(READY_TO_JUMP,false);
-        //this.entityData.define(JUMP_STATE,false);
-
+        this.entityData.define(ATTACK_COOLDOWN,20);
+        this.entityData.define(PHASE,1);
     }
 
-    public void setHealthThreshold(int health){this.entityData.set(HEALTH_THRESHOLD,health);}
-
-    public int getHealthThreshold(){return this.entityData.get(HEALTH_THRESHOLD);}
-
-    public boolean hasTransitioned(){return this.entityData.get(HAS_TRANSITIONED);}
-
-    public void setTransitioned(boolean trans){this.entityData.set(HAS_TRANSITIONED, trans);}
-
-//    public boolean isReadyToJump(){return this.entityData.get(READY_TO_JUMP);}
-//
-//    public void setReadyToJump(boolean jump){this.entityData.set(READY_TO_JUMP,jump);}
-//
-//    public boolean getJump(){return this.entityData.get(JUMP_STATE);}
-//
-//    public void setJump(boolean jump){this.entityData.set(JUMP_STATE,jump);}
-
+    public void setAttackCooldown(int attack){this.entityData.set(ATTACK_COOLDOWN,attack);}
+    public int getAttackCooldown(){return this.entityData.get(ATTACK_COOLDOWN);}
+    public void setPhase(int phase){this.entityData.set(PHASE,phase);}
+    public int getPhase(){return this.entityData.get(PHASE);}
 }
 
 

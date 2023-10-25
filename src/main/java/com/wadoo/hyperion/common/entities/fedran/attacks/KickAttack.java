@@ -2,10 +2,12 @@ package com.wadoo.hyperion.common.entities.fedran.attacks;
 
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.entities.ai.AnimatedAttack;
+import com.wadoo.hyperion.common.entities.fedran.FedranAttack;
+import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
 import net.minecraft.world.damagesource.DamageSource;
 
-public class KickAttack extends AnimatedAttack {
-    public KickAttack(HyperionLivingEntity entity, int state, String animation, int animLength) {
+public class KickAttack extends FedranAttack {
+    public KickAttack(FedranEntity entity, int state, String animation, int animLength) {
         super(entity, state, animation, animLength);
     }
 

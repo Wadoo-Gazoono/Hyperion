@@ -1,0 +1,17 @@
+
+{
+  "variants": {
+    "axis=x": {
+      "model": "hyperion:block/basalt_spire_brick_pillar",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "hyperion:block/basalt_spire_brick_pillar"
+    },
+    "axis=z": {
+      "model": "hyperion:block/basalt_spire_brick_pillar",
+      "x": 90
+    }
+  }
+}

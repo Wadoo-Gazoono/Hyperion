@@ -34,5 +34,4 @@ public class FedranRenderer extends GeoEntityRenderer<FedranEntity> {
         super(renderManager, new FedranModel());
         this.shadowRadius = 1.6F;
     }
-
 }

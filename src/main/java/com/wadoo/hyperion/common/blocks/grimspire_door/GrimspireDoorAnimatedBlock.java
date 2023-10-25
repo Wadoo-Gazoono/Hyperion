@@ -24,12 +24,12 @@ public class GrimspireDoorAnimatedBlock extends BaseEntityBlock {
     protected static final VoxelShape SHAPE_S = Block.box(0d, 0.0D, 0.0D, 16D, 16D, 16.0D);
 
 
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public GrimspireDoorAnimatedBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.SOUTH));
+                .setValue(HORIZONTAL_FACING, Direction.SOUTH));
     }
 
     @Override
@@ -38,16 +38,17 @@ public class GrimspireDoorAnimatedBlock extends BaseEntityBlock {
     }
 
 
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
+        super.createBlockStateDefinition(stateBuilder);
+        stateBuilder.add(HORIZONTAL_FACING);
     }
 
     public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+        return state.setValue(HORIZONTAL_FACING, rotation.rotate(state.getValue(HORIZONTAL_FACING)));
     }
 
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+        return state.rotate(mirror.getRotation(state.getValue(HORIZONTAL_FACING)));
     }
 
     @Nullable

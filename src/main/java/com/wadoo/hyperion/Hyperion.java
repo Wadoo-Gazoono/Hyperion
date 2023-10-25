@@ -1,10 +1,11 @@
 package com.wadoo.hyperion;
 
 import com.mojang.logging.LogUtils;
-import com.wadoo.hyperion.common.entities.AutoMiningDroidEntity;
 import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.CrucibleEntity;
+import com.wadoo.hyperion.common.entities.agol.*;
 import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
+import com.wadoo.hyperion.common.entities.forgenaut.ForgenautEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskHeadEntity;
 import com.wadoo.hyperion.common.registry.*;
@@ -39,6 +40,7 @@ import org.slf4j.Logger;
 import java.util.Set;
 import java.util.UUID;
 //TODO FIX KILNS DATA SAVING
+//TODO FIX GRIMSPIRE LOG SPAM
 @Mod(Hyperion.MODID)
 public class Hyperion {
     public static final String MODID = "hyperion";
@@ -67,8 +69,19 @@ public class Hyperion {
         event.put(EntityHandler.GRUSK.get(), GruskEntity.createAttributes().build());
         event.put(EntityHandler.GRUSK_HEAD.get(), GruskHeadEntity.createAttributes().build());
         event.put(EntityHandler.CRUCIBLE.get(), CrucibleEntity.createAttributes().build());
-        event.put(EntityHandler.AUTOMININGDROID.get(), AutoMiningDroidEntity.createAttributes().build());
+        event.put(EntityHandler.FORGENAUT.get(), ForgenautEntity.createAttributes().build());
         event.put(EntityHandler.FEDRAN.get(), FedranEntity.createAttributes().build());
+
+
+        event.put(EntityHandler.AGOL_CORE_WALKER.get(), AgolWalkerEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_MODULE.get(), AgolModuleEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_SPEAKER.get(), AgolSpeakerEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_PERFUMER.get(), AgolPerfumerEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_CONNECTOR.get(), AgolConnectorEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_SEAT.get(), AgolSeatEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_FLAMER.get(), AgolSeatEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_PLATFORM.get(), AgolSeatEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_BLOCK.get(), AgolSeatEntity.createAttributes().build());
 
     }
 

@@ -35,10 +35,13 @@ public class BlockHandler {
     public static final RegistryObject<Block> AGRALITE_CHAIN = BLOCKS.register("agralite_chain", () -> new ChainBlock(BlockBehaviour.Properties.copy(Blocks.CHAIN).randomTicks().noOcclusion()));
 
 
-    public static final RegistryObject<RotatedPillarBlock> SPIRE_BRICKS = BLOCKS.register("basalt_spire_bricks", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
-    public static final RegistryObject<RotatedPillarBlock> CRACKED_SPIRE_BRICKS = BLOCKS.register("cracked_basalt_spire_bricks", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
+    public static final RegistryObject<Block> SPIRE_BRICKS = BLOCKS.register("basalt_spire_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BASALT)));
+    public static final RegistryObject<Block> CRACKED_SPIRE_BRICKS = BLOCKS.register("cracked_basalt_spire_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BASALT)));
     public static final RegistryObject<Block> CUT_SPIRE_BRICKS = BLOCKS.register("cut_basalt_spire_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.POLISHED_BASALT)));
     public static final RegistryObject<Block> CHISELED_CUT_SPIRE_BRICKS = BLOCKS.register("chiseled_cut_basalt_spire_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.POLISHED_BASALT)));
+    public static final RegistryObject<RotatedPillarBlock> SPIRE_BRICK_PILLAR = BLOCKS.register("basalt_spire_brick_pillar", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.POLISHED_BASALT)));
+    public static final RegistryObject<Block> SPIRE_BRICK_PINNACLE = BLOCKS.register("basalt_spire_brick_pinnacle", () -> new Block(BlockBehaviour.Properties.copy(Blocks.POLISHED_BASALT)));
+
     public static final RegistryObject<Block> CUT_SPIRE_BRICK_STAIRS = BLOCKS.register("cut_spire_brick_stairs", () -> new StairBlock(CUT_SPIRE_BRICKS.get().defaultBlockState(),BlockBehaviour.Properties.copy(Blocks.BASALT)));
     public static final RegistryObject<Block> CUT_SPIRE_BRICK_SLAB = BLOCKS.register("cut_spire_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
     public static final RegistryObject<Block> CUT_SPIRE_BRICK_WALL = BLOCKS.register("cut_spire_brick_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
@@ -47,6 +50,6 @@ public class BlockHandler {
 
     public static final RegistryObject<Block> KILN = BLOCKS.register("kiln", () -> new KilnBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE).randomTicks().noOcclusion()));
     public static final RegistryObject<Block> GRIMSPIRE_DOOR = BLOCKS.register("grimspire_door", () -> new GrimSpireDoorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).randomTicks().noOcclusion()));
-    public static final RegistryObject<Block> GRIMSPIRE_DOOR_ENTITY = BLOCKS.register("grimspire_door_entity", () -> new GrimspireDoorAnimatedBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).randomTicks().noOcclusion()));
+    public static final RegistryObject<GrimspireDoorAnimatedBlock> GRIMSPIRE_DOOR_ENTITY = BLOCKS.register("grimspire_door_entity", () -> new GrimspireDoorAnimatedBlock(BlockBehaviour.Properties.copy(Blocks.BASALT).randomTicks().noOcclusion()));
 
 }

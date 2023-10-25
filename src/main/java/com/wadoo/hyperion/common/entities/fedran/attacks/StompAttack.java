@@ -4,6 +4,7 @@ import com.wadoo.hyperion.common.entities.CrucibleEntity;
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.entities.ai.AnimatedAttack;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
+import com.wadoo.hyperion.common.entities.fedran.FedranAttack;
 import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -11,8 +12,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class StompAttack extends AnimatedAttack {
-    public StompAttack(HyperionLivingEntity entity, int state, String animation, int animLength) {
+public class StompAttack extends FedranAttack {
+    public StompAttack(FedranEntity entity, int state, String animation, int animLength) {
         super(entity, state, animation, animLength);
     }
 

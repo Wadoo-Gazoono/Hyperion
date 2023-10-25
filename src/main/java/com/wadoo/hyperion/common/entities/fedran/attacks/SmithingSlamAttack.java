@@ -4,6 +4,7 @@ import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.entities.ai.AnimatedAttack;
 import com.wadoo.hyperion.common.entities.effects.BasaltSpikeEntity;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
+import com.wadoo.hyperion.common.entities.fedran.FedranAttack;
 import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
 import com.wadoo.hyperion.common.registry.EntityHandler;
 import net.minecraft.world.damagesource.DamageSource;
@@ -13,8 +14,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class SmithingSlamAttack extends AnimatedAttack {
-    public SmithingSlamAttack(HyperionLivingEntity entity, int state, String animation, int animLength) {
+public class SmithingSlamAttack extends FedranAttack {
+    public SmithingSlamAttack(FedranEntity entity, int state, String animation, int animLength) {
         super(entity, state, animation, animLength);
     }
 

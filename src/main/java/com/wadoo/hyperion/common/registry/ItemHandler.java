@@ -50,6 +50,8 @@ public class ItemHandler {
     public static final RegistryObject<BlockItem> CHISELED_CUT_SPIRE_BRICKS = ITEMS.register("chiseled_cut_basalt_spire_bricks", () -> new BlockItem(BlockHandler.CHISELED_CUT_SPIRE_BRICKS.get(), new Item.Properties()));
 
     public static final RegistryObject<BlockItem> CHECKERED_SPIRE_BRICKS = ITEMS.register("checkered_spire_bricks", () -> new BlockItem(BlockHandler.CHECKERED_SPIRE_BRICKS.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SPIRE_BRICK_PILLAR = ITEMS.register("basalt_spire_brick_pillar", () -> new BlockItem(BlockHandler.SPIRE_BRICK_PILLAR.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SPIRE_BRICK_PINNACLE = ITEMS.register("basalt_spire_brick_pinnacle", () -> new BlockItem(BlockHandler.SPIRE_BRICK_PINNACLE.get(), new Item.Properties()));
 
     public static final RegistryObject<BlockItem> KILN = ITEMS.register("kiln", () -> new BlockItem(BlockHandler.KILN.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> GRIMSPIRE_DOOR = ITEMS.register("grimspire_door", () -> new BlockItem(BlockHandler.GRIMSPIRE_DOOR.get(), new Item.Properties()));
@@ -60,20 +62,32 @@ public class ItemHandler {
 
     public static final RegistryObject<Item> GRUSK_SPAWN_EGG = ITEMS.register("grusk_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.GRUSK, 0x575757, 0x141210, new Item.Properties()));
     public static final RegistryObject<Item> CRUCIBLE_SPAWN_EGG = ITEMS.register("crucible_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.CRUCIBLE, 0x4d494c, 0x1b2632, new Item.Properties()));
-    public static final RegistryObject<Item> AMD_SPAWN_EGG = ITEMS.register("auto_mining_droid_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.AUTOMININGDROID, 0x3a3b48, 0x794934, new Item.Properties()));
+    public static final RegistryObject<Item> FORGENAUT_SPAWN_EGG = ITEMS.register("forgenaut_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.FORGENAUT, 0x3a3b48, 0x794934, new Item.Properties()));
+    public static final RegistryObject<Item> FEDRAN_SPAWN_EGG = ITEMS.register("fedran_spawn_egg", () -> new ForgeSpawnEggItem(EntityHandler.FEDRAN, 0x3f3f43, 0x3f303b, new Item.Properties()));
 
     public static final RegistryObject<VolatileGoopItem> VOLATILE_GOOP = ITEMS.register("volatile_goop",() -> new VolatileGoopItem((new Item.Properties()).stacksTo(16).fireResistant()));
 
+    public static final RegistryObject<ModuleItem> AGOL_WALKER_MODULE = ITEMS.register("agol_walker_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_CORE_WALKER));
+    public static final RegistryObject<ModuleItem> AGOL_FLAMER_MODULE = ITEMS.register("agol_flamer_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_FLAMER));
+    public static final RegistryObject<ModuleItem> AGOL_MELEE_MODULE = ITEMS.register("agol_melee_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_MODULE));
+    public static final RegistryObject<ModuleItem> AGOL_PERFUMER_MODULE = ITEMS.register("agol_perfumer_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_PERFUMER));
+    public static final RegistryObject<ModuleItem> AGOL_PLATFORM_MODULE = ITEMS.register("agol_platform_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_PLATFORM));
+    public static final RegistryObject<ModuleItem> AGOL_SPEAKER_MODULE = ITEMS.register("agol_speaker_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_SPEAKER));
+    public static final RegistryObject<ModuleItem> AGOL_CONNECTOR_MODULE = ITEMS.register("agol_connector_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_CONNECTOR));
+    public static final RegistryObject<ModuleItem> AGOL_SEAT_MODULE = ITEMS.register("agol_seat_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_SEAT));
 
 
 
     public static final List<RegistryObject<? extends Item>> HYPERION_ITEMS = List.of(
-        AGRALITE_CAGE,AGRALITE_PIPE,AGRALITE_LAMP,AGRALITE_CHAIN,AGRALITE_SHEET,AGRALITE_BLOCK,AGRALITE_SLAB,AGRALITE_STAIRS,
-            CUT_AGRALITE,CUT_AGRALITE_STAIRS,
-            CUT_AGRALITE_SLAB,SPIRE_BRICKS,CRACKED_SPIRE_BRICKS, CUT_SPIRE_BRICKS,CHISELED_CUT_SPIRE_BRICKS,CUT_SPIRE_BRICK_STAIRS, CUT_SPIRE_BRICK_SLAB,
-            CHECKERED_SPIRE_BRICKS,
-            KILN, CAPSLING_BUCKET,VOLATILE_GOOP,
-            CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,CRUCIBLE_SPAWN_EGG,AMD_SPAWN_EGG
+            AGRALITE_CAGE,AGRALITE_PIPE,AGRALITE_LAMP,AGRALITE_CHAIN,AGRALITE_SHEET,
+            AGRALITE_BLOCK,AGRALITE_SLAB,AGRALITE_STAIRS, CUT_AGRALITE,CUT_AGRALITE_STAIRS,
+            CUT_AGRALITE_SLAB,SPIRE_BRICKS,CRACKED_SPIRE_BRICKS, CUT_SPIRE_BRICKS,
+            CHISELED_CUT_SPIRE_BRICKS,CUT_SPIRE_BRICK_STAIRS, CUT_SPIRE_BRICK_SLAB,
+            SPIRE_BRICK_PILLAR,SPIRE_BRICK_PINNACLE, CHECKERED_SPIRE_BRICKS, KILN,
+            CAPSLING_BUCKET,VOLATILE_GOOP, CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,
+            CRUCIBLE_SPAWN_EGG,FORGENAUT_SPAWN_EGG, FEDRAN_SPAWN_EGG, AGOL_WALKER_MODULE, AGOL_MELEE_MODULE,
+            AGOL_SPEAKER_MODULE, AGOL_PERFUMER_MODULE, AGOL_FLAMER_MODULE, AGOL_CONNECTOR_MODULE,
+            AGOL_PLATFORM_MODULE
     );
 
     @SubscribeEvent

@@ -19,6 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
@@ -29,7 +30,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class GrimSpireDoorBlock extends Block {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty X_POS = IntegerProperty.create("x_pos",0,8);
     public static final IntegerProperty Y_POS = IntegerProperty.create("y_pos",0,8);
     public static final EnumProperty<GSDoorPart> PART = EnumProperty.create("part", GSDoorPart.class);

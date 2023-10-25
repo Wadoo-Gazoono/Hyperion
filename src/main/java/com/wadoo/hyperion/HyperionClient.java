@@ -82,7 +82,7 @@ public class HyperionClient {
 
             Minecraft.getInstance().getProfiler().push("coolerBossBar");
             RenderSystem.setShaderTexture(0,BOSS_BAR_OVERLAY_LOCATION);
-            graphics.blit(BOSS_BAR_LOCATION,event.getX()-14,y-14,0,0,195,26,195,26);
+            graphics.blit(BOSS_BAR_OVERLAY_LOCATION,event.getX()-14,y-14,0,0,195,26,195,26);
             Minecraft.getInstance().getProfiler().pop();
 
             graphics.drawString(Minecraft.getInstance().font, component, i1, j1, 16777215);
