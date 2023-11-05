@@ -67,14 +67,14 @@ public class ItemHandler {
 
     public static final RegistryObject<VolatileGoopItem> VOLATILE_GOOP = ITEMS.register("volatile_goop",() -> new VolatileGoopItem((new Item.Properties()).stacksTo(16).fireResistant()));
 
-    public static final RegistryObject<ModuleItem> AGOL_WALKER_MODULE = ITEMS.register("agol_walker_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_CORE_WALKER));
-    public static final RegistryObject<ModuleItem> AGOL_FLAMER_MODULE = ITEMS.register("agol_flamer_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_FLAMER));
-    public static final RegistryObject<ModuleItem> AGOL_MELEE_MODULE = ITEMS.register("agol_melee_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_MODULE));
-    public static final RegistryObject<ModuleItem> AGOL_PERFUMER_MODULE = ITEMS.register("agol_perfumer_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_PERFUMER));
-    public static final RegistryObject<ModuleItem> AGOL_PLATFORM_MODULE = ITEMS.register("agol_platform_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_PLATFORM));
-    public static final RegistryObject<ModuleItem> AGOL_SPEAKER_MODULE = ITEMS.register("agol_speaker_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_SPEAKER));
-    public static final RegistryObject<ModuleItem> AGOL_CONNECTOR_MODULE = ITEMS.register("agol_connector_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_CONNECTOR));
-    public static final RegistryObject<ModuleItem> AGOL_SEAT_MODULE = ITEMS.register("agol_seat_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_SEAT));
+//    public static final RegistryObject<ModuleItem> AGOL_WALKER_MODULE = ITEMS.register("agol_walker_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_CORE_WALKER));
+//    public static final RegistryObject<ModuleItem> AGOL_FLAMER_MODULE = ITEMS.register("agol_flamer_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_FLAMER));
+//    public static final RegistryObject<ModuleItem> AGOL_MELEE_MODULE = ITEMS.register("agol_melee_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_MODULE));
+//    public static final RegistryObject<ModuleItem> AGOL_PERFUMER_MODULE = ITEMS.register("agol_perfumer_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_PERFUMER));
+//    public static final RegistryObject<ModuleItem> AGOL_PLATFORM_MODULE = ITEMS.register("agol_platform_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_PLATFORM));
+//    public static final RegistryObject<ModuleItem> AGOL_SPEAKER_MODULE = ITEMS.register("agol_speaker_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_SPEAKER));
+//    public static final RegistryObject<ModuleItem> AGOL_CONNECTOR_MODULE = ITEMS.register("agol_connector_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_CONNECTOR));
+//    public static final RegistryObject<ModuleItem> AGOL_SEAT_MODULE = ITEMS.register("agol_seat_module",() -> new ModuleItem((new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(16).fireResistant(),EntityHandler.AGOL_SEAT));
 
 
 
@@ -85,9 +85,10 @@ public class ItemHandler {
             CHISELED_CUT_SPIRE_BRICKS,CUT_SPIRE_BRICK_STAIRS, CUT_SPIRE_BRICK_SLAB,
             SPIRE_BRICK_PILLAR,SPIRE_BRICK_PINNACLE, CHECKERED_SPIRE_BRICKS, KILN,
             CAPSLING_BUCKET,VOLATILE_GOOP, CAPSLING_SPAWN_EGG,GRUSK_SPAWN_EGG,
-            CRUCIBLE_SPAWN_EGG,FORGENAUT_SPAWN_EGG, FEDRAN_SPAWN_EGG, AGOL_WALKER_MODULE, AGOL_MELEE_MODULE,
-            AGOL_SPEAKER_MODULE, AGOL_PERFUMER_MODULE, AGOL_FLAMER_MODULE, AGOL_CONNECTOR_MODULE,
-            AGOL_PLATFORM_MODULE
+            CRUCIBLE_SPAWN_EGG,FORGENAUT_SPAWN_EGG, FEDRAN_SPAWN_EGG
+            //AGOL_WALKER_MODULE, AGOL_MELEE_MODULE,
+            //AGOL_SPEAKER_MODULE, AGOL_PERFUMER_MODULE, AGOL_FLAMER_MODULE, AGOL_CONNECTOR_MODULE,
+            //AGOL_PLATFORM_MODULE
     );
 
     @SubscribeEvent

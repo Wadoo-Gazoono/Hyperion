@@ -29,12 +29,12 @@ public class NoDeltasInStructuresMixin {
             return;
         }
         Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registries.STRUCTURE);
-        StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
-        for (Holder<Structure> configuredStructureFeature : configuredStructureFeatureRegistry.getOrCreateTag(TagHandler.REMOVE_BASALT)) {
-            if (structureManager .getStructureAt(context.origin(), configuredStructureFeature.value()).isValid()) {
-                cir.setReturnValue(false);
-                return;
-            }
-        }
+//        StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
+//        for (Holder<Structure> configuredStructureFeature : configuredStructureFeatureRegistry.getOrCreateTag(TagHandler.REMOVE_BASALT)) {
+//            if (structureManager .getStructureAt(context.origin(), configuredStructureFeature.value()).isValid()) {
+//                cir.setReturnValue(false);
+//                return;
+//            }
+//        }
     }
 }

@@ -6,7 +6,6 @@
   "mixins": [
     "hyperionMixin.NoBasaltColumnsInStructuresMixin",
     "hyperionMixin.NoDeltasInStructuresMixin",
-    "hyperionMixin.WorldGenRegionAccessor"
   ],
   "client": [
   ],

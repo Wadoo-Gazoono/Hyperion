@@ -67,4 +67,10 @@ public class ForgenautSlamAttack extends ForgenautAttack {
             }
         }
     }
+
+    @Override
+    public void stop() {
+        super.stop();
+        this.entity.setSlamAttackCooldown(40);
+    }
 }

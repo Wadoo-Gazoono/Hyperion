@@ -7,8 +7,8 @@
 				"texture_width": 256,
 				"texture_height": 256,
 				"visible_bounds_width": 9,
-				"visible_bounds_height": 5.5,
-				"visible_bounds_offset": [0, 2.25, 0]
+				"visible_bounds_height": 8,
+				"visible_bounds_offset": [0, 1, 0]
 			},
 			"bones": [
 				{
@@ -181,6 +181,22 @@
 					"rotation": [0, 0, 45],
 					"cubes": [
 						{"origin": [-39, 4, -10], "size": [6, 6, 20], "uv": [146, 66]}
+					]
+				},
+				{
+					"name": "fire",
+					"parent": "rightHand",
+					"pivot": [-36, 3.5, 0.5],
+					"cubes": [
+						{"origin": [-38.5, -55, -3], "size": [5, 54, 5], "uv": [236, 57]}
+					]
+				},
+				{
+					"name": "inner_fire",
+					"parent": "fire",
+					"pivot": [-36, 3.5, 0.5],
+					"cubes": [
+						{"origin": [-37.5, -54, -2], "size": [3, 53, 3], "uv": [244, 0]}
 					]
 				},
 				{

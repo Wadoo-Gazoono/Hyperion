@@ -13,6 +13,5 @@ public class ForgenautAttack extends AnimatedAttack {
     @Override
     public void stop() {
         super.stop();
-        this.entity.setAttackCooldown(20);
     }
 }

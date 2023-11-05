@@ -47,12 +47,7 @@ public class ForgenautAttackAI extends Goal{
         LivingEntity target = this.forgenaut.getTarget();
         if (target == null) return;
         if(forgenaut.getPhase() == 0){
-            if(Math.sqrt(this.forgenaut.distanceToSqr(this.targetX, this.targetY, this.targetZ)) < 15f){
-                forgenaut.setAnimation(1);
-            }
-            else{
-                return;
-            }
+            forgenaut.setAnimation(1);
         }
         double distSqr = this.forgenaut.distanceToSqr(this.targetX, this.targetY, this.targetZ);
         this.forgenaut.getLookControl().setLookAt(target, 30.0F, 30.0F);
@@ -80,17 +75,25 @@ public class ForgenautAttackAI extends Goal{
         if (dist < 3f) this.forgenaut.getNavigation().stop();
         if (target.getY() - this.forgenaut.getY() >= -1 && target.getY() - this.forgenaut.getY() <= 3) {
             //Attack Checker
-            if (this.forgenaut.getAttackCooldown() <= 0 && this.forgenaut.getPhase() != 0) {
-                if (dist < 4f) {
+            if (this.forgenaut.getPhase() != 0) {
+                if (dist < 6f && this.forgenaut.getPunchAttackCooldown() <= 0) {
                     float rand = this.forgenaut.getRandom().nextFloat();
-                    if (rand < 0.5f) {
-                        this.forgenaut.setAnimation(2);
-                    } else {
+                    if (this.forgenaut.hasArm()) {
+                        if (rand < 0.5f) {
+                            this.forgenaut.setAnimation(2);
+                        } else {
+                            this.forgenaut.setAnimation(3);
+                        }
+                    }
+                    else{
                         this.forgenaut.setAnimation(3);
                     }
                 }
-                if(dist > 7f && dist < 10f){
+                if(dist > 5f && dist < 8f && this.forgenaut.getSlamAttackCooldown() <= 0){
                     this.forgenaut.setAnimation(4);
+                }
+                if(dist > 10f && this.forgenaut.getFlameAttackCooldown() <= 0){
+                    this.forgenaut.setAnimation(5);
                 }
             }
         }

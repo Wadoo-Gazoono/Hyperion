@@ -51,6 +51,7 @@ public class Hyperion {
         MinecraftForge.EVENT_BUS.register(this);
 
         EntityHandler.ENTITIES.register(bus);
+        ContainerHandler.MENUS.register(bus);
         ItemHandler.ITEMS.register(bus);
         BlockHandler.BLOCKS.register(bus);
         CreativeTabHandler.TABS.register(bus);
@@ -73,15 +74,8 @@ public class Hyperion {
         event.put(EntityHandler.FEDRAN.get(), FedranEntity.createAttributes().build());
 
 
-        event.put(EntityHandler.AGOL_CORE_WALKER.get(), AgolWalkerEntity.createAttributes().build());
-        event.put(EntityHandler.AGOL_MODULE.get(), AgolModuleEntity.createAttributes().build());
-        event.put(EntityHandler.AGOL_SPEAKER.get(), AgolSpeakerEntity.createAttributes().build());
-        event.put(EntityHandler.AGOL_PERFUMER.get(), AgolPerfumerEntity.createAttributes().build());
-        event.put(EntityHandler.AGOL_CONNECTOR.get(), AgolConnectorEntity.createAttributes().build());
-        event.put(EntityHandler.AGOL_SEAT.get(), AgolSeatEntity.createAttributes().build());
-        event.put(EntityHandler.AGOL_FLAMER.get(), AgolSeatEntity.createAttributes().build());
-        event.put(EntityHandler.AGOL_PLATFORM.get(), AgolSeatEntity.createAttributes().build());
-        event.put(EntityHandler.AGOL_BLOCK.get(), AgolSeatEntity.createAttributes().build());
+        event.put(EntityHandler.AGOL_BASE.get(), AbstractAgolEntity.createAttributes().build());
+
 
     }
 
