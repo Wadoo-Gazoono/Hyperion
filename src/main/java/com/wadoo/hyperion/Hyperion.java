@@ -8,6 +8,7 @@ import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
 import com.wadoo.hyperion.common.entities.forgenaut.ForgenautEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskHeadEntity;
+import com.wadoo.hyperion.common.network.NetworkHandler;
 import com.wadoo.hyperion.common.registry.*;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -37,6 +38,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
+import javax.annotation.Syntax;
 import java.util.Set;
 import java.util.UUID;
 //TODO FIX KILNS DATA SAVING
@@ -49,9 +51,9 @@ public class Hyperion {
     public Hyperion() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
-
+        bus.addListener(this::commonSetup);
         EntityHandler.ENTITIES.register(bus);
-        ContainerHandler.MENUS.register(bus);
+        ContainerHandler.MENU_TYPES.register(bus);
         ItemHandler.ITEMS.register(bus);
         BlockHandler.BLOCKS.register(bus);
         CreativeTabHandler.TABS.register(bus);
@@ -64,6 +66,7 @@ public class Hyperion {
 
         bus.addListener(this::registerEntityAttributes);
     }
+
 
     private void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(EntityHandler.CAPSLING.get(), CapslingEntity.createAttributes().build());
@@ -79,6 +82,11 @@ public class Hyperion {
 
     }
 
+    private void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            NetworkHandler.init();
+        });
+    }
 
     @SubscribeEvent
     public void spawns(SpawnPlacementRegisterEvent event){

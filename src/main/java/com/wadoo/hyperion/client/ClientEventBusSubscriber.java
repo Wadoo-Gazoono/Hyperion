@@ -9,14 +9,19 @@ import com.wadoo.hyperion.client.renderers.entity.agol.*;
 import com.wadoo.hyperion.client.renderers.entity.effect.BasaltSpikeRenderer;
 //import com.wadoo.hyperion.common.registry.BlockEntityHandler;
 import com.wadoo.hyperion.client.renderers.entity.effect.ChainTestRenderer;
+import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolMenu;
 import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolScreen;
 import com.wadoo.hyperion.common.registry.BlockEntityHandler;
 import com.wadoo.hyperion.common.registry.ContainerHandler;
 import com.wadoo.hyperion.common.registry.EntityHandler;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
 
@@ -46,9 +51,6 @@ public class ClientEventBusSubscriber {
 
     }
 
-    public void client_start(){
-        MenuScreens.register(ContainerHandler.AGOL_MENU.get(), AbstractAgolScreen::new);
-    }
 
 
 }

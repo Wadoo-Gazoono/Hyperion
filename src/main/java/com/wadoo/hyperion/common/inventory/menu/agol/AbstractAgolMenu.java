@@ -1,43 +1,26 @@
 package com.wadoo.hyperion.common.inventory.menu.agol;
 
 import com.wadoo.hyperion.common.entities.agol.AbstractAgolEntity;
-import com.wadoo.hyperion.common.registry.ContainerHandler;
-import com.wadoo.hyperion.common.registry.ItemHandler;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuConstructor;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class AbstractAgolMenu extends AbstractContainerMenu {
-    private Container agolContainer;
-    private AbstractAgolEntity agol;
+    private final Container horseContainer;
+    private final AbstractAgolEntity horse;
 
-    @Override
-    public MenuType<?> getType() {
-        return ContainerHandler.AGOL_MENU.get();
-    }
-
-    public AbstractAgolMenu(int p_39656_, Inventory inv, Container container, final AbstractAgolEntity entity) {
-        super(ContainerHandler.AGOL_MENU.get(), p_39656_);
-        this.agolContainer = container;
-        this.agol = entity;
-        int i = 3;
-        container.startOpen(inv.player);
-        int j = -18;
+    public AbstractAgolMenu(int id, Inventory inventory, Container container, final AbstractAgolEntity agol) {
+        super(null, id);
+        this.horseContainer = container;
+        this.horse = agol;
+        container.startOpen(inventory.player);
         this.addSlot(new Slot(container, 0, 8, 18) {
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(ItemHandler.AGRALITE_SHEET.get());
+                return stack.is(Items.SADDLE) && !this.hasItem();
             }
             public boolean isActive() {
                 return true;
@@ -45,7 +28,7 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
         });
         this.addSlot(new Slot(container, 1, 8, 36) {
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(ItemHandler.AGRALITE_SHEET.get());
+                return true;
             }
 
             public boolean isActive() {
@@ -53,44 +36,34 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
             }
 
             public int getMaxStackSize() {
-                return 64;
+                return 1;
             }
         });
 
-
         for(int i1 = 0; i1 < 3; ++i1) {
             for(int k1 = 0; k1 < 9; ++k1) {
-                this.addSlot(new Slot(container, k1 + i1 * 9 + 9, 8 + k1 * 18, 102 + i1 * 18 + -18));
+                this.addSlot(new Slot(inventory, k1 + i1 * 9 + 9, 8 + k1 * 18, 102 + i1 * 18 + -18));
             }
         }
 
         for(int j1 = 0; j1 < 9; ++j1) {
-            this.addSlot(new Slot(container, j1, 8 + j1 * 18, 142));
+            this.addSlot(new Slot(inventory, j1, 8 + j1 * 18, 142));
         }
 
     }
 
-    public AbstractAgolMenu(int i, Inventory inventory) {
-        super(ContainerHandler.AGOL_MENU.get(), i);
-    }
-
-    public AbstractAgolMenu(int i, Inventory j, SimpleContainer inventory) {
-        super(ContainerHandler.AGOL_MENU.get(), i);
-    }
-
     public boolean stillValid(Player player) {
-        return !this.agol.hasInventoryChanged(this.agolContainer) && this.agolContainer.stillValid(player) && this.agol.isAlive() && this.agol.distanceTo(player) < 8.0F;
+        return !this.horse.hasInventoryChanged(this.horseContainer) && this.horseContainer.stillValid(player) && this.horse.isAlive() && this.horse.distanceTo(player) < 8.0F;
     }
 
-
-    public ItemStack quickMoveStack(Player p_39665_, int p_39666_) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(p_39666_);
-        if (slot != null && slot.hasItem()) {
+        Slot slot = this.slots.get(index);
+        if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            int i = this.agolContainer.getContainerSize();
-            if (p_39666_ < i) {
+            int i = this.horseContainer.getContainerSize();
+            if (index < i) {
                 if (!this.moveItemStackTo(itemstack1, i, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
@@ -105,11 +78,11 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
             } else if (i <= 2 || !this.moveItemStackTo(itemstack1, 2, i, false)) {
                 int j = i + 27;
                 int k = j + 9;
-                if (p_39666_ >= j && p_39666_ < k) {
+                if (index >= j && index < k) {
                     if (!this.moveItemStackTo(itemstack1, i, j, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (p_39666_ >= i && p_39666_ < j) {
+                } else if (index < j) {
                     if (!this.moveItemStackTo(itemstack1, j, k, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -121,7 +94,7 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
             }
 
             if (itemstack1.isEmpty()) {
-                slot.setByPlayer(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
@@ -130,12 +103,8 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
         return itemstack;
     }
 
-    public void removed(Player p_39663_) {
-        super.removed(p_39663_);
-        this.agolContainer.stopOpen(p_39663_);
-    }
-
-    public static MenuConstructor getServerContainer(AbstractAgolEntity agol) {
-        return (id, playerInv, player) -> new AbstractAgolMenu(id, playerInv, agol.inventory, agol);
+    public void removed(Player player) {
+        super.removed(player);
+        this.horseContainer.stopOpen(player);
     }
 }

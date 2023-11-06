@@ -3,18 +3,26 @@ package com.wadoo.hyperion;
 import com.mojang.authlib.minecraft.client.MinecraftClient;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.wadoo.hyperion.common.entities.agol.AbstractAgolEntity;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
+import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolMenu;
+import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolScreen;
+import com.wadoo.hyperion.common.network.OpenAgolScreenPacket;
 import com.wadoo.hyperion.common.registry.ItemHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderGuiEvent;
@@ -60,6 +68,22 @@ public class HyperionClient {
     }
 
 
+    public static void openAgolInventoryScreen(OpenAgolScreenPacket packet) {
+        Minecraft minecraft = Minecraft.getInstance();
+        LocalPlayer clientPlayer = minecraft.player;
+        Entity entity = null;
+        if (clientPlayer != null) {
+            entity = clientPlayer.level().getEntity(packet.getEntityId());
+        }
+        if (entity instanceof AbstractAgolEntity reindeer) {
+            SimpleContainer inventory = new SimpleContainer(packet.getSize());
+            Inventory playerInventory = clientPlayer.getInventory();
+            AbstractAgolMenu reindeerContainer = new AbstractAgolMenu(packet.getContainerId(), playerInventory, inventory, reindeer);
+            clientPlayer.containerMenu = reindeerContainer;
+            AbstractAgolScreen reindeerScreen = new AbstractAgolScreen(reindeerContainer, playerInventory, reindeer);
+            minecraft.setScreen(reindeerScreen);
+        }
+    }
 
     private static void setGraphics(RenderGuiEvent.Pre event){
         graphics = event.getGuiGraphics();

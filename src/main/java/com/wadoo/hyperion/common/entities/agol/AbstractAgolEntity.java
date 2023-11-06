@@ -1,38 +1,29 @@
 package com.wadoo.hyperion.common.entities.agol;
 
-import com.wadoo.hyperion.Hyperion;
-import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolMenu;
-import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolScreen;
-import com.wadoo.hyperion.common.registry.EntityHandler;
-import com.wadoo.hyperion.common.registry.ItemHandler;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.nbt.CompoundTag;
+import com.wadoo.hyperion.common.inventory.menu.agol.AgolOpenContainer;
+import com.wadoo.hyperion.common.network.NetworkHandler;
+import com.wadoo.hyperion.common.network.OpenAgolScreenPacket;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentContents;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.*;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.npc.InventoryCarrier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.DispenserMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -42,14 +33,11 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib.util.JsonUtil;
 
-import java.util.List;
 import java.util.UUID;
 
 public class AbstractAgolEntity extends PathfinderMob implements ContainerListener, HasCustomInventoryScreen, OwnableEntity, GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public  SimpleContainer inventory;
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
 
@@ -61,6 +49,7 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
     private double damage = 20;
     private int energy_use = 1;
     private int weight = 5;
+    public final SimpleContainer inventory = new SimpleContainer(12);
     /*
     sensory,
     basem
@@ -128,7 +117,8 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        return InteractionResult.PASS;
+        this.openCustomInventoryScreen(player);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -151,13 +141,37 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
     }
 
 
-    @Override
-    public void containerChanged(Container container) {
-
-    }
 
     @Override
     public void openCustomInventoryScreen(Player player) {
+        if (!this.level().isClientSide && player instanceof ServerPlayer serverPlayer) {
+            if (serverPlayer.containerMenu != serverPlayer.inventoryMenu)
+                serverPlayer.closeContainer();
+
+            serverPlayer.nextContainerCounter();
+            NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new OpenAgolScreenPacket(serverPlayer.containerCounter, this.getInventorySize(), this.getId()));
+            serverPlayer.containerMenu = new AbstractAgolMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), this.inventory, this);
+            serverPlayer.initMenu(serverPlayer.containerMenu);
+            MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(serverPlayer, serverPlayer.containerMenu));
+        }
+    }
+
+    private int getInventorySize() {
+        return 12;
+    }
+
+
+    public SimpleContainer getInventory() {
+        return this.inventory;
+    }
+
+    @Override
+    public void containerChanged(Container pContainer) {
 
     }
+
+    public boolean hasInventoryChanged(Container pInventory) {
+        return this.inventory != pInventory;
+    }
+
 }
