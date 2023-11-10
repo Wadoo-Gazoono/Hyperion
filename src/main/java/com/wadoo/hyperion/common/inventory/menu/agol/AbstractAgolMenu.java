@@ -10,23 +10,35 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class AbstractAgolMenu extends AbstractContainerMenu {
-    private final Container horseContainer;
-    private final AbstractAgolEntity horse;
-
+    private Container horseContainer;
+    private AbstractAgolEntity horse;
     public AbstractAgolMenu(int id, Inventory inventory, Container container, final AbstractAgolEntity agol) {
         super(null, id);
         this.horseContainer = container;
         this.horse = agol;
         container.startOpen(inventory.player);
-        this.addSlot(new Slot(container, 0, 8, 18) {
+        this.addSlot(new Slot(container, 0, 20, 21) {
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(Items.SADDLE) && !this.hasItem();
+                return stack.is(Items.APPLE) && !this.hasItem();
             }
             public boolean isActive() {
                 return true;
             }
         });
-        this.addSlot(new Slot(container, 1, 8, 36) {
+        this.addSlot(new Slot(container, 1, 20, 41) {
+            public boolean mayPlace(ItemStack stack) {
+                return true;
+            }
+
+            public boolean isActive() {
+                return true;
+            }
+
+            public int getMaxStackSize() {
+                return 1;
+            }
+        });
+        this.addSlot(new Slot(container, 2, 132, 31) {
             public boolean mayPlace(ItemStack stack) {
                 return true;
             }
@@ -42,15 +54,24 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
 
         for(int i1 = 0; i1 < 3; ++i1) {
             for(int k1 = 0; k1 < 9; ++k1) {
-                this.addSlot(new Slot(inventory, k1 + i1 * 9 + 9, 8 + k1 * 18, 102 + i1 * 18 + -18));
+                this.addSlot(new Slot(inventory, k1 + i1 * 9 + 9, 4 + k1 * 18, 102 + i1 * 18 + -18));
             }
         }
 
         for(int j1 = 0; j1 < 9; ++j1) {
-            this.addSlot(new Slot(inventory, j1, 8 + j1 * 18, 142));
+            this.addSlot(new Slot(inventory, j1, 4 + j1 * 18, 142));
         }
 
     }
+
+    public void setEntity(AbstractAgolEntity entity){
+        this.horse = entity;
+    }
+
+    public void setContainer(Container container){
+        this.horseContainer = container;
+    }
+
 
     public boolean stillValid(Player player) {
         return !this.horse.hasInventoryChanged(this.horseContainer) && this.horseContainer.stillValid(player) && this.horse.isAlive() && this.horse.distanceTo(player) < 8.0F;

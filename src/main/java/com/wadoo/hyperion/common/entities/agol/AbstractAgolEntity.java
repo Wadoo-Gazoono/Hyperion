@@ -1,10 +1,9 @@
 package com.wadoo.hyperion.common.entities.agol;
 
 import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolMenu;
-import com.wadoo.hyperion.common.inventory.menu.agol.AgolOpenContainer;
 import com.wadoo.hyperion.common.network.NetworkHandler;
 import com.wadoo.hyperion.common.network.OpenAgolScreenPacket;
-import net.minecraft.network.chat.Component;
+import com.wadoo.hyperion.common.registry.EntityHandler;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -13,16 +12,13 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.npc.InventoryCarrier;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.DispenserMenu;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.TntBlock;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -36,7 +32,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.UUID;
 
-public class AbstractAgolEntity extends PathfinderMob implements ContainerListener, HasCustomInventoryScreen, OwnableEntity, GeoEntity {
+public class AbstractAgolEntity extends PathfinderMob implements ContainerListener, HasCustomInventoryScreen, PlayerRideable, OwnableEntity, GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
@@ -114,9 +110,23 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
         return this.cache;
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.inventory.getItem(2).is(Items.AIR) && !this.isVehicle()){
+            LivingEntity module = (LivingEntity) EntityHandler.AGOL_BASE.get().create(this.level());
+            module.moveTo(this.position().add(0d,1d,0d));
+            this.level().addFreshEntity(module);
+            module.startRiding(this);
+        }
+    }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if(player.isCrouching()){
+            player.startRiding(this);
+            return InteractionResult.SUCCESS;
+        }
         this.openCustomInventoryScreen(player);
         return InteractionResult.SUCCESS;
     }
@@ -151,6 +161,19 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
             serverPlayer.nextContainerCounter();
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new OpenAgolScreenPacket(serverPlayer.containerCounter, this.getInventorySize(), this.getId()));
             serverPlayer.containerMenu = new AbstractAgolMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), this.inventory, this);
+            serverPlayer.initMenu(serverPlayer.containerMenu);
+            MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(serverPlayer, serverPlayer.containerMenu));
+        }
+    }
+
+    public void openAboveInventoryScreen(Player player){
+        if (!this.level().isClientSide && player instanceof ServerPlayer serverPlayer && this.getFirstPassenger() instanceof AbstractAgolEntity) {
+            AbstractAgolEntity passenger = (AbstractAgolEntity) getFirstPassenger();
+            serverPlayer.closeContainer();
+            
+            serverPlayer.nextContainerCounter();
+            NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new OpenAgolScreenPacket(serverPlayer.containerCounter, passenger.getInventorySize(), passenger.getId()));
+            serverPlayer.containerMenu = new AbstractAgolMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), this.inventory, passenger);
             serverPlayer.initMenu(serverPlayer.containerMenu);
             MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(serverPlayer, serverPlayer.containerMenu));
         }
