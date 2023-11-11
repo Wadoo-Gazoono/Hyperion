@@ -1,42 +1,57 @@
 {
-  "grusk.ambient": {
-    "subtitle": "hyperion.grusk.ambient",
-    "sounds": [
-      {
-        "name": "hyperion:grusk/grusk_ambient1",
-        "stream": true
-      },
-      {
-        "name": "hyperion:grusk/grusk_ambient2",
-        "stream": true
-      }
-    ]
-  },
-  "grusk.damage": {
-    "subtitle": "hyperion.grusk.damage",
-    "sounds": [
-      {
-        "name": "hyperion:grusk/grusk_damage",
-        "stream": true
-      }
-    ]
-  },
-  "grusk.death": {
-    "subtitle": "hyperion.grusk.death",
-    "sounds": [
-      {
-        "name": "hyperion:grusk/grusk_death",
-        "stream": true
-      }
-    ]
-  },
-  "weapon.parry": {
-    "subtitle": "hyperion.weapon.parry",
-    "sounds": [
-      {
-        "name": "hyperion:weapon/parry",
-        "stream": true
-      }
-    ]
-  }
+    "entity.capsling.idle": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/capsling/idle1",
+                "pitch": 1.3
+            },
+            {
+                "name": "hyperion:entity/capsling/idle2",
+                "pitch": 1.3
+            },
+            {
+                "name": "hyperion:entity/capsling/idle3",
+                "pitch": 1.3
+            },
+            {
+                "name": "hyperion:entity/capsling/idle4",
+                "pitch": 1.3
+            }
+        ],
+        "subtitle": "entity.capsling.idle"
+    },
+    "entity.capsling.hurt": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/capsling/hurt1",
+                "pitch": 1.3
+            },
+            {
+                "name": "hyperion:entity/capsling/hurt2",
+                "pitch": 1.3
+            },
+            {
+                "name": "hyperion:entity/capsling/hurt3",
+                "pitch": 1.3
+            }
+        ],
+        "subtitle": "entity.capsling.hurt"
+    },
+    "entity.capsling.death": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/capsling/death1",
+                "pitch": 1.3
+            },
+            {
+                "name": "hyperion:entity/capsling/death2",
+                "pitch": 1.3
+            },
+            {
+                "name": "hyperion:entity/capsling/death3",
+                "pitch": 1.3
+            }
+        ],
+        "subtitle": "entity.capsling.death"
+    }
 }

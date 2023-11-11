@@ -2,6 +2,7 @@ package com.wadoo.hyperion.common.entities;
 
 import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import com.wadoo.hyperion.common.registry.ItemHandler;
+import com.wadoo.hyperion.common.registry.SoundsRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,6 +17,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -126,6 +128,18 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
 
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes().add(Attributes.MAX_HEALTH, 15.0D).add(Attributes.MOVEMENT_SPEED, 0.3F).add(Attributes.KNOCKBACK_RESISTANCE, 0.7D);
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return SoundsRegistry.CAPSLING_IDLE.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundsRegistry.CAPSLING_HURT.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return SoundsRegistry.CAPSLING_DEATH.get();
     }
 
     @Override
