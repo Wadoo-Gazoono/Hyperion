@@ -1,4 +1,17 @@
 {
+    "entity.capsling.into_bucket": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/capsling/into_bucket1",
+                "pitch": 1
+            },
+            {
+                "name": "hyperion:entity/capsling/into_bucket2",
+                "pitch": 1
+            }
+        ],
+        "subtitle": "entity.capsling.into_bucket"
+    },
     "entity.capsling.idle": {
         "sounds": [
             {

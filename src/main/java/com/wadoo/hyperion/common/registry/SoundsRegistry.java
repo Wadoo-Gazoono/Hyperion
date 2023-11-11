@@ -21,6 +21,7 @@ public class SoundsRegistry {
     public static final RegistryObject<SoundEvent> CAPSLING_BITE = register("entity.capsling.bite");
     public static final RegistryObject<SoundEvent> CAPSLING_CHEW = register("entity.capsling.chew");
     public static final RegistryObject<SoundEvent> CAPSLING_SPIT = register("entity.capsling.spit");
+    public static final RegistryObject<SoundEvent> CAPSLING_INTO_BUCKET = register("entity.capsling.into_bucket");
 
     public static final RegistryObject<SoundEvent> GRUSK_IDLE = register("entity.grusk.idle");
     public static final RegistryObject<SoundEvent> GRUSK_HURT = register("entity.grusk.hurt");

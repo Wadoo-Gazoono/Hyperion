@@ -13,7 +13,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -226,7 +225,7 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
 
     @Override
     public SoundEvent getPickupSound() {
-        return SoundEvents.BUCKET_FILL_AXOLOTL;
+        return SoundsRegistry.CAPSLING_INTO_BUCKET.get();
     }
 
     static <T extends LivingEntity & Bucketable> Optional<InteractionResult> bucketMobPickup(Player p_148829_, InteractionHand p_148830_, T p_148831_) {
