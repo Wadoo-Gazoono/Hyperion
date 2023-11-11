@@ -374,21 +374,19 @@ class CapslingEatGoal extends Goal{
         this.entity.getNavigation().stop();
         if (tickTimer <= this.entity.ITEMCOOLDOWN){
             tickTimer++;
-            if(tickTimer < 30){
+            if (tickTimer < 30){
                 this.entity.setAnimState(1);
                 if(tickTimer == 12){
-                    this.entity.playSound(SoundEvents.STRIDER_EAT,1.0f,1.6f);
+                    this.entity.playSound(SoundsRegistry.CAPSLING_BITE.get(),1,1);
                 }
-            }
-            else{
+            } else {
                 this.entity.setAnimState(2);
             }
-            if(tickTimer %  8 == 0 && tickTimer > 45){
-                this.entity.playSound(SoundEvents.ANVIL_PLACE,0.1f,2.2f);
+            if (tickTimer %  8 == 0 && tickTimer > 45){
+                this.entity.playSound(SoundsRegistry.CAPSLING_CHEW.get(),1,1);
             }
-        }
-        else{
-            this.entity.playSound(SoundEvents.ITEM_PICKUP,1.0f, 1.8f);
+        } else {
+            this.entity.playSound(SoundsRegistry.CAPSLING_SPIT.get(),1, 1);
             this.entity.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);
             this.entity.level().addFreshEntity(new ItemEntity(this.entity.level(),this.entity.getX(),this.entity.getY(),this.entity.getZ(),new ItemStack(ItemHandler.AGRALITE_SHEET.get(),1)));
         }

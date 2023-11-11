@@ -18,7 +18,9 @@ public class SoundsRegistry {
     public static final RegistryObject<SoundEvent> CAPSLING_IDLE_PLEAD = register("entity.capsling.idle.plead");
     public static final RegistryObject<SoundEvent> CAPSLING_HURT = register("entity.capsling.hurt");
     public static final RegistryObject<SoundEvent> CAPSLING_DEATH = register("entity.capsling.death");
+    public static final RegistryObject<SoundEvent> CAPSLING_BITE = register("entity.capsling.bite");
     public static final RegistryObject<SoundEvent> CAPSLING_CHEW = register("entity.capsling.chew");
+    public static final RegistryObject<SoundEvent> CAPSLING_SPIT = register("entity.capsling.spit");
 
     public static final RegistryObject<SoundEvent> GRUSK_IDLE = register("entity.grusk.idle");
     public static final RegistryObject<SoundEvent> GRUSK_HURT = register("entity.grusk.hurt");

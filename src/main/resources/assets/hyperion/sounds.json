@@ -3,19 +3,19 @@
         "sounds": [
             {
                 "name": "hyperion:entity/capsling/idle1",
-                "pitch": 1.3
+                "pitch": 1.2
             },
             {
                 "name": "hyperion:entity/capsling/idle2",
-                "pitch": 1.3
+                "pitch": 1.2
             },
             {
                 "name": "hyperion:entity/capsling/idle3",
-                "pitch": 1.3
+                "pitch": 1.2
             },
             {
                 "name": "hyperion:entity/capsling/idle4",
-                "pitch": 1.3
+                "pitch": 1.2
             }
         ],
         "subtitle": "entity.capsling.idle"
@@ -24,13 +24,13 @@
         "sounds": [
             {
                 "name": "hyperion:entity/capsling/idle_plead1",
-                "pitch": 1.3,
-                "volume": 0.5
+                "pitch": 1.4,
+                "volume": 0.3
             },
             {
                 "name": "hyperion:entity/capsling/idle_plead2",
-                "pitch": 1.3,
-                "volume": 0.5
+                "pitch": 1.4,
+                "volume": 0.3
             }
         ],
         "subtitle": "entity.capsling.idle.plead"
@@ -39,32 +39,88 @@
         "sounds": [
             {
                 "name": "hyperion:entity/capsling/hurt1",
-                "pitch": 1.3
+                "pitch": 1.2
             },
             {
                 "name": "hyperion:entity/capsling/hurt2",
-                "pitch": 1.3
+                "pitch": 1.2
             },
             {
                 "name": "hyperion:entity/capsling/hurt3",
-                "pitch": 1.3
+                "pitch": 1.2
             }
         ],
         "subtitle": "entity.capsling.hurt"
+    },
+    "entity.capsling.chew": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/capsling/chew1",
+                "pitch": 1.1,
+                "volume": 0.6
+            },
+            {
+                "name": "hyperion:entity/capsling/chew2",
+                "pitch": 1.1,
+                "volume": 0.6
+            },
+            {
+                "name": "hyperion:entity/capsling/chew3",
+                "pitch": 1.1,
+                "volume": 0.6
+            },
+            {
+                "name": "hyperion:entity/capsling/chew4",
+                "pitch": 1.1,
+                "volume": 0.6
+            },
+            {
+                "name": "hyperion:entity/capsling/chew5",
+                "pitch": 1.1,
+                "volume": 0.6
+            }
+        ],
+        "subtitle": "entity.capsling.chew"
+    },
+    "entity.capsling.spit": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/capsling/spit1",
+                "pitch": 1.1
+            },
+            {
+                "name": "hyperion:entity/capsling/spit2",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "entity.capsling.spit"
+    },
+    "entity.capsling.bite": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/capsling/bite1",
+                "pitch": 1.1
+            },
+            {
+                "name": "hyperion:entity/capsling/bite2",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "entity.capsling.bite"
     },
     "entity.capsling.death": {
         "sounds": [
             {
                 "name": "hyperion:entity/capsling/death1",
-                "pitch": 1.3
+                "pitch": 1.1
             },
             {
                 "name": "hyperion:entity/capsling/death2",
-                "pitch": 1.3
+                "pitch": 1.1
             },
             {
                 "name": "hyperion:entity/capsling/death3",
-                "pitch": 1.3
+                "pitch": 1.1
             }
         ],
         "subtitle": "entity.capsling.death"
