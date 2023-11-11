@@ -131,6 +131,8 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
     }
 
     protected SoundEvent getAmbientSound() {
+        if (getOpen()) return SoundsRegistry.CAPSLING_IDLE_PLEAD.get();
+        if (getAnimState() == 2) return null;
         return SoundsRegistry.CAPSLING_IDLE.get();
     }
 

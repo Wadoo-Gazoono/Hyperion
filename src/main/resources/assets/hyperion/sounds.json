@@ -20,6 +20,21 @@
         ],
         "subtitle": "entity.capsling.idle"
     },
+    "entity.capsling.idle.plead": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/capsling/idle_plead1",
+                "pitch": 1.3,
+                "volume": 0.5
+            },
+            {
+                "name": "hyperion:entity/capsling/idle_plead2",
+                "pitch": 1.3,
+                "volume": 0.5
+            }
+        ],
+        "subtitle": "entity.capsling.idle.plead"
+    },
     "entity.capsling.hurt": {
         "sounds": [
             {
