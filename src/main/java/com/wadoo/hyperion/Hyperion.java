@@ -79,6 +79,7 @@ public class Hyperion {
 
         event.put(EntityHandler.AGOL_BASE.get(), AbstractAgolEntity.createAttributes().build());
 
+        event.put(EntityHandler.AGOL_WALKER.get(), AbstractAgolEntity.createAttributes().build());
 
     }
 

@@ -1,6 +1,7 @@
 package com.wadoo.hyperion.common.entities.agol;
 
 import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolMenu;
+import com.wadoo.hyperion.common.items.ModuleItem;
 import com.wadoo.hyperion.common.network.NetworkHandler;
 import com.wadoo.hyperion.common.network.OpenAgolScreenPacket;
 import com.wadoo.hyperion.common.registry.EntityHandler;
@@ -9,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -113,17 +115,15 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
     @Override
     public void tick() {
         super.tick();
-        if (!this.inventory.getItem(2).is(Items.AIR) && !this.isVehicle()){
-            LivingEntity module = (LivingEntity) EntityHandler.AGOL_BASE.get().create(this.level());
-            module.moveTo(this.position().add(0d,1d,0d));
-            this.level().addFreshEntity(module);
-            module.startRiding(this);
-        }
     }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if(player.isCrouching()){
+            AbstractAgolEntity module = EntityHandler.AGOL_BASE.get().create(level());
+            module.moveTo(position());
+            level().addFreshEntity(module);
+            module.startRiding(this);
             player.startRiding(this);
             return InteractionResult.SUCCESS;
         }
@@ -157,29 +157,71 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
         if (!this.level().isClientSide && player instanceof ServerPlayer serverPlayer) {
             if (serverPlayer.containerMenu != serverPlayer.inventoryMenu)
                 serverPlayer.closeContainer();
-
+            System.out.println(serverPlayer.containerCounter);
             serverPlayer.nextContainerCounter();
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new OpenAgolScreenPacket(serverPlayer.containerCounter, this.getInventorySize(), this.getId()));
-            serverPlayer.containerMenu = new AbstractAgolMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), this.inventory, this);
+            serverPlayer.containerMenu = new AbstractAgolMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), this.inventory, this, player);
             serverPlayer.initMenu(serverPlayer.containerMenu);
             MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(serverPlayer, serverPlayer.containerMenu));
         }
     }
 
-    public void openAboveInventoryScreen(Player player){
-        if (!this.level().isClientSide && player instanceof ServerPlayer serverPlayer && this.getFirstPassenger() instanceof AbstractAgolEntity) {
-            AbstractAgolEntity passenger = (AbstractAgolEntity) getFirstPassenger();
-            serverPlayer.closeContainer();
-            
-            serverPlayer.nextContainerCounter();
-            NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new OpenAgolScreenPacket(serverPlayer.containerCounter, passenger.getInventorySize(), passenger.getId()));
-            serverPlayer.containerMenu = new AbstractAgolMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), this.inventory, passenger);
-            serverPlayer.initMenu(serverPlayer.containerMenu);
-            MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(serverPlayer, serverPlayer.containerMenu));
+
+    @Override
+    public double m_6048_() {
+        return 1f;
+    }
+
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        if(getRootEntity() != this){
+            getRootEntity().hurt(pSource,pAmount);
+            return false;
+        }
+        else {
+            for(Entity e: this.getIndirectPassengers()){
+                e.animateHurt(1f);
+            }
+            return super.hurt(pSource, pAmount);
         }
     }
 
-    private int getInventorySize() {
+    @Override
+    public void die(DamageSource pDamageSource) {
+        if(getRootEntity() == this){
+            for(Entity e: this.getIndirectPassengers()){
+                e.discard();
+            }
+        }
+        super.die(pDamageSource);
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (getInventory().getItem(2).getItem() instanceof ModuleItem && !this.isVehicle()){
+            AbstractAgolEntity module = (AbstractAgolEntity) ((ModuleItem)getInventory().getItem(2).getItem()).getType().create(this.level());
+            module.moveTo(position());
+            level().addFreshEntity(module);
+            module.startRiding(this);
+        }
+    }
+
+    public Entity getAboveEntity(){
+        if (this.isVehicle()){
+            return (AbstractAgolEntity) this.getPassengers().get(0);
+        }
+        return null;
+    }
+
+    public Entity getBelowEntity(){
+        if (this.isPassenger()){
+            return (AbstractAgolEntity) this.getVehicle();
+        }
+        return null;
+    }
+
+    public int getInventorySize() {
         return 12;
     }
 
@@ -190,11 +232,18 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
 
     @Override
     public void containerChanged(Container pContainer) {
-
     }
 
     public boolean hasInventoryChanged(Container pInventory) {
         return this.inventory != pInventory;
+    }
+
+    public AbstractAgolEntity getRootEntity(){
+        AbstractAgolEntity e = this;
+        while (e.isPassenger()){
+            e = (AbstractAgolEntity) e.getVehicle();
+        }
+        return e;
     }
 
 }

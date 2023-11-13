@@ -9,6 +9,7 @@ import com.wadoo.hyperion.client.renderers.entity.agol.*;
 import com.wadoo.hyperion.client.renderers.entity.effect.BasaltSpikeRenderer;
 //import com.wadoo.hyperion.common.registry.BlockEntityHandler;
 import com.wadoo.hyperion.client.renderers.entity.effect.ChainTestRenderer;
+import com.wadoo.hyperion.common.entities.agol.AgolWalker;
 import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolMenu;
 import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolScreen;
 import com.wadoo.hyperion.common.registry.BlockEntityHandler;
@@ -37,6 +38,7 @@ public class ClientEventBusSubscriber {
         event.registerEntityRenderer(EntityHandler.FEDRAN.get(), FedranRenderer::new);
 
         event.registerEntityRenderer(EntityHandler.AGOL_BASE.get(), AbstractAgolRenderer::new);
+        event.registerEntityRenderer(EntityHandler.AGOL_WALKER.get(), AgolWalkerRenderer::new);
 
 
         event.registerEntityRenderer(EntityHandler.VOLATILE_GOOP.get(), VolatileGoopRenderer::new);

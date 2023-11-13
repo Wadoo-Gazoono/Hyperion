@@ -22,7 +22,6 @@ public abstract class ServerPlayerMixin implements AgolOpenContainer {
 
     @Override
     public void openAgolInventory(AbstractAgolEntity hamster, Container pInventory) {
-        System.out.println("hi");
         ServerPlayer $this = (ServerPlayer) (Object) this;
         if ($this.containerMenu != $this.inventoryMenu) {
             $this.closeContainer();

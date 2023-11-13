@@ -1,0 +1,78 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.agol_walker",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 16, 0]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-9, 16, -9], "size": [18, 7, 18], "uv": [0, 26]},
+						{"origin": [-8, 23, -8], "size": [16, 2, 16], "uv": [0, 52]},
+						{"origin": [-9, 25, -9], "size": [18, 7, 18], "uv": [0, 0]},
+						{"origin": [-3, 32, -3], "size": [6, 3, 6], "uv": [58, 6]}
+					]
+				},
+				{
+					"name": "fork",
+					"parent": "body",
+					"pivot": [0, 34, 0],
+					"cubes": [
+						{"origin": [-5, 34, -1], "size": [10, 2, 2], "uv": [86, 16]},
+						{"origin": [-5, 36, -1], "size": [2, 4, 2], "uv": [88, 21]},
+						{"origin": [3, 36, -1], "size": [2, 4, 2], "uv": [97, 21]}
+					]
+				},
+				{
+					"name": "front",
+					"parent": "body",
+					"pivot": [0, 24, -8]
+				},
+				{
+					"name": "right",
+					"parent": "body",
+					"pivot": [8, 24, 0]
+				},
+				{
+					"name": "left",
+					"parent": "body",
+					"pivot": [-8, 24, 0]
+				},
+				{
+					"name": "back",
+					"parent": "body",
+					"pivot": [0, 24, 8]
+				},
+				{
+					"name": "leftLeg",
+					"parent": "root",
+					"pivot": [8, 24, 0],
+					"cubes": [
+						{"origin": [7, 0, -4], "size": [5, 27, 8], "uv": [0, 72]}
+					]
+				},
+				{
+					"name": "rightLeg",
+					"parent": "root",
+					"pivot": [-8, 24, 0],
+					"cubes": [
+						{"origin": [-12, 0, -4], "size": [5, 27, 8], "uv": [0, 72], "mirror": true}
+					]
+				}
+			]
+		}
+	]
+}

@@ -13,6 +13,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -383,6 +384,9 @@ class CapslingEatGoal extends Goal{
             }
             if (tickTimer %  8 == 0 && tickTimer > 45){
                 this.entity.playSound(SoundsRegistry.CAPSLING_CHEW.get(),1,1);
+            }
+            if (tickTimer %  5 == 0 && tickTimer > 45){
+                this.entity.playSound(SoundEvents.FIRE_AMBIENT,1,1);
             }
         } else {
             this.entity.playSound(SoundsRegistry.CAPSLING_SPIT.get(),1, 1);
