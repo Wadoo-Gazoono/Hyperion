@@ -4,10 +4,12 @@ import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.CrucibleEntity;
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.registry.EntityHandler;
+import com.wadoo.hyperion.common.registry.SoundsRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -91,6 +93,18 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     @Override
     public boolean isPersistenceRequired() {
         return true;
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return hasHead() ? SoundsRegistry.GRUSK_IDLE.get() : null;
+    }
+
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundsRegistry.GRUSK_HURT.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return SoundsRegistry.GRUSK_DEATH.get();
     }
 
     @Override
