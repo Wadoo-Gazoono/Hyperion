@@ -19,9 +19,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.WitherSkeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -117,6 +115,7 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
             setState(4);
             setHasHead(false);
             triggerAnim("controller","decapitate");
+            playSound(SoundsRegistry.GRUSK_DECAPITATE.get(), 1, 1);
             decapitateTimer = 40;
             if(!this.level().isClientSide) {
                 GruskHeadEntity head = EntityHandler.GRUSK_HEAD.get().create(this.level());

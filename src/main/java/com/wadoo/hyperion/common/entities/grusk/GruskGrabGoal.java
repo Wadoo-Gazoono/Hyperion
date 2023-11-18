@@ -3,11 +3,9 @@ package com.wadoo.hyperion.common.entities.grusk;
 import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.entities.ai.AnimatedAttack;
+import com.wadoo.hyperion.common.registry.SoundsRegistry;
 import com.wadoo.hyperion.common.util.GrabAnimation;
 import com.wadoo.hyperion.common.util.GrabKeyframe;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -47,14 +45,14 @@ public class GruskGrabGoal extends AnimatedAttack {
         LivingEntity target = this.entity.getTarget();
         entity.getLookControl().setLookAt(target);
         if(grabAnim.isOnKeyframe(currentTick) != null&& entity.distanceTo(target) < 3.2f){
-            if(target instanceof CapslingEntity){
+            if(target instanceof CapslingEntity capsling){
                 target.noPhysics = true;
-                if(currentTick > 12)entity.playSound(SoundEvents.GENERIC_EAT);
+                if(currentTick > 12) entity.playSound(SoundsRegistry.GRUSK_EAT.get());
                 if(currentTick >= 35){
                     target.discard();
                 }
                 if(currentTick > 2) {
-                    ((CapslingEntity) target).triggerAnim("animController", "eaten");
+                    capsling.triggerAnim("animController", "eaten");
                 }
             }
             target.setDeltaMovement(0d,0d,0d);

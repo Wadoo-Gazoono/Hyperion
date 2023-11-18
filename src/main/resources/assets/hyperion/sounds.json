@@ -63,6 +63,19 @@
         ],
         "subtitle": "entity.grusk.roar"
     },
+    "entity.grusk.decapitate": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/grusk/decapitate1",
+                "volume": 1.8
+            },
+            {
+                "name": "hyperion:entity/grusk/decapitate2",
+                "volume": 1.8
+            }
+        ],
+        "subtitle": "entity.grusk.decapitate"
+    },
     "entity.capsling.into_bucket": {
         "sounds": [
             {
