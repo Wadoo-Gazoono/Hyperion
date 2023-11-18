@@ -40,10 +40,10 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     private static final RawAnimation IDLE = RawAnimation.begin().thenPlay("idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenPlay("walk");
     private static final RawAnimation RUN = RawAnimation.begin().thenPlay("run");
-    private static final RawAnimation LEAP = RawAnimation.begin().thenPlay("leap");
     private static final RawAnimation DECAPITATE = RawAnimation.begin().thenPlay("decapitate");
     private static final RawAnimation ROAR = RawAnimation.begin().thenPlay("roar");
     private static final RawAnimation EAT = RawAnimation.begin().thenPlay("eat");
+    private static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("attack");
 
     private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(GruskEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> HEAD = SynchedEntityData.defineId(GruskEntity.class, EntityDataSerializers.BOOLEAN);
@@ -60,10 +60,11 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
                 .triggerableAnim("idle",IDLE)
                 .triggerableAnim("walk",WALK)
                 .triggerableAnim("run",RUN)
-                .triggerableAnim("leap",LEAP)
                 .triggerableAnim("decapitate",DECAPITATE)
                 .triggerableAnim("roar",ROAR)
                 .triggerableAnim("eat",EAT));
+        controllers.add(new AnimationController<>(this, "attackController", 2, this::attackPredicate)
+                .triggerableAnim("attack",ATTACK));
     }
 
     @Override
@@ -133,11 +134,15 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
         return state.isMoving() && this.getState() == 0 ? (state.setAndContinue(RUN)) : state.setAndContinue(IDLE);
     }
 
+    protected PlayState attackPredicate(AnimationState<GruskEntity> state) {
+        return PlayState.CONTINUE;
+    }
+
     @Override
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(3, new GruskAttackAI(this));
-        goalSelector.addGoal(3, new GruskLeapGoal(this,1,"leap",15));
+        goalSelector.addGoal(3, new GruskAttackGoal(this,1,"attack",25));
         goalSelector.addGoal(3, new GruskRoarGoal(this,2,"roar",40));
         goalSelector.addGoal(3, new GruskGrabGoal(this,3,"eat",40));
 
