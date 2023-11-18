@@ -1,6 +1,9 @@
 package com.wadoo.hyperion.common.inventory.menu.agol;
 
 import com.wadoo.hyperion.common.entities.agol.AbstractAgolEntity;
+import com.wadoo.hyperion.common.entities.agol.AgolConnectorT;
+import com.wadoo.hyperion.common.entities.agol.AgolHead;
+import com.wadoo.hyperion.common.items.ModuleItem;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +31,7 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
         });
         this.addSlot(new Slot(container, 1, 20, 41) {
             public boolean mayPlace(ItemStack stack) {
-                return true;
+                return stack.getItem() instanceof ModuleItem && !this.hasItem();
             }
 
             public boolean isActive() {
@@ -39,19 +42,54 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
                 return 1;
             }
         });
-        this.addSlot(new Slot(container, 2, 132, 31) {
-            public boolean mayPlace(ItemStack stack) {
-                return true;
-            }
+        if (agol instanceof AgolConnectorT){
+            this.addSlot(new Slot(container, 2, 121, 31) {
+                public boolean mayPlace(ItemStack stack) {
+                    return stack.getItem() instanceof ModuleItem && !this.hasItem();
 
-            public boolean isActive() {
-                return true;
-            }
+                }
 
-            public int getMaxStackSize() {
-                return 1;
-            }
-        });
+                public boolean isActive() {
+                    return true;
+                }
+
+                public int getMaxStackSize() {
+                    return 1;
+                }
+            });
+            this.addSlot(new Slot(container, 3, 143, 31) {
+                public boolean mayPlace(ItemStack stack) {
+                    return stack.getItem() instanceof ModuleItem && !this.hasItem();
+
+                }
+
+                public boolean isActive() {
+                    return true;
+                }
+
+                public int getMaxStackSize() {
+                    return 1;
+                }
+            });
+        }else if (agol instanceof AgolHead) {
+
+        }
+        else {
+            this.addSlot(new Slot(container, 2, 132, 31) {
+                public boolean mayPlace(ItemStack stack) {
+                    return stack.getItem() instanceof ModuleItem && !this.hasItem();
+
+                }
+
+                public boolean isActive() {
+                    return true;
+                }
+
+                public int getMaxStackSize() {
+                    return 1;
+                }
+            });
+        }
 
         for(int i1 = 0; i1 < 3; ++i1) {
             for(int k1 = 0; k1 < 9; ++k1) {
@@ -92,19 +130,53 @@ public class AbstractAgolMenu extends AbstractContainerMenu {
                 return 1;
             }
         });
-        this.addSlot(new Slot(container, 2, 132, 31) {
-            public boolean mayPlace(ItemStack stack) {
-                return true;
-            }
+        if (agol instanceof AgolConnectorT){
+            this.addSlot(new Slot(container, 2, 121, 31) {
+                public boolean mayPlace(ItemStack stack) {
+                    return stack.getItem() instanceof ModuleItem && !this.hasItem();
 
-            public boolean isActive() {
-                return true;
-            }
+                }
 
-            public int getMaxStackSize() {
-                return 1;
-            }
-        });
+                public boolean isActive() {
+                    return true;
+                }
+
+                public int getMaxStackSize() {
+                    return 1;
+                }
+            });
+            this.addSlot(new Slot(container, 3, 143, 31) {
+                public boolean mayPlace(ItemStack stack) {
+                    return stack.getItem() instanceof ModuleItem && !this.hasItem();
+
+                }
+
+                public boolean isActive() {
+                    return true;
+                }
+
+                public int getMaxStackSize() {
+                    return 1;
+                }
+            });
+        } else if (agol instanceof AgolHead) {
+
+        } else {
+            this.addSlot(new Slot(container, 2, 132, 31) {
+                public boolean mayPlace(ItemStack stack) {
+                    return stack.getItem() instanceof ModuleItem && !this.hasItem();
+
+                }
+
+                public boolean isActive() {
+                    return true;
+                }
+
+                public int getMaxStackSize() {
+                    return 1;
+                }
+            });
+        }
 
         for(int i1 = 0; i1 < 3; ++i1) {
             for(int k1 = 0; k1 < 9; ++k1) {

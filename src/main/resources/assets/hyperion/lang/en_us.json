@@ -24,6 +24,8 @@
 
   "entity.hyperion.capsling": "Capsling",
   "entity.hyperion.agol_base": "Agol Base",
+  "entity.hyperion.agol_walker": "Agol Walker",
+  "entity.hyperion.agol_connector_t": "Agol T-Connector",
 
   "entity.hyperion.grusk": "Grusk",
   "entity.hyperion.crucible": "Crucible",

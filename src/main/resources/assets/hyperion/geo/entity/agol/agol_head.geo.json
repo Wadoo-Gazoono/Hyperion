@@ -18,20 +18,10 @@
 				{
 					"name": "body",
 					"parent": "root",
-					"pivot": [0, 0, 0],
+					"pivot": [0, 8, 0],
 					"cubes": [
 						{"origin": [-8, 0, -8], "size": [16, 16, 16], "inflate": -0.5, "uv": [0, 48]},
 						{"origin": [-9, 0, -9], "size": [18, 16, 18], "uv": [0, 0]}
-					]
-				},
-				{
-					"name": "plug",
-					"parent": "body",
-					"pivot": [0, 16, 0],
-					"cubes": [
-						{"origin": [-5, 19, 0], "size": [10, 4, 0], "pivot": [0, 0, 0], "rotation": [0, 90, 0], "uv": [30, 34]},
-						{"origin": [-5, 19, 0], "size": [10, 4, 0], "uv": [30, 34]},
-						{"origin": [-5, 16, -5], "size": [10, 3, 10], "uv": [0, 34]}
 					]
 				},
 				{
@@ -48,6 +38,22 @@
 					"pivot": [-7.75, 8, 0],
 					"cubes": [
 						{"origin": [-8.75, 0, -8], "size": [2, 16, 16], "inflate": -1, "uv": [48, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "iris",
+					"parent": "body",
+					"pivot": [0, 8, -8.5],
+					"cubes": [
+						{"origin": [-7, 1, -8.5], "size": [14, 14, 0], "uv": [0, 80]}
+					]
+				},
+				{
+					"name": "pupil",
+					"parent": "root",
+					"pivot": [0, 8, -8.25],
+					"cubes": [
+						{"origin": [-7, 1, -8.25], "size": [14, 14, 0], "uv": [0, 94]}
 					]
 				}
 			]

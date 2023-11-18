@@ -34,6 +34,9 @@ public class EntityHandler {
     //AGOLS
     public static final RegistryObject<EntityType<AbstractAgolEntity>> AGOL_BASE = create("agol_base", EntityType.Builder.<AbstractAgolEntity>of(AbstractAgolEntity::new, MobCategory.MISC).sized(1f, 1f).fireImmune());
     public static final RegistryObject<EntityType<AgolWalker>> AGOL_WALKER = create("agol_walker", EntityType.Builder.<AgolWalker>of(AgolWalker::new, MobCategory.MISC).sized(1f, 2f).fireImmune());
+    public static final RegistryObject<EntityType<AgolConnectorT>> AGOL_CONNECTOR_T = create("agol_connector_t", EntityType.Builder.<AgolConnectorT>of(AgolConnectorT::new, MobCategory.MISC).sized(1f, 1f).fireImmune());
+    public static final RegistryObject<EntityType<AgolHead>> AGOL_HEAD = create("agol_head", EntityType.Builder.<AgolHead>of(AgolHead::new, MobCategory.MISC).sized(1f, 1f).fireImmune());
+    public static final RegistryObject<EntityType<AgolPlaceholder>> AGOL_PLACEHOLDER = create("agol_placeholder", EntityType.Builder.of(AgolPlaceholder::new, MobCategory.MISC).sized(0.2f, 0.2f).fireImmune());
 
 
     public static final RegistryObject<EntityType<VolatileGoopProjectile>> VOLATILE_GOOP = create("volatile_goop", EntityType.Builder.<VolatileGoopProjectile>of(VolatileGoopProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));

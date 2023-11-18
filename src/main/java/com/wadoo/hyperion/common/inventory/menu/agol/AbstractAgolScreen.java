@@ -39,7 +39,6 @@ import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu> {
-    private static final ResourceLocation AGOL_INV = new ResourceLocation(Hyperion.MODID, "textures/gui/container/agol/agol_base.png");
     private AbstractAgolEntity horse;
     private AbstractAgolMenu menu;
     private Inventory inventory;
@@ -82,6 +81,7 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
 
     protected void renderBg(GuiGraphics poseStack, float partialTicks, int x, int y) {
         rotationY += rotateY;
+        ResourceLocation AGOL_INV = new ResourceLocation(Hyperion.MODID, "textures/gui/container/agol/" + this.horse.getAgolName() +".png");
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, AGOL_INV);
@@ -92,11 +92,13 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
         poseStack.blit(AGOL_INV, i + 50, j - 24, 176, 0, 28,24);
 
         Quaternionf quaternionf = (new Quaternionf().rotateX((float) Math.toRadians(180f)));
-        Quaternionf quaternionf1 = (new Quaternionf().rotateX((float) Math.toRadians(35f)).rotateY((float) Math.toRadians(-45f)).rotateY((float) ((float) rotationY)));
+        Quaternionf quaternionf1 = (new Quaternionf().rotateX((float) Math.toRadians(3f)).rotateY((float) Math.toRadians(-45f)).rotateY((float) ((float) rotationY)));
         quaternionf.mul(quaternionf1);
-
-        InventoryScreen.renderEntityInInventory(poseStack, i + 88, j + 45, 15, quaternionf, quaternionf1, this.horse );
-
+        poseStack.pose().pushPose();
+        poseStack.pose().scale(0.8f,0.8f,0.8f);
+        InventoryScreen.renderEntityInInventory(poseStack, i + 146, j + 77, 15, quaternionf, quaternionf1, this.horse );
+        poseStack.pose().scale(1f,1f,1f);
+        poseStack.pose().popPose();
     }
 
     @Override
@@ -113,6 +115,7 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
 
     public void render(GuiGraphics poseStack, int x, int y, float partialTicks) {
         this.renderBackground(poseStack);
+
         super.render(poseStack, x, y, partialTicks);
     }
 
@@ -147,6 +150,8 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
         public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
             if (isHovered){ real_uvY = uvY + 18;}
             else{real_uvY = uvY;}
+            ResourceLocation AGOL_INV = new ResourceLocation(Hyperion.MODID, "textures/gui/container/agol/agol_base.png");
+
             pGuiGraphics.blit(AGOL_INV, this.getX(), this.getY(), uvX, real_uvY, sizeX,sizeY);
         }
 

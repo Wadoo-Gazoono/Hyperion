@@ -9,12 +9,15 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.TntBlock;
@@ -40,14 +43,14 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
 
     private static final EntityDataAccessor<String> TYPE = SynchedEntityData.defineId(AbstractAgolEntity.class, EntityDataSerializers.STRING);
-    private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(AbstractAgolEntity.class, EntityDataSerializers.BYTE);
+
 
     private double health = 20;
     private double defense = 20;
     private double damage = 20;
     private int energy_use = 1;
     private int weight = 5;
-    public final SimpleContainer inventory = new SimpleContainer(12);
+    public SimpleContainer inventory;
     /*
     sensory,
     basem
@@ -61,6 +64,7 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         setAgolType("base");
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+        createInventory();
     }
 
     public AbstractAgolEntity(EntityType<? extends PathfinderMob> mob, Level level, int health, int defense, int damage, int energy_use, int weight, String type) {
@@ -72,8 +76,46 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
         this.energy_use = energy_use;
         this.weight = weight;
         setAgolType(type);
+        createInventory();
     }
 
+    private net.minecraftforge.common.util.LazyOptional<?> itemHandler = null;
+
+    @Override
+    public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.core.Direction facing) {
+        if (this.isAlive() && capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER && itemHandler != null)
+            return itemHandler.cast();
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        if (itemHandler != null) {
+            net.minecraftforge.common.util.LazyOptional<?> oldHandler = itemHandler;
+            itemHandler = null;
+            oldHandler.invalidate();
+        }
+    }
+
+    protected void createInventory() {
+        SimpleContainer simplecontainer = this.inventory;
+        this.inventory = new SimpleContainer(this.getInventorySize());
+        if (simplecontainer != null) {
+            simplecontainer.removeListener(this);
+            int i = Math.min(simplecontainer.getContainerSize(), this.inventory.getContainerSize());
+
+            for(int j = 0; j < i; ++j) {
+                ItemStack itemstack = simplecontainer.getItem(j);
+                if (!itemstack.isEmpty()) {
+                    this.inventory.setItem(j, itemstack.copy());
+                }
+            }
+        }
+
+        this.inventory.addListener(this);
+        this.itemHandler = net.minecraftforge.common.util.LazyOptional.of(() -> new net.minecraftforge.items.wrapper.InvWrapper(this.inventory));
+    }
 
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -84,7 +126,6 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(TYPE, "base");
-        this.entityData.define(DATA_ID_FLAGS, (byte)0);
     }
 
 
@@ -119,11 +160,7 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if(player.isCrouching()){
-            AbstractAgolEntity module = EntityHandler.AGOL_BASE.get().create(level());
-            module.moveTo(position());
-            level().addFreshEntity(module);
-            module.startRiding(this);
+        if(player.getItemInHand(hand).isEmpty() && this instanceof AgolHead){
             player.startRiding(this);
             return InteractionResult.SUCCESS;
         }
@@ -157,13 +194,16 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
         if (!this.level().isClientSide && player instanceof ServerPlayer serverPlayer) {
             if (serverPlayer.containerMenu != serverPlayer.inventoryMenu)
                 serverPlayer.closeContainer();
-            System.out.println(serverPlayer.containerCounter);
             serverPlayer.nextContainerCounter();
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new OpenAgolScreenPacket(serverPlayer.containerCounter, this.getInventorySize(), this.getId()));
             serverPlayer.containerMenu = new AbstractAgolMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), this.inventory, this, player);
             serverPlayer.initMenu(serverPlayer.containerMenu);
             MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(serverPlayer, serverPlayer.containerMenu));
         }
+    }
+
+    public String getAgolName(){
+        return "agol_base";
     }
 
 
@@ -189,9 +229,7 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
     @Override
     public void die(DamageSource pDamageSource) {
         if(getRootEntity() == this){
-            for(Entity e: this.getIndirectPassengers()){
-                e.discard();
-            }
+            this.getIndirectPassengers().forEach((i) -> i.discard());
         }
         super.die(pDamageSource);
     }
@@ -199,24 +237,23 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
     @Override
     public void aiStep() {
         super.aiStep();
-        if (getInventory().getItem(2).getItem() instanceof ModuleItem && !this.isVehicle()){
-            AbstractAgolEntity module = (AbstractAgolEntity) ((ModuleItem)getInventory().getItem(2).getItem()).getType().create(this.level());
-            module.moveTo(position());
-            level().addFreshEntity(module);
-            module.startRiding(this);
-        }
+        LivingEntity root = getRootEntity();
+        this.setYRot(root.getYRot());
+        this.yRotO = getYRot();
+        this.yBodyRot= getYRot();
+        this.yHeadRot = getYRot();
     }
 
     public Entity getAboveEntity(){
         if (this.isVehicle()){
-            return (AbstractAgolEntity) this.getPassengers().get(0);
+            return this.getPassengers().get(0);
         }
         return null;
     }
 
     public Entity getBelowEntity(){
         if (this.isPassenger()){
-            return (AbstractAgolEntity) this.getVehicle();
+            return this.getVehicle();
         }
         return null;
     }
@@ -232,6 +269,35 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
 
     @Override
     public void containerChanged(Container pContainer) {
+        updateParent(pContainer);
+    }
+
+    public void updateParent(Container pContainer){
+        if (!level().isClientSide) {
+            Item slot_item = pContainer.getItem(2).getItem();
+            if (slot_item instanceof ModuleItem) {
+                if (!isVehicle()){
+                    AbstractAgolEntity module = (AbstractAgolEntity) ((ModuleItem) slot_item).getType().create(level());
+                    module.moveTo(position());
+                    level().addFreshEntity(module);
+                    module.startRiding(this);
+                }
+            }
+            else{
+                if (isVehicle()){
+                    for(Entity e: getIndirectPassengers()){
+                        if (e instanceof AbstractAgolEntity){
+                            ((AbstractAgolEntity) e).destroyAgol();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void destroyAgol(){
+        discard();
+        playSound(SoundEvents.ANCIENT_DEBRIS_BREAK);
     }
 
     public boolean hasInventoryChanged(Container pInventory) {
