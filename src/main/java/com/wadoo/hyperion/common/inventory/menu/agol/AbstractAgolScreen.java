@@ -140,10 +140,19 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
             this.real_uvY = uvY;
         }
 
+
+
         protected AgolScreenButton(int pX, int pY, int sX, int sY, Component pMessage) {
             super(pX, pY, sX, sY, pMessage);
             sizeX = sX;
             sizeY = sY;
+        }
+
+
+
+        @Override
+        protected boolean isValidClickButton(int pButton) {
+            return super.isValidClickButton(pButton);
         }
 
         @Override
@@ -183,6 +192,11 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
         }
 
         @Override
+        protected boolean isValidClickButton(int pButton) {
+            return AbstractAgolScreen.this.horse.getAboveEntity() != null;
+        }
+
+        @Override
         public void onPress() {
             super.onPress();
             if (AbstractAgolScreen.this.horse.isVehicle()){
@@ -197,6 +211,11 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
             super(pX, pY, sX, sY, 176, 32);
         }
 
+
+        @Override
+        protected boolean isValidClickButton(int pButton) {
+            return AbstractAgolScreen.this.horse.getLeftEntity() != null;
+        }
         @Override
         public void onPress() {
             super.onPress();
@@ -212,6 +231,12 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
             super(pX, pY, sX, sY, 189, 32);
         }
 
+
+        @Override
+        protected boolean isValidClickButton(int pButton) {
+            return AbstractAgolScreen.this.horse.getRightEntity() != null;
+        }
+
         @Override
         public void onPress() {
             super.onPress();
@@ -223,6 +248,12 @@ public class AbstractAgolScreen extends AbstractContainerScreen<AbstractAgolMenu
         protected Player player = AbstractAgolScreen.this.minecraft.player;
         protected AgolDownButton(int pX, int pY, int sX, int sY) {
             super(pX, pY, sX, sY, 181, 40);
+        }
+
+
+        @Override
+        protected boolean isValidClickButton(int pButton) {
+            return AbstractAgolScreen.this.horse.getBelowEntity() != null;
         }
 
         @Override

@@ -5,6 +5,7 @@ import com.wadoo.hyperion.common.items.ModuleItem;
 import com.wadoo.hyperion.common.network.NetworkHandler;
 import com.wadoo.hyperion.common.network.OpenAgolScreenPacket;
 import com.wadoo.hyperion.common.registry.EntityHandler;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -77,6 +78,36 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
         this.weight = weight;
         setAgolType(type);
         createInventory();
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.putString("type", getAgolType());
+        if (!this.inventory.getItem(2).isEmpty()) {
+            System.out.println("added");
+            pCompound.put("module", this.inventory.getItem(2).save(new CompoundTag()));
+
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        setAgolType(pCompound.getString("type"));
+        if (pCompound.contains("module", 10)) {
+            System.out.println("reading");
+            ItemStack itemstack = ItemStack.of(pCompound.getCompound("module"));
+            if (itemstack.getItem() instanceof ModuleItem) {
+                this.inventory.setItem(2, itemstack);
+            }
+        }
+    }
+
+    @Override
+    protected void spawnSprintParticle() {
+
+
     }
 
     private net.minecraftforge.common.util.LazyOptional<?> itemHandler = null;
@@ -188,7 +219,6 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
     }
 
 
-
     @Override
     public void openCustomInventoryScreen(Player player) {
         if (!this.level().isClientSide && player instanceof ServerPlayer serverPlayer) {
@@ -258,6 +288,46 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
         return null;
     }
 
+    public Entity getRightEntity(){
+        if (this.isPassenger()){
+            Entity vehicle = this.getVehicle();
+            int index = vehicle.getPassengers().indexOf(this);
+            int next_index = index;
+            int length = vehicle.getPassengers().size();
+            if (length > 1) {
+                if (index + 1 == length) {
+                    index = 0;
+                }
+                else{
+                    next_index += 1;
+                }
+                return vehicle.getPassengers().get(next_index);
+            }
+            return null;
+        }
+        return null;
+    }
+
+    public Entity getLeftEntity(){
+        if (this.isPassenger()){
+            Entity vehicle = this.getVehicle();
+            int index = vehicle.getPassengers().indexOf(this);
+            int next_index = index;
+            int length = vehicle.getPassengers().size();
+            if (length > 1) {
+                if (index == 0) {
+                    index = length - 1;
+                }
+                else{
+                    next_index -= 1;
+                }
+                return vehicle.getPassengers().get(next_index);
+            }
+            return null;
+        }
+        return null;
+    }
+
     public int getInventorySize() {
         return 12;
     }
@@ -285,7 +355,7 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
             }
             else{
                 if (isVehicle()){
-                    for(Entity e: getIndirectPassengers()){
+                    for(Entity e: getPassengers()){
                         if (e instanceof AbstractAgolEntity){
                             ((AbstractAgolEntity) e).destroyAgol();
                         }
@@ -297,6 +367,9 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
 
     public void destroyAgol(){
         discard();
+        for (Entity e: this.getPassengers()){
+            if (e instanceof AbstractAgolEntity) ((AbstractAgolEntity) e).destroyAgol();
+        }
         playSound(SoundEvents.ANCIENT_DEBRIS_BREAK);
     }
 

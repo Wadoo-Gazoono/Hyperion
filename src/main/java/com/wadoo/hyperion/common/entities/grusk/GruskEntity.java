@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -22,6 +23,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.WitherSkeleton;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
@@ -44,6 +47,7 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     private static final RawAnimation ROAR = RawAnimation.begin().thenPlay("roar");
     private static final RawAnimation EAT = RawAnimation.begin().thenPlay("eat");
     private static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("attack");
+    private static final RawAnimation NULL = RawAnimation.begin().thenPlay("null_animation");
 
     private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(GruskEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> HEAD = SynchedEntityData.defineId(GruskEntity.class, EntityDataSerializers.BOOLEAN);
@@ -112,21 +116,6 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
         if(decapitateTimer > 0){
             return super.hurt(source, amount/3f);
         }
-        if(this.getHealth() < this.getMaxHealth()/2f && this.random.nextFloat() < 0.9f && hasHead()){
-            setState(4);
-            setHasHead(false);
-            triggerAnim("controller","decapitate");
-            playSound(SoundsRegistry.GRUSK_DECAPITATE.get(), 1, 1);
-            decapitateTimer = 40;
-            if(!this.level().isClientSide) {
-                GruskHeadEntity head = EntityHandler.GRUSK_HEAD.get().create(this.level());
-                head.moveTo(this.position().add(0d,0.7d,0d));
-                head.setDeltaMovement(0d,1d,0d);
-                head.setOwner(this);
-                level().addFreshEntity(head);
-            }
-        }
-
         return super.hurt(source, amount);
     }
 
@@ -135,7 +124,7 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     }
 
     protected PlayState attackPredicate(AnimationState<GruskEntity> state) {
-        return PlayState.CONTINUE;
+        return state.setAndContinue(NULL);
     }
 
     @Override
@@ -163,6 +152,22 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
+        if(this.getHealth() < this.getMaxHealth()/2f && this.random.nextFloat() < 0.9f && hasHead()){
+            setState(4);
+            setHasHead(false);
+            triggerAnim("controller","decapitate");
+            playSound(SoundsRegistry.GRUSK_DECAPITATE.get(), 1, 1);
+            decapitateTimer = 40;
+            if(!this.level().isClientSide) {
+                GruskHeadEntity head = EntityHandler.GRUSK_HEAD.get().create(this.level());
+                head.moveTo(this.position().add(0d,0.7d,0d));
+                head.setDeltaMovement(0d,1d,0d);
+                head.setOwner(this);
+                getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("attackController").tryTriggerAnimation("attack");
+
+                level().addFreshEntity(head);
+            }
+        }
         if(decapitateTimer>0){
             decapitateTimer--;
             setDeltaMovement(0d,this.getDeltaMovement().y,0d);
@@ -178,13 +183,16 @@ public class GruskEntity extends HyperionLivingEntity implements GeoEntity {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor accessor, DifficultyInstance instance, MobSpawnType type, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
         setHasHead(true);
+        if (random.nextFloat() < 0.4f){
+            this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.GOLDEN_PICKAXE));
+        }
         return super.finalizeSpawn(accessor, instance, type, data, tag);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 25.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.35F)
+                .add(Attributes.MOVEMENT_SPEED, 0.45F)
                 .add(Attributes.ATTACK_DAMAGE, 3.0F)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.7D);
     }

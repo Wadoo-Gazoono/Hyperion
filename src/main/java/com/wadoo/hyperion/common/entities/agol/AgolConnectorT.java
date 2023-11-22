@@ -1,5 +1,6 @@
 package com.wadoo.hyperion.common.entities.agol;
 
+import com.wadoo.hyperion.common.entities.fedran.FedranPart;
 import com.wadoo.hyperion.common.inventory.menu.agol.AbstractAgolMenu;
 import com.wadoo.hyperion.common.items.ModuleItem;
 import com.wadoo.hyperion.common.network.NetworkHandler;
@@ -29,6 +30,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.Nullable;
@@ -64,6 +66,12 @@ public class AgolConnectorT extends AbstractAgolEntity implements ContainerListe
     private int weight = 5;
     private UUID[] passengers = {null,null};
 
+    //MULTIPART
+    private final AgolPart[] parts;
+    private final AgolPart right;
+    private final Vec3 rightPos = new Vec3(1.125f,0f,0f);
+    private final AgolPart left;
+    private final Vec3 leftPos = new Vec3(-1.125f,0f,0f);
 
     public final SimpleContainer inventory = new SimpleContainer(12);
     /*
@@ -78,6 +86,9 @@ public class AgolConnectorT extends AbstractAgolEntity implements ContainerListe
         super(mob, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         setAgolType("base");
+        this.right = new AgolPart(this,"right",1f,1f);
+        this.left = new AgolPart(this,"left",1f,1f);
+        parts = new AgolPart[]{this.left,this.right};
     }
 
     public AgolConnectorT(EntityType<? extends PathfinderMob> mob, Level level, int health, int defense, int damage, int energy_use, int weight, String type) {
@@ -89,12 +100,44 @@ public class AgolConnectorT extends AbstractAgolEntity implements ContainerListe
         this.energy_use = energy_use;
         this.weight = weight;
         setAgolType(type);
+        this.right = new AgolPart(this,"right",1f,1f);
+        this.left = new AgolPart(this,"left",1f,1f);
+        parts = new AgolPart[]{this.left,this.right};
     }
 
+    public void updatePartPosition(AgolPart part, Vec3 vec){
+        Vec3 rotatedVec = position().add((new Vec3(vec.x,vec.y,vec.z).yRot((float)Math.toRadians(-this.yBodyRot))));
+        part.moveTo(rotatedVec);
+    }
 
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        for (int i = 0; i < this.parts.length; i++)
+            this.parts[i].setId(id + i + 1);
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (tickCount % 3 == 0) {
+            updatePartPosition(this.right, this.rightPos);
+            updatePartPosition(this.left, this.leftPos);
+        }
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes().add(Attributes.MAX_HEALTH, 15.0D).add(Attributes.ATTACK_DAMAGE, 2.0D).add(Attributes.ARMOR, 2F).add(Attributes.MOVEMENT_SPEED, 0.3F).add(Attributes.KNOCKBACK_RESISTANCE, 0.7D);
+    }
+
+    @Override
+    public net.minecraftforge.entity.PartEntity<?>[] getParts() {
+        return this.parts;
+    }
+
+    @Override
+    public boolean isMultipartEntity() {
+        return true;
     }
 
     @Override
@@ -118,6 +161,8 @@ public class AgolConnectorT extends AbstractAgolEntity implements ContainerListe
     @Override
     public void onAddedToWorld() {
         super.onAddedToWorld();
+        updatePartPosition(this.right,this.rightPos);
+        updatePartPosition(this.left,this.leftPos);
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.health);
         this.getAttribute(Attributes.ARMOR).setBaseValue(this.defense);
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(this.damage);
@@ -129,26 +174,61 @@ public class AgolConnectorT extends AbstractAgolEntity implements ContainerListe
         return PlayState.CONTINUE;
     }
 
-
+    @Override
     public String getAgolName(){
         return "agol_connector_t";
     }
 
     @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.putUUID("right",getRightUUID());
+        pCompound.putUUID("left",getLeftUUID());
+        if (!this.inventory.getItem(2).isEmpty()) {
+            pCompound.put("leftItem", this.inventory.getItem(2).save(new CompoundTag()));
+
+        }
+        if (!this.inventory.getItem(3).isEmpty()) {
+            pCompound.put("rightItem", this.inventory.getItem(3).save(new CompoundTag()));
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        setRightUUID(pCompound.getUUID("right"));
+        setLeftUUID(pCompound.getUUID("left"));
+        if (pCompound.contains("leftItem", 10)) {
+            ItemStack itemstack = ItemStack.of(pCompound.getCompound("leftItem"));
+            if (itemstack.getItem() instanceof ModuleItem) {
+                this.inventory.setItem(2, itemstack);
+                setRight(itemstack);
+            }
+        }
+        if (pCompound.contains("rightItem", 10)) {
+            ItemStack itemstack = ItemStack.of(pCompound.getCompound("rightItem"));
+            if (itemstack.getItem() instanceof ModuleItem) {
+                this.inventory.setItem(3, itemstack);
+                setLeft(itemstack);
+            }
+        }
+    }
+
+    @Override
     protected void positionRider(Entity pPassenger, MoveFunction moveFunction) {
-        if (!this.hasPassenger(pPassenger)) return;
-        Vec3 leftVec = new Vec3(-1.125D, 0D, 0D).yRot(-this.yBodyRot * ((float)Math.PI / 180F));
-        Vec3 rightVec = new Vec3(1.125D, 0D, 0D).yRot(-this.yBodyRot * ((float)Math.PI / 180F));
-        for (Entity entity : getPassengers()){
-            if (entity.getUUID().equals(passengers[0])){
-                pPassenger.setPos(position().x + leftVec.x, position().y + 1d, position().z + leftVec.z);
+        if (this.hasPassenger(pPassenger)){
+            if(this.getRightUUID().equals(pPassenger.getUUID())){
+                Vec3 posVec = (new Vec3(-1.125D, 0.0D, 0.0D)).yRot(-this.yBodyRot * ((float)Math.PI / 180F));
+                moveFunction.accept(pPassenger, posVec.x + this.getX(), this.getY() + m_6048_(), posVec.z + this.getZ());
                 return;
             }
-            if (entity.getUUID().equals(passengers[1])) {
-                pPassenger.setPos(position().x + rightVec.x, position().y + 1d, position().z + rightVec.z);
+            if(this.getLeftUUID().equals(pPassenger.getUUID())){
+                Vec3 posVec = (new Vec3(1.125D, 0.0D, 0.0D)).yRot(-this.yBodyRot * ((float)Math.PI / 180F));
+                moveFunction.accept(pPassenger, posVec.x + this.getX(), this.getY() + m_6048_(), posVec.z + this.getZ());
                 return;
-                }
             }
+        }
+        super.positionRider(pPassenger,moveFunction);
     }
 
     @Override
@@ -159,49 +239,68 @@ public class AgolConnectorT extends AbstractAgolEntity implements ContainerListe
     @Override
     public void tick() {
         super.tick();
-        if (level().isClientSide) System.out.println(getLeft());
-        passengers[0] = getLeftUUID();
-        passengers[1] = getRightUUID();
+
     }
 
     @Override
-    public void updateParent(Container pContainer){
-        Item left = this.getInventory().getItem(2).getItem();
-        Item right = this.getInventory().getItem(3).getItem();
-        if (left instanceof ModuleItem && !(getLeft().getItem() instanceof ModuleItem)){
-            System.out.println("testing");
-            AbstractAgolEntity module = (AbstractAgolEntity) ((ModuleItem)left).getType().create(level());
-            module.moveTo(position());
-            level().addFreshEntity(module);
-            module.startRiding(this);
-            setLeft(getInventory().getItem(2));
-            setLeftUUID(module.getUUID());
-            System.out.println(module);
-        }
-        else{
-            //setLeft(new ItemStack(Items.AIR));
-            for(Entity e: getPassengers()){
-                if (e.getUUID() == getLeftUUID() && e instanceof AbstractAgolEntity) ((AbstractAgolEntity) e).destroyAgol();
+    protected void spawnSprintParticle() {
+
+
+    }
+
+    @Override
+    protected boolean canAddPassenger(Entity pPassenger) {
+        return true;
+    }
+
+    @Override
+    public void updateParent(Container pContainer) {
+        if (!level().isClientSide) {
+            Item right = pContainer.getItem(2).getItem();
+            if (right instanceof ModuleItem) {
+                if (getRight().is(Items.AIR)){
+                    System.out.println("hello");
+                    AbstractAgolEntity module = (AbstractAgolEntity) ((ModuleItem) right).getType().create(level());
+                    module.moveTo(position());
+                    level().addFreshEntity(module);
+                    module.startRiding(this);
+                    setRight(pContainer.getItem(2));
+                    setRightUUID(module.getUUID());
+                }
             }
-            setLeftUUID(this.uuid);
+            else{
+                if (isVehicle()){
+                    for(Entity e: getPassengers()){
+                        if (e.getUUID().equals(this.getRightUUID())){
+                            ((AbstractAgolEntity) e).destroyAgol();
+                        }
+                    }
+                }
+            }
+            Item left = pContainer.getItem(3).getItem();
+
+            if (left instanceof ModuleItem) {
+                if (getLeft().is(Items.AIR)){
+                    System.out.println("hello");
+                    AbstractAgolEntity module = (AbstractAgolEntity) ((ModuleItem) left).getType().create(level());
+                    module.moveTo(position());
+                    level().addFreshEntity(module);
+                    module.startRiding(this);
+                    setLeft(pContainer.getItem(3));
+                    setLeftUUID(module.getUUID());
+                }
+            }
+            else{
+                if (isVehicle()){
+                    for(Entity e: getPassengers()){
+                        if (e.getUUID().equals(this.getLeftUUID())){
+                            ((AbstractAgolEntity) e).destroyAgol();
+                        }
+                    }
+                }
+            }
         }
 
-        if (right instanceof ModuleItem && !(getRight().getItem() instanceof ModuleItem)){
-            AbstractAgolEntity module = (AbstractAgolEntity) ((ModuleItem)right).getType().create(level());
-            module.moveTo(position());
-            level().addFreshEntity(module);
-            module.startRiding(this);
-            setRight(getInventory().getItem(3));
-            setRightUUID(module.getUUID());
-        }
-        else{
-            //setRight(new ItemStack(Items.AIR));
-            for(Entity e: getPassengers()){
-                if (e.getUUID() == getRightUUID() && e instanceof AbstractAgolEntity) ((AbstractAgolEntity) e).destroyAgol();
-            }
-            setRightUUID(this.uuid);
-
-        }
     }
 
 

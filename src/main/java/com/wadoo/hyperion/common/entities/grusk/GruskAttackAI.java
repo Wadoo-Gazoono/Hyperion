@@ -81,14 +81,14 @@ public class GruskAttackAI extends Goal {
         if (target.getY() - this.grusk.getY() >= -1 && target.getY() - this.grusk.getY() <= 3 && grusk.decapitateTimer == 0) {
             //Attack Checker
 
-            if(Math.sqrt(this.grusk.distanceToSqr(targetX,targetY,targetZ)) < 3.5){
-                if(leapCoolDown < 0 && !(this.grusk.getTarget() instanceof CapslingEntity)) {
+            if(Math.sqrt(this.grusk.distanceToSqr(targetX,targetY,targetZ)) < 2.5){
+                if(leapCoolDown < 0 && (!(this.grusk.getTarget() instanceof CapslingEntity) || (this.grusk.getTarget() instanceof CapslingEntity && !this.grusk.hasHead()))) {
                     this.grusk.setAnimation(1);
-                    leapCoolDown = this.grusk.getRandom().nextInt(13) + 10;
+                    leapCoolDown = this.grusk.getRandom().nextInt(13) + 5;
                 }
             }
             if(Math.sqrt(this.grusk.distanceToSqr(targetX,targetY,targetZ)) < 0.8){
-                if(grabCoolDown < 0 && (this.grusk.getTarget() instanceof CapslingEntity)) {
+                if(grabCoolDown < 0 && (this.grusk.getTarget() instanceof CapslingEntity && this.grusk.hasHead())) {
                     this.grusk.setAnimation(3);
                     grabCoolDown = this.grusk.getRandom().nextInt(23) + 15;
                 }

@@ -53,10 +53,10 @@ public class OpenAgolScreenClientPacket {
                     send_to_entity = (AbstractAgolEntity) baseEntity.getBelowEntity();
                     break;
                 case 3:
-                    send_to_entity = baseEntity;
+                    send_to_entity = (AbstractAgolEntity) baseEntity.getLeftEntity();
                     break;
                 case 4:
-                    send_to_entity = baseEntity;
+                    send_to_entity = (AbstractAgolEntity) baseEntity.getRightEntity();
                     break;
                 default:
                     send_to_entity = baseEntity;
@@ -64,7 +64,6 @@ public class OpenAgolScreenClientPacket {
 
             }
             if (!send_to_entity.level().isClientSide) {
-                System.out.println(serverPlayer.containerCounter);
                 serverPlayer.nextContainerCounter();
                 NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new OpenAgolScreenPacket(serverPlayer.containerCounter, send_to_entity.getInventorySize(), send_to_entity.getId()));
                 serverPlayer.containerMenu = new AbstractAgolMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), send_to_entity.inventory, send_to_entity, serverPlayer);
