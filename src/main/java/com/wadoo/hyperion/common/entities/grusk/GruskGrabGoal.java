@@ -6,6 +6,9 @@ import com.wadoo.hyperion.common.entities.ai.AnimatedAttack;
 import com.wadoo.hyperion.common.registry.SoundsRegistry;
 import com.wadoo.hyperion.common.util.GrabAnimation;
 import com.wadoo.hyperion.common.util.GrabKeyframe;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -47,9 +50,13 @@ public class GruskGrabGoal extends AnimatedAttack {
         if(grabAnim.isOnKeyframe(currentTick) != null&& entity.distanceTo(target) < 3.2f){
             if(target instanceof CapslingEntity capsling){
                 target.noPhysics = true;
-                if(currentTick > 12) entity.playSound(SoundsRegistry.GRUSK_EAT.get());
-                if(currentTick >= 35){
-                    target.discard();
+                if(currentTick > 12) {
+                    entity.playSound(SoundsRegistry.GRUSK_EAT.get());
+                    capsling.hurt(entity.level().damageSources().mobAttack(entity), 0);
+                }
+                if (currentTick >= 35) {
+                    capsling.playSound(SoundsRegistry.CAPSLING_DEATH.get());
+                    capsling.discard();
                 }
                 if(currentTick > 2) {
                     capsling.triggerAnim("animController", "eaten");
