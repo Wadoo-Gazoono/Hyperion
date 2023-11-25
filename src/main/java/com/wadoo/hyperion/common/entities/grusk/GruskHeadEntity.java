@@ -3,11 +3,13 @@ package com.wadoo.hyperion.common.entities.grusk;
 import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.registry.SoundsRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -22,6 +24,7 @@ import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -64,6 +67,11 @@ public class GruskHeadEntity extends HyperionLivingEntity implements GeoEntity {
         return SoundsRegistry.GRUSK_DEATH.get();
     }
 
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        super.playStepSound(pos, state);
+        playSound(SoundsRegistry.GRUSK_RABID.get());
+    }
 
     protected PlayState predicate(AnimationState<GruskHeadEntity> state) {
         return state.isMoving() ?(state.setAndContinue(ATTACK)) : state.setAndContinue(IDLE);

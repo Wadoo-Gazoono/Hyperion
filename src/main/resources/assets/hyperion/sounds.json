@@ -219,6 +219,31 @@
         ],
         "subtitle": "entity.grusk.idle"
     },
+    "entity.grusk.rabid": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/grusk/rabid1",
+                "pitch": 1.5,
+                "volume": 0.1
+            },
+            {
+                "name": "hyperion:entity/grusk/rabid2",
+                "pitch": 1.5,
+                "volume": 0.1
+            },
+            {
+                "name": "hyperion:entity/grusk/rabid3",
+                "pitch": 1.5,
+                "volume": 0.1
+            },
+            {
+                "name": "hyperion:entity/grusk/rabid4",
+                "pitch": 1.5,
+                "volume": 0.1
+            }
+        ],
+        "subtitle": "entity.grusk.rabid"
+    },
     "entity.grusk.roar": {
         "sounds": [
             {

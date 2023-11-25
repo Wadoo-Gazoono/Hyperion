@@ -26,6 +26,7 @@ public class SoundsRegistry {
     public static final RegistryObject<SoundEvent> GRUSK_IDLE = register("entity.grusk.idle");
     public static final RegistryObject<SoundEvent> GRUSK_HURT = register("entity.grusk.hurt");
     public static final RegistryObject<SoundEvent> GRUSK_DEATH = register("entity.grusk.death");
+    public static final RegistryObject<SoundEvent> GRUSK_RABID = register("entity.grusk.rabid");
     public static final RegistryObject<SoundEvent> GRUSK_ROAR = register("entity.grusk.roar");
     public static final RegistryObject<SoundEvent> GRUSK_EAT = register("entity.grusk.eat");
     public static final RegistryObject<SoundEvent> GRUSK_DECAPITATE = register("entity.grusk.decapitate");
