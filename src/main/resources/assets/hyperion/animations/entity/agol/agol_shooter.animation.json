@@ -1,0 +1,116 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"idle": {
+			"loop": true,
+			"animation_length": 8,
+			"bones": {
+				"gear": {
+					"rotation": {
+						"vector": ["query.anim_time * 45", 0, 0]
+					},
+					"position": {
+						"vector": [0, "Math.sin(query.anim_time * 2880) * 0.02", "Math.cos(query.anim_time * 2880) * 0.03"]
+					}
+				},
+				"leftGear1": {
+					"rotation": {
+						"vector": ["query.anim_time * 45", 0, 0]
+					},
+					"position": {
+						"vector": [0, "Math.sin(query.anim_time * 2880) * 0.02", "Math.cos(query.anim_time * 2880) * 0.03"]
+					}
+				},
+				"leftGear2": {
+					"rotation": {
+						"vector": ["query.anim_time * -45", 0, 0]
+					},
+					"position": {
+						"vector": [0, "Math.sin(query.anim_time * 2880) * 0.02", "Math.cos(query.anim_time * 2880) * 0.03"]
+					}
+				},
+				"leftGear3": {
+					"rotation": {
+						"vector": ["query.anim_time * 45", 0, 0]
+					},
+					"position": {
+						"vector": [0, "Math.sin(query.anim_time * 2880) * 0.02", "Math.cos(query.anim_time * 2880) * 0.03"]
+					}
+				},
+				"rightGear1": {
+					"rotation": {
+						"vector": ["query.anim_time * 45", 0, 0]
+					},
+					"position": {
+						"vector": [0, "Math.sin(query.anim_time * 2880) * 0.02", "Math.cos(query.anim_time * 2880) * 0.03"]
+					}
+				},
+				"rightGear2": {
+					"rotation": {
+						"vector": ["query.anim_time * -45", 0, 0]
+					},
+					"position": {
+						"vector": [0, "Math.sin(query.anim_time * 2880) * 0.02", "Math.cos(query.anim_time * 2880) * 0.03"]
+					}
+				},
+				"rightGear3": {
+					"rotation": {
+						"vector": ["query.anim_time * 45", 0, 0]
+					},
+					"position": {
+						"vector": [0, "Math.sin(query.anim_time * 2880) * 0.02", "Math.cos(query.anim_time * 2880) * 0.03"]
+					}
+				}
+			}
+		},
+		"fire": {
+			"animation_length": 0.54167,
+			"bones": {
+				"root": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.125": {
+							"vector": [0, "Math.sin(query.anim_time * 2880) * 0.2", "Math.cos(query.anim_time * 2880) * 0.2"]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"gear": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.125": {
+							"vector": [180, 0, 0],
+							"easing": "easeInBack"
+						},
+						"0.5417": {
+							"vector": [0, 0, 0],
+							"easing": "easeOutCubic"
+						}
+					}
+				},
+				"barrel": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.125": {
+							"vector": [0, 0, 2],
+							"easing": "easeInElastic"
+						},
+						"0.5": {
+							"vector": [0, 0, 0],
+							"easing": "easeOutCubic"
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

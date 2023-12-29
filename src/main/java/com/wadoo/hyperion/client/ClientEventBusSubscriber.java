@@ -36,13 +36,15 @@ public class ClientEventBusSubscriber {
         event.registerEntityRenderer(EntityHandler.GRUSK_HEAD.get(), GruskHeadRenderer::new);
         event.registerEntityRenderer(EntityHandler.CRUCIBLE.get(), CrucibleRenderer::new);
         event.registerEntityRenderer(EntityHandler.FORGENAUT.get(), ForgenautRenderer::new);
+        event.registerEntityRenderer(EntityHandler.OBELISK.get(), ObeliskRenderer::new);
+
         event.registerEntityRenderer(EntityHandler.FEDRAN.get(), FedranRenderer::new);
 
         event.registerEntityRenderer(EntityHandler.AGOL_BASE.get(), AbstractAgolRenderer::new);
         event.registerEntityRenderer(EntityHandler.AGOL_WALKER.get(), AgolWalkerRenderer::new);
         event.registerEntityRenderer(EntityHandler.AGOL_CONNECTOR_T.get(), AgolConnectorTRenderer::new);
         event.registerEntityRenderer(EntityHandler.AGOL_HEAD.get(), AgolHeadRenderer::new);
-        event.registerEntityRenderer(EntityHandler.AGOL_PLACEHOLDER.get(), RenderNothing::new);
+        event.registerEntityRenderer(EntityHandler.AGOL_SHOOTER.get(), AgolShooterRenderer::new);
 
 
         event.registerEntityRenderer(EntityHandler.VOLATILE_GOOP.get(), VolatileGoopRenderer::new);

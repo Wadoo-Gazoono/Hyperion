@@ -120,7 +120,7 @@ public class AgolConnectorT extends AbstractAgolEntity implements ContainerListe
     @Override
     public void aiStep() {
         super.aiStep();
-        if (tickCount % 3 == 0) {
+        if (tickCount % 1 == 0) {
             updatePartPosition(this.right, this.rightPos);
             updatePartPosition(this.left, this.leftPos);
         }

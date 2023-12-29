@@ -171,7 +171,7 @@ public class CapslingEntity extends Animal implements GeoEntity, Bucketable {
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (player.getItemInHand(hand).is(Items.MAGMA_CREAM)){
+        if (player.getItemInHand(hand).is(Items.MAGMA_CREAM) && this.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.AIR)){
             this.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.MAGMA_CREAM,1));
             player.getItemInHand(hand).shrink(1);
             return InteractionResult.CONSUME;

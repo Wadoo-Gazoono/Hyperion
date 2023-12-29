@@ -8,6 +8,7 @@ import com.wadoo.hyperion.common.entities.fedran.FedranEntity;
 import com.wadoo.hyperion.common.entities.forgenaut.ForgenautEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskHeadEntity;
+import com.wadoo.hyperion.common.entities.obelisk.ObeliskEntity;
 import com.wadoo.hyperion.common.network.NetworkHandler;
 import com.wadoo.hyperion.common.registry.*;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -73,6 +74,8 @@ public class Hyperion {
         event.put(EntityHandler.GRUSK.get(), GruskEntity.createAttributes().build());
         event.put(EntityHandler.GRUSK_HEAD.get(), GruskHeadEntity.createAttributes().build());
         event.put(EntityHandler.CRUCIBLE.get(), CrucibleEntity.createAttributes().build());
+        event.put(EntityHandler.OBELISK.get(), ObeliskEntity.createAttributes().build());
+
         event.put(EntityHandler.FORGENAUT.get(), ForgenautEntity.createAttributes().build());
         event.put(EntityHandler.FEDRAN.get(), FedranEntity.createAttributes().build());
 
@@ -80,6 +83,7 @@ public class Hyperion {
         event.put(EntityHandler.AGOL_BASE.get(), AbstractAgolEntity.createAttributes().build());
         event.put(EntityHandler.AGOL_CONNECTOR_T.get(), AgolConnectorT.createAttributes().build());
         event.put(EntityHandler.AGOL_HEAD.get(), AgolHead.createAttributes().build());
+        event.put(EntityHandler.AGOL_SHOOTER.get(), AgolHead.createAttributes().build());
 
         event.put(EntityHandler.AGOL_WALKER.get(), AgolWalker.createAttributes().build());
 
