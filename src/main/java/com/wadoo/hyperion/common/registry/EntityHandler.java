@@ -3,6 +3,7 @@ package com.wadoo.hyperion.common.registry;
 import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.entities.*;
 import com.wadoo.hyperion.common.entities.agol.*;
+import com.wadoo.hyperion.common.entities.clinker.ClinkerEntity;
 import com.wadoo.hyperion.common.entities.effects.BasaltSpikeEntity;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
 import com.wadoo.hyperion.common.entities.effects.ChainTestEntity;
@@ -15,11 +16,9 @@ import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import software.bernie.geckolib.renderer.GeoObjectRenderer;
 
 public class EntityHandler {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Hyperion.MODID);
@@ -30,6 +29,7 @@ public class EntityHandler {
     public static final RegistryObject<EntityType<GruskHeadEntity>> GRUSK_HEAD = create("grusk_head", EntityType.Builder.of(GruskHeadEntity::new, MobCategory.MONSTER).sized(0.8f, 0.6f).fireImmune());
     public static final RegistryObject<EntityType<FedranEntity>> FEDRAN = create("fedran", EntityType.Builder.of(FedranEntity::new, MobCategory.MONSTER).sized(1.1f, 4.8f).fireImmune());
     public static final RegistryObject<EntityType<ObeliskEntity>> OBELISK = create("obelisk", EntityType.Builder.of(ObeliskEntity::new, MobCategory.MONSTER).sized(1f, 2.5f).fireImmune());
+    public static final RegistryObject<EntityType<ClinkerEntity>> CLINKER = create("clinker", EntityType.Builder.of(ClinkerEntity::new, MobCategory.MONSTER).sized(0.65f, 0.65f).fireImmune());
 
     public static final RegistryObject<EntityType<ForgenautEntity>> FORGENAUT = create("forgenaut", EntityType.Builder.of(ForgenautEntity::new, MobCategory.MONSTER).sized(1.7f, 3.0f).fireImmune());
 

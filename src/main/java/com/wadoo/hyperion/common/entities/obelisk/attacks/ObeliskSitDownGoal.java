@@ -1,8 +1,9 @@
-package com.wadoo.hyperion.common.entities.obelisk;
+package com.wadoo.hyperion.common.entities.obelisk.attacks;
 
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.entities.ai.AnimatedAttack;
 import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
+import com.wadoo.hyperion.common.entities.obelisk.ObeliskEntity;
 import com.wadoo.hyperion.common.registry.SoundsRegistry;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

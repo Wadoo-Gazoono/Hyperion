@@ -9,6 +9,7 @@ import com.wadoo.hyperion.client.renderers.layers.CrucibleLavaLayer;
 import com.wadoo.hyperion.client.renderers.layers.ObeliskEyesLayer;
 import com.wadoo.hyperion.common.entities.grusk.GruskHeadEntity;
 import com.wadoo.hyperion.common.entities.obelisk.ObeliskEntity;
+import com.wadoo.hyperion.common.registry.EntityHandler;
 import com.wadoo.hyperion.common.registry.ParticleHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -55,13 +56,13 @@ public class ObeliskRenderer extends GeoEntityRenderer<ObeliskEntity> {
                 if (animatable.getRandom().nextFloat() < 0.1f)
                     animatable.level().addParticle(ParticleHandler.AGRALITE_FLAME.get(), pos.x, pos.y + 1.7d + Math.sin(animatable.tickCount / 5f) * 0.05d, pos.z, delta.x, delta.y, delta.z);
             }
-            Entity e = EntityType.MAGMA_CUBE.create(animatable.level());
+            Entity e = EntityHandler.CLINKER.get().create(animatable.level());
 
             if (e != null) {
 
                 poseStack.pushPose();
                 poseStack.scale(0.7f,0.7f,0.7f);
-                poseStack.translate(0d,2.35d + Math.sin(animatable.tickCount / 5f) * 0.05d,0d);
+                poseStack.translate(0d,2.25d + Math.sin(animatable.tickCount / 5f) * 0.05d,0d);
                 poseStack.mulPose(Axis.YP.rotationDegrees( animatable.tickCount * 5));
                 this.entityRenderer.render(e, 0.0D, 0.0D, 0.0D, 0f, partialTick, poseStack, bufferSource, packedLight);
                 poseStack.popPose();

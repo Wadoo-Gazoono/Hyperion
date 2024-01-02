@@ -37,6 +37,7 @@ public class ClientEventBusSubscriber {
         event.registerEntityRenderer(EntityHandler.CRUCIBLE.get(), CrucibleRenderer::new);
         event.registerEntityRenderer(EntityHandler.FORGENAUT.get(), ForgenautRenderer::new);
         event.registerEntityRenderer(EntityHandler.OBELISK.get(), ObeliskRenderer::new);
+        event.registerEntityRenderer(EntityHandler.CLINKER.get(), ClinkerRenderer::new);
 
         event.registerEntityRenderer(EntityHandler.FEDRAN.get(), FedranRenderer::new);
 

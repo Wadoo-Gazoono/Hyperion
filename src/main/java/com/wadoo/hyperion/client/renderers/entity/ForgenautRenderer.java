@@ -38,10 +38,6 @@ public class ForgenautRenderer extends DynamicGeoEntityRenderer<ForgenautEntity>
 
     @Override
     public void renderRecursively(PoseStack poseStack, ForgenautEntity animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        if (bone.getName().equals("fire") && animatable.getFiring()){
-            if(animatable.getFiring()){bone.setHidden(false);}
-            else{bone.setHidden(true);}
-        }
         super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 

@@ -1,7 +1,8 @@
-package com.wadoo.hyperion.common.entities.obelisk;
+package com.wadoo.hyperion.common.entities.obelisk.attacks;
 
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
 import com.wadoo.hyperion.common.entities.ai.AnimatedAttack;
+import com.wadoo.hyperion.common.entities.obelisk.ObeliskEntity;
 
 public class ObeliskStandUpGoal extends AnimatedAttack {
     public ObeliskStandUpGoal(HyperionLivingEntity entity, int state, String animation, int animLength) {

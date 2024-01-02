@@ -2,27 +2,22 @@ package com.wadoo.hyperion.common.entities.obelisk;
 
 import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
-import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
+import com.wadoo.hyperion.common.entities.clinker.ClinkerEntity;
+import com.wadoo.hyperion.common.entities.obelisk.attacks.ObeliskSitDownGoal;
+import com.wadoo.hyperion.common.entities.obelisk.attacks.ObeliskStandUpGoal;
+import com.wadoo.hyperion.common.registry.EntityHandler;
 import com.wadoo.hyperion.common.registry.SoundsRegistry;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Position;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.MinecartSpawner;
-import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -84,8 +79,7 @@ public class ObeliskEntity extends HyperionLivingEntity implements GeoEntity {
 
 
     protected PlayState predicate(AnimationState<ObeliskEntity> state) {
-        return state.getLimbSwingAmount() > 0.05f ? (state.setAndContinue(WALK)) :
-                (getSitting() ? state.setAndContinue(SITTING_IDLE) : state.setAndContinue(IDLE));
+        return !getSitting() ? (state.getLimbSwingAmount() > 0.05f ? state.setAndContinue(WALK) : state.setAndContinue(IDLE)) : state.setAndContinue(SITTING_IDLE);
     }
 
     @Override
@@ -108,6 +102,7 @@ public class ObeliskEntity extends HyperionLivingEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
+        System.out.println(getHealth());
         if (getSitting()){
             this.yBodyRotO = Math.round(this.yBodyRot / 90) *90;
             this.setYRot(this.yBodyRotO);
@@ -124,8 +119,15 @@ public class ObeliskEntity extends HyperionLivingEntity implements GeoEntity {
                 float size = 1.25f;
                 Vec3 particlePos = position().add(Math.sin(tickCount / 4f) * size, 1.5f, Math.cos(tickCount / 4f) * size);
                 level().addParticle(ParticleTypes.FLAME, particlePos.x, particlePos.y, particlePos.z, 0d, 0d, 0d);
+                Vec3 particlePos2 = position().add(-Math.sin(tickCount / 4f) * size, 1.5f, -Math.cos(tickCount / 4f) * size);
+
+                level().addParticle(ParticleTypes.FLAME, particlePos2.x, particlePos2.y, particlePos2.z, 0d, 0d, 0d);
 
 
+            }
+
+            if(getTarget() == null && getAnimation() == 0){
+                setAnimation(2);
             }
         }
     }
@@ -133,8 +135,9 @@ public class ObeliskEntity extends HyperionLivingEntity implements GeoEntity {
     public void spawnCubes(){
         for (int i = 0; i < random.nextInt(3); i++){
 
-            MagmaCube mob = EntityType.MAGMA_CUBE.create(level());
-            mob.setSize(random.nextInt(1,3),true);
+            ClinkerEntity mob = EntityHandler.CLINKER.get().create(level());
+            mob.setOwner(ObeliskEntity.this);
+            mob.setSpawnpos(this.position().add(0d,1.5d,0d));
             Vec3 pos = position().add(this.random.nextInt(8) - 4, 1d,this.random.nextInt(8) - 4);
             mob.moveTo(pos);
             level().addFreshEntity(mob);
@@ -150,12 +153,19 @@ public class ObeliskEntity extends HyperionLivingEntity implements GeoEntity {
     }
 
     public void sit(){
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(300.0D);
+
+        this.setHealth(300f);
+
         this.setSitting(true);
         this.yBodyRotO = Math.round(this.yBodyRot / 90) *90;
     }
 
     public void stand(){
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(30.0D);
+
         this.setSitting(false);
+        this.setHealth(30f);
     }
 
     @Override

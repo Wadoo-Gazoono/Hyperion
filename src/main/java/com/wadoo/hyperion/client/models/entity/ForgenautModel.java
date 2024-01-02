@@ -22,8 +22,6 @@ public class ForgenautModel extends DefaultedEntityGeoModel<ForgenautEntity> {
         super.setCustomAnimations(animatable, instanceId, animationState);
 
         CoreGeoBone arm = getAnimationProcessor().getBone("leftArm");
-        if (!animatable.hasArm()){ arm.setHidden(true);}
-        else{arm.setHidden(false);}
 
 
         CoreGeoBone head = getAnimationProcessor().getBone("head");

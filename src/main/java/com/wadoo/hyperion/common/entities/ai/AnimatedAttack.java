@@ -21,7 +21,7 @@ public class AnimatedAttack extends Goal {
 
     @Override
     public boolean canUse() {
-        return entity.getAnimation() == this.state;
+        return entity.getAnimation() == this.state && this.entity.getTransition() == 0;
     }
 
     @Override

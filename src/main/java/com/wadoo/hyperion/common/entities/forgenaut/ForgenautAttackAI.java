@@ -76,24 +76,8 @@ public class ForgenautAttackAI extends Goal{
         if (target.getY() - this.forgenaut.getY() >= -1 && target.getY() - this.forgenaut.getY() <= 3) {
             //Attack Checker
             if (this.forgenaut.getPhase() != 0) {
-                if (dist < 6f && this.forgenaut.getPunchAttackCooldown() <= 0) {
-                    float rand = this.forgenaut.getRandom().nextFloat();
-                    if (this.forgenaut.hasArm()) {
-                        if (rand < 0.5f) {
-                            this.forgenaut.setAnimation(2);
-                        } else {
-                            this.forgenaut.setAnimation(3);
-                        }
-                    }
-                    else{
-                        this.forgenaut.setAnimation(3);
-                    }
-                }
-                if(dist > 5f && dist < 8f && this.forgenaut.getSlamAttackCooldown() <= 0){
-                    this.forgenaut.setAnimation(4);
-                }
-                if(dist > 10f && this.forgenaut.getFlameAttackCooldown() <= 0){
-                    this.forgenaut.setAnimation(5);
+                if (dist < 3f){
+                    this.forgenaut.setAnimation(this.forgenaut.getRandom().nextFloat() < 0.5f ? 2 : 4);
                 }
             }
         }

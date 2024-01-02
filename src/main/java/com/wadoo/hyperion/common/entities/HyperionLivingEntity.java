@@ -38,6 +38,7 @@ public class HyperionLivingEntity extends Monster implements GeoEntity {
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
 
     private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(HyperionLivingEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> TRANSITION_STATE = SynchedEntityData.defineId(HyperionLivingEntity.class, EntityDataSerializers.INT);
 
     public HyperionLivingEntity(EntityType<? extends HyperionLivingEntity> monster, Level level) {
         super(monster, level);
@@ -51,6 +52,8 @@ public class HyperionLivingEntity extends Monster implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(STATE, 0);
+        this.entityData.define(TRANSITION_STATE, 0);
+
     }
 
     @Override
@@ -81,5 +84,18 @@ public class HyperionLivingEntity extends Monster implements GeoEntity {
         return this.entityData.get(STATE);
     }
 
+    public void setTransition(int trans){
+        this.entityData.set(TRANSITION_STATE, trans);
+    }
+
+    public int getTransition(){
+        return this.entityData.get(TRANSITION_STATE);
+    }
+
+    public void freeze(){
+        this.yBodyRot = this.yBodyRotO = this.yHeadRot = this.yHeadRotO = this.getYRot();
+        this.setDeltaMovement(0d, this.getDeltaMovement().y, 0d);
+        this.getNavigation().stop();
+    }
 }
 
