@@ -66,7 +66,7 @@ public class FedranAttackAI extends Goal {
             } else if (distSqr > 16.0D * 16.0D) {
                 this.repath += 5;
             }
-            if (!this.fedran.getNavigation().moveTo(target, 1.3D)) {
+            if (!this.fedran.getNavigation().moveTo(target, 0.8D)) {
                 this.repath += 15;
             }
         }
@@ -76,29 +76,29 @@ public class FedranAttackAI extends Goal {
         if (dist < 6f) this.fedran.getNavigation().stop();
         if (target.getY() - this.fedran.getY() >= -1 && target.getY() - this.fedran.getY() <= 3) {
             //Attack Checker
-            if (testPhase(1, 450) || testPhase(2, 300) || testPhase(3, 150)) {
-                this.fedran.setAnimation(6);
-                this.fedran.setPhase(this.fedran.getPhase() + 1);
-            }
-            if (this.fedran.getAttackCooldown() <= 0){
-                    //SHORT RANGE ATTACKS
-                    if (dist < 3f) {
-                        int rand = this.fedran.getRandom().nextInt(11);
-                        if (rand < 4) this.fedran.setAnimation(3); //STOMP
-                        if (rand >= 4 && rand <= 7) this.fedran.setAnimation(7); //KICK;
-                        if (rand > 7) this.fedran.setAnimation(2); //FORWARD JAB
-                    }
-                //MID RANGE ATTACKS
-                if (dist >= 3f && dist <= 10f) {
-                    int rand = this.fedran.getRandom().nextInt(11);
-                    if (rand < 5) this.fedran.setAnimation(4); //HORIZONTAL SWEEP
-                    if (rand >= 5) this.fedran.setAnimation(2); //FORWARD JAB
-                }
-                //LONG RANGE ATTACKS
-                if (dist > 10f && dist < 18f) {
-                    this.fedran.setAnimation(5);
-                }
-            }
+//            if (testPhase(1, 450) || testPhase(2, 300) || testPhase(3, 150)) {
+//                this.fedran.setAnimation(6);
+//                this.fedran.setPhase(this.fedran.getPhase() + 1);
+//            }
+//            if (this.fedran.getAttackCooldown() <= 0){
+//                    //SHORT RANGE ATTACKS
+//                    if (dist < 3f) {
+//                        int rand = this.fedran.getRandom().nextInt(11);
+//                        if (rand < 4) this.fedran.setAnimation(3); //STOMP
+//                        if (rand >= 4 && rand <= 7) this.fedran.setAnimation(7); //KICK;
+//                        if (rand > 7) this.fedran.setAnimation(2); //FORWARD JAB
+//                    }
+//                //MID RANGE ATTACKS
+//                if (dist >= 3f && dist <= 10f) {
+//                    int rand = this.fedran.getRandom().nextInt(11);
+//                    if (rand < 5) this.fedran.setAnimation(4); //HORIZONTAL SWEEP
+//                    if (rand >= 5) this.fedran.setAnimation(2); //FORWARD JAB
+//                }
+//                //LONG RANGE ATTACKS
+//                if (dist > 10f && dist < 18f) {
+//                    this.fedran.setAnimation(5);
+//                }
+//            }
         }
     }
 

@@ -12,6 +12,7 @@ import com.wadoo.hyperion.common.entities.forgenaut.ForgenautEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskEntity;
 import com.wadoo.hyperion.common.entities.grusk.GruskHeadEntity;
 import com.wadoo.hyperion.common.entities.obelisk.ObeliskEntity;
+import com.wadoo.hyperion.common.entities.projectiles.LavaBallProjectile;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -42,6 +43,8 @@ public class EntityHandler {
 
 
     public static final RegistryObject<EntityType<VolatileGoopProjectile>> VOLATILE_GOOP = create("volatile_goop", EntityType.Builder.<VolatileGoopProjectile>of(VolatileGoopProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
+    public static final RegistryObject<EntityType<LavaBallProjectile>> LAVA_BALL = create("lava_ball", EntityType.Builder.<LavaBallProjectile>of(LavaBallProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
+
     public static final RegistryObject<EntityType<CameraShakeEntity>> CAMERA = create("camera_shake", EntityType.Builder.<CameraShakeEntity>of(CameraShakeEntity::new, MobCategory.MISC).sized(1F, 1F).updateInterval(Integer.MAX_VALUE));
     public static final RegistryObject<EntityType<BasaltSpikeEntity>> BASALT_SPIKE = create("basalt_spike", EntityType.Builder.<BasaltSpikeEntity>of(BasaltSpikeEntity::new, MobCategory.MISC).sized(1F, 2.5F));
     public static final RegistryObject<EntityType<ChainTestEntity>> CHAIN_TEST = create("chain_test", EntityType.Builder.<ChainTestEntity>of(ChainTestEntity::new, MobCategory.MISC).sized(0.2F, 2.0F));

@@ -19,37 +19,18 @@ public class FNSlamLeftAttack extends AnimatedAttack {
     public void doEffects(int currentTick) {
         super.doEffects(currentTick);
         if (entity instanceof ForgenautEntity fn){
-            fn.freeze();
+            fn.freeze(true);
             if (currentTick == 10) {
                 CameraShakeEntity.cameraShake(fn.level(), fn.position(), 12, 0.32f, 30, 3);
-                List<LivingEntity> entitiesHit = fn.level().getEntitiesOfClass(LivingEntity.class, fn.getBoundingBox().inflate(7.2D, 1.0D, 7.2D));
-                float damage = (float)entity.getAttribute(Attributes.ATTACK_DAMAGE).getValue();
-                for (LivingEntity entityHit : entitiesHit) {
-                    if(entityHit == fn) continue;
-                    float entityHitAngle = (float) ((Math.atan2(entityHit.getZ() - entity.getZ(), entityHit.getX() - entity.getX()) * (180 / Math.PI) - 90) % 360);
-                    float entityAttackingAngle = entity.yBodyRot % 360;
-                    //if (entityHit instanceof HyperionLivingEntity) continue;
-                    if (entityHitAngle < 0) {
-                        entityHitAngle += 360;
-                    }
-                    if (entityAttackingAngle < 0) {
-                        entityAttackingAngle += 360;
-                    }
-                    float entityRelativeAngle = entityHitAngle - entityAttackingAngle;
-                    float arc_angle = 180;
-                    float entityHitDistance = (float) Math.sqrt((entityHit.getZ() - entity.getZ()) * (entityHit.getZ() - entity.getZ()) + (entityHit.getX() - entity.getX()) * (entityHit.getX() - entity.getX())) - entityHit.getBbWidth() / 2f;
-                    if (entityHitDistance <= 4f && (entityRelativeAngle <= arc_angle / 2 && entityRelativeAngle >= -arc_angle / 2) || (entityRelativeAngle >= 360 - arc_angle / 2 || entityRelativeAngle <= -360 + arc_angle / 2)) {
-                        entityHit.hurt(fn.damageSources().mobAttack(entity), damage);
-                        if (entityHit.isBlocking())
-                            entityHit.getUseItem().hurtAndBreak(400, entityHit, player -> player.broadcastBreakEvent(entityHit.getUsedItemHand()));
-                        Vec3 velocity = fn.position().vectorTo(entityHit.position()).normalize().multiply(4.5f,1f,4.5f).add(0d, 0.5d,0d);
-                        entityHit.setDeltaMovement(velocity);
-                    }
-                }
+                fn.hurtEntitiesInArcAndRange(170f, 5f, false, 7.2f, 100);
             }
-
-
         }
     }
 
+    @Override
+    public void stop() {
+        super.stop();
+        ForgenautEntity fn = (ForgenautEntity) this.entity;
+        fn.setAttackCooldown(4);
+    }
 }

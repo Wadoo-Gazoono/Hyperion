@@ -66,4 +66,9 @@ public class GruskGrabGoal extends AnimatedAttack {
             target.setPos(grabAnim.getKeyframes().get(currentTick).toWorldCoords(this.entity));
         }
     }
+
+    @Override
+    public void stop() {
+        super.stop();
+    }
 }

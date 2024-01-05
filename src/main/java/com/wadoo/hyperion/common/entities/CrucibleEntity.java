@@ -114,7 +114,7 @@ public class CrucibleEntity extends Monster implements GeoEntity {
     @Override
     public void onAddedToWorld() {
         super.onAddedToWorld();
-        getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").setTransitionLength(0);
+        getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").transitionLength(0);
 
     }
 
@@ -122,7 +122,7 @@ public class CrucibleEntity extends Monster implements GeoEntity {
     public void tick() {
         super.tick();
         if(tickCount > 2) {
-            getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").setTransitionLength(5);
+            getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").transitionLength(5);
         }
             Vec3 projectilePos = new Vec3(0D,0D,2D).yRot((float)Math.toRadians(-getYRot())).add(this.position());
         if(level().isClientSide && this.getRandom().nextFloat() < 0.06f){

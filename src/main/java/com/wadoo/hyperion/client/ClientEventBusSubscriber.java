@@ -48,6 +48,8 @@ public class ClientEventBusSubscriber {
         event.registerEntityRenderer(EntityHandler.AGOL_SHOOTER.get(), AgolShooterRenderer::new);
 
 
+        event.registerEntityRenderer(EntityHandler.LAVA_BALL.get(), LavaBallRenderer::new);
+
         event.registerEntityRenderer(EntityHandler.VOLATILE_GOOP.get(), VolatileGoopRenderer::new);
         event.registerEntityRenderer(EntityHandler.BASALT_SPIKE.get(), BasaltSpikeRenderer::new);
         event.registerEntityRenderer(EntityHandler.CHAIN_TEST.get(), ChainTestRenderer::new);

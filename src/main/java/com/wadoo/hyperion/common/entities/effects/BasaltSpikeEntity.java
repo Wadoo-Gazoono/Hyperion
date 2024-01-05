@@ -2,6 +2,7 @@ package com.wadoo.hyperion.common.entities.effects;
 
 import com.wadoo.hyperion.common.entities.CapslingEntity;
 import com.wadoo.hyperion.common.entities.forgenaut.ForgenautEntity;
+import com.wadoo.hyperion.common.registry.EntityHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -40,7 +41,10 @@ public class BasaltSpikeEntity extends Entity implements GeoEntity {
         super(entityType, level);
     }
 
-
+    public BasaltSpikeEntity(Level level, LivingEntity owner) {
+        super(EntityHandler.BASALT_SPIKE.get(), level);
+        this.owner = owner;
+    }
     @Override
     protected void defineSynchedData() {
 

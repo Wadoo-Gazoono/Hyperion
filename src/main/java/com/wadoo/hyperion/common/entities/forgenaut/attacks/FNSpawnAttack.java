@@ -13,11 +13,8 @@ public class FNSpawnAttack extends AnimatedAttack {
     public void doEffects(int currentTick) {
         super.doEffects(currentTick);
         if (this.entity instanceof ForgenautEntity e) {
-            e.setDeltaMovement(0d, this.entity.getDeltaMovement().y, 0d);
-            e.getNavigation().stop();
-            if (e.getTarget() != null) {
-                e.getLookControl().setLookAt(e.getTarget());
-            }
+            if (currentTick < 35) e.freeze(false);
+            else {e.freeze(true);}
             if (currentTick == 85) {
                 e.setPhase(1);
             }

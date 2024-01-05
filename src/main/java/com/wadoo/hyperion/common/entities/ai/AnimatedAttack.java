@@ -52,6 +52,7 @@ public class AnimatedAttack extends Goal {
     public void stop() {
         super.stop();
         this.entity.setAnimation(0);
+        this.entity.unfreeze();
     }
 
     @Override

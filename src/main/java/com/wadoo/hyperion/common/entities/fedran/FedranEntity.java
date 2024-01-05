@@ -1,6 +1,8 @@
 package com.wadoo.hyperion.common.entities.fedran;
 
 import com.wadoo.hyperion.common.entities.HyperionLivingEntity;
+import com.wadoo.hyperion.common.entities.ai.MMPathNavigatorGround;
+import com.wadoo.hyperion.common.entities.ai.SmartBodyHelper;
 import com.wadoo.hyperion.common.entities.fedran.attacks.*;
 import com.wadoo.hyperion.common.util.verlet.VerletLine;
 import com.wadoo.hyperion.common.util.verlet.VerletPoint;
@@ -19,8 +21,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -210,6 +214,17 @@ public class FedranEntity extends HyperionLivingEntity implements GeoEntity {
                 .triggerableAnim("STEAM_RELEASE",STEAM_RELEASE)
                 .triggerableAnim("KICK",KICK));
     }
+
+    @Override
+    protected BodyRotationControl createBodyControl() {
+        return new SmartBodyHelper(this);
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level pLevel) {
+        return new MMPathNavigatorGround(this, pLevel);
+    }
+
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> state) {
         if(state.isMoving()){

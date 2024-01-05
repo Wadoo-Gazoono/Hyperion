@@ -22,7 +22,7 @@ public class AnimatedTransitionAttack extends AnimatedAttack{
     public void doEffects(int currentTick) {
         super.doEffects(currentTick);
         if (shouldFreeze){
-            this.entity.freeze();
+            this.entity.freeze(true);
         }
     }
 
