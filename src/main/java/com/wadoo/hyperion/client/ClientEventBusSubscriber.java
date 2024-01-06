@@ -1,6 +1,7 @@
 package com.wadoo.hyperion.client;
 
 import com.wadoo.hyperion.Hyperion;
+import com.wadoo.hyperion.client.network.Keybindings;
 import com.wadoo.hyperion.client.renderers.block.AgraliteCageRenderer;
 import com.wadoo.hyperion.client.renderers.block.GrimSpireDoorRenderer;
 import com.wadoo.hyperion.client.renderers.block.KilnRenderer;
@@ -22,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -62,6 +64,15 @@ public class ClientEventBusSubscriber {
 
     }
 
+    @SubscribeEvent
+    public static void registerKeys(RegisterKeyMappingsEvent event) {
+        event.register(Keybindings.INSTANCE.AGOL_INPUT_1);
+        event.register(Keybindings.INSTANCE.AGOL_INPUT_2);
+        event.register(Keybindings.INSTANCE.AGOL_INPUT_3);
+        event.register(Keybindings.INSTANCE.AGOL_INPUT_4);
+        event.register(Keybindings.INSTANCE.AGOL_INPUT_5);
+
+    }
 
 
 }

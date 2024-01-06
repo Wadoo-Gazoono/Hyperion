@@ -52,7 +52,7 @@ public class ForgenautAttackAI extends Goal{
         double dist = Math.sqrt(this.forgenaut.distanceToSqr(this.targetX, this.targetY, this.targetZ));
 
         if(forgenaut.getPhase() == 0){
-            if (forgenaut.distanceTo(forgenaut.getTarget()  ) < 5f) {
+            if (forgenaut.distanceTo(forgenaut.getTarget()  ) < 13f || forgenaut.getHealth() < forgenaut.getMaxHealth()) {
                 forgenaut.setAnimation(1);
             }
             return;
@@ -90,9 +90,6 @@ public class ForgenautAttackAI extends Goal{
             }
             //Attack Checker
             if (this.forgenaut.getPhase() != 0) {
-                if (forgenaut.getTarget().getUseItem().getItem() instanceof BowItem){
-                    System.out.println("hi");
-                }
                 if (dist < 3f){
                     float rand = forgenaut.getRandom().nextFloat();
                     if (rand < 0.8){

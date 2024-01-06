@@ -85,7 +85,7 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
         super.addAdditionalSaveData(pCompound);
         pCompound.putString("type", getAgolType());
         if (!this.inventory.getItem(2).isEmpty()) {
-            System.out.println("added");
+            //System.out.println("added");
             pCompound.put("module", this.inventory.getItem(2).save(new CompoundTag()));
 
         }
@@ -383,6 +383,11 @@ public class AbstractAgolEntity extends PathfinderMob implements ContainerListen
             e = (AbstractAgolEntity) e.getVehicle();
         }
         return e;
+    }
+
+
+    public void executeAction(byte id){
+        System.out.println(this.getId());
     }
 
 }

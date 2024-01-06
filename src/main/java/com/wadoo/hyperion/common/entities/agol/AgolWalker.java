@@ -199,4 +199,13 @@ public class AgolWalker extends AbstractAgolEntity implements ContainerListener,
     public double m_6048_() {
         return 2f;
     }
+
+    @Override
+    public void executeAction(byte id){
+        getIndirectPassengers().forEach(entity -> {
+            if (entity instanceof AbstractAgolEntity){
+                ((AbstractAgolEntity) entity).executeAction(id);
+            }
+        });
+    }
 }

@@ -12,6 +12,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -202,6 +203,13 @@ public class ForgenautEntity extends HyperionLivingEntity implements GeoEntity {
             freeze(false);
         }
         if (tickCount == 5)getAnimatableInstanceCache().getManagerForId(this.getId()).getAnimationControllers().get("controller").transitionLength(5);
+
+    }
+
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        if (getAnimation() == 1) return false;
+        return super.hurt(pSource, pAmount);
 
     }
 

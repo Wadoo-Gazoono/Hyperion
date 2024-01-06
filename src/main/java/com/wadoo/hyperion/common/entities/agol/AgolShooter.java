@@ -1,9 +1,11 @@
 package com.wadoo.hyperion.common.entities.agol;
 
 import com.wadoo.hyperion.common.entities.CapslingEntity;
+import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
@@ -16,8 +18,10 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -26,6 +30,8 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import javax.net.ssl.SNIHostName;
 
 public class AgolShooter extends AbstractAgolEntity implements ContainerListener, HasCustomInventoryScreen, PlayerRideable, OwnableEntity, GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -128,5 +134,23 @@ public class AgolShooter extends AbstractAgolEntity implements ContainerListener
     @Override
     public void updateParent(Container pContainer) {
         super.updateParent(pContainer);
+    }
+
+    @Override
+    public void executeAction(byte id) {
+        super.executeAction(id);
+            Arrow snowball = new Arrow(this.level(), this);
+            Vec3 lookVec = this.getViewVector(1f).scale(1f);
+            Vec3 targetPos = this.position().add(lookVec);
+            snowball.moveTo(targetPos);
+            double d0 = targetPos.y;
+            double d1 = targetPos.x - this.getX();
+            double d2 = d0 - snowball.getY();
+            double d3 = targetPos.z - this.getZ();
+            double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double) 0.5F;
+            snowball.shoot(d1, d2 + d4, d3, 0.8F, 40f);
+
+            this.playSound(SoundEvents.ARROW_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 2F + 1F));
+            this.level().addFreshEntity(snowball);
     }
 }

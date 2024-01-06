@@ -28,8 +28,9 @@ public class NetworkHandler {
 
         public static void init() {
             INSTANCE.registerMessage(getPacketID(), OpenAgolScreenClientPacket.class, OpenAgolScreenClientPacket::write, OpenAgolScreenClientPacket::read, OpenAgolScreenClientPacket::handle, Optional.of(NetworkDirection.PLAY_TO_SERVER));
-
+            INSTANCE.registerMessage(getPacketID(), AgolActionClientPacket.class, AgolActionClientPacket::write, AgolActionClientPacket::read, AgolActionClientPacket::handle, Optional.of(NetworkDirection.PLAY_TO_SERVER));
             INSTANCE.registerMessage(getPacketID(), OpenAgolScreenPacket.class, OpenAgolScreenPacket::write, OpenAgolScreenPacket::read, OpenAgolScreenPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+
         }
 
         public static int getPacketID() {
