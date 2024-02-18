@@ -58,6 +58,16 @@
         ],
         "subtitle": "entity.crucible.throw"
     },
+    "item.volatile_goop.throw": {
+        "sounds": [
+            {
+                "name": "hyperion:entity.crucible.throw",
+                "type": "event",
+                "pitch": 1.2
+            }
+        ],
+        "subtitle": "entity.crucible.throw"
+    },
     "entity.capsling.bite": {
         "sounds": [
             {

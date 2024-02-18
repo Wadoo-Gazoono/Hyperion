@@ -57,6 +57,8 @@ public class SoundsRegistry {
     public static final RegistryObject<SoundEvent> FEDRAN_STOMP = register("entity.fedran.stomp");
     public static final RegistryObject<SoundEvent> FEDRAN_PHASE_CHANGE = register("entity.fedran.phase_change");
 
+    public static final RegistryObject<SoundEvent> VOLATILE_GOOP_THROW = register("item.volatile_goop.throw");
+
     public static final RegistryObject<SoundEvent> PARRY = SOUNDS.register("weapon.parry",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Hyperion.MODID, "weapon.parry")));
 }

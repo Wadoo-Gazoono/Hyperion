@@ -2,6 +2,7 @@ package com.wadoo.hyperion.common.items;
 
 import com.wadoo.hyperion.client.renderers.item.VolatileGoopItemRenderer;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
+import com.wadoo.hyperion.common.registry.SoundsRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -55,6 +56,7 @@ public class VolatileGoopItem extends Item implements GeoItem {
             if (!user.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
+            user.playSound(SoundsRegistry.VOLATILE_GOOP_THROW.get(), 1, 1);
             return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
         } else {
             return InteractionResultHolder.fail(itemstack);
