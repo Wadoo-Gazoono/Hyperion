@@ -1,4 +1,63 @@
 {
+    "entity.crucible.idle": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/crucible/idle1",
+                "pitch": 1
+            },
+            {
+                "name": "hyperion:entity/crucible/idle2",
+                "pitch": 1
+            },
+            {
+                "name": "hyperion:entity/crucible/idle3",
+                "pitch": 1
+            },
+            {
+                "name": "hyperion:entity/crucible/idle4",
+                "pitch": 1
+            }
+        ],
+        "subtitle": "entity.crucible.idle"
+    },
+    "entity.crucible.hurt": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/crucible/hurt1",
+                "pitch": 1.2
+            },
+            {
+                "name": "hyperion:entity/crucible/hurt2",
+                "pitch": 1.2
+            },
+            {
+                "name": "hyperion:entity/crucible/hurt3",
+                "pitch": 1.2
+            },
+            {
+                "name": "hyperion:entity/crucible/hurt4",
+                "pitch": 1.2
+            }
+        ],
+        "subtitle": "entity.crucible.hurt"
+    },
+    "entity.crucible.throw": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/crucible/throw1",
+                "pitch": 1
+            },
+            {
+                "name": "hyperion:entity/crucible/throw2",
+                "pitch": 1
+            },
+            {
+                "name": "hyperion:entity/crucible/throw3",
+                "pitch": 1
+            }
+        ],
+        "subtitle": "entity.crucible.throw"
+    },
     "entity.capsling.bite": {
         "sounds": [
             {

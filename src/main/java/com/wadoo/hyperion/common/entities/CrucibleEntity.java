@@ -1,6 +1,5 @@
 package com.wadoo.hyperion.common.entities;
 
-import com.wadoo.hyperion.Hyperion;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import com.wadoo.hyperion.common.registry.ItemHandler;
@@ -9,8 +8,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,6 +45,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
 
+import static com.wadoo.hyperion.common.registry.SoundsRegistry.*;
+
 public class CrucibleEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -68,7 +71,7 @@ public class CrucibleEntity extends Monster implements GeoEntity {
     public int throwCoolDown = 5;
     public CrucibleEntity(EntityType<? extends CrucibleEntity> monster, Level level) {
         super(monster, level);
-        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.WATER, -1);
         this.setPathfindingMalus(BlockPathTypes.LAVA, -0.2F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.2F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.2F);
@@ -91,8 +94,8 @@ public class CrucibleEntity extends Monster implements GeoEntity {
         //TODO Add Flags to goals
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.8d));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Mob.class, 8.0F));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Mob.class, 8));
 
         this.goalSelector.addGoal(3, new CrucibleSlamGoal(this));
         this.goalSelector.addGoal(4, new CrucibleThrowGoal(this));
@@ -104,6 +107,18 @@ public class CrucibleEntity extends Monster implements GeoEntity {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, WitherSkeleton.class, true));
 
 
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return CRUCIBLE_IDLE.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return CRUCIBLE_HURT.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return CRUCIBLE_DEATH.get();
     }
 
     @Override
@@ -195,7 +210,7 @@ public class CrucibleEntity extends Monster implements GeoEntity {
             if(this.level().isClientSide()){
                 for (int i = 0; i < random.nextInt(550) + 350; ++i) {
                     Vec3 partSpawn0 = new Vec3(this.getRandomX(5.5d), this.getY(), this.getRandomZ(5.5d));
-                    if(Math.sqrt(this.distanceToSqr(partSpawn0)) < 8.0f) {
+                    if(Math.sqrt(this.distanceToSqr(partSpawn0)) < 8) {
                         this.level().addParticle(ParticleTypes.POOF, partSpawn0.x, this.getY(), partSpawn0.z, 0, 0.08d, 0);
                     }
                 }
@@ -303,6 +318,7 @@ class CrucibleSlamGoal extends Goal {
     @Override
     public void start() {
         super.start();
+        entity.playSound(CRUCIBLE_SLAM.get(), 1, 1);
         this.entity.triggerAnim("controller", "slam");
         this.entity.setAnimstate(2);
     }
@@ -467,9 +483,8 @@ class CrucibleThrowGoal extends Goal {
                 double d2 = d0 - snowball.getY();
                 double d3 = this.entity.getTarget().getZ() - this.entity.getZ();
                 double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double)0.5F;
-                snowball.shoot(d1, d2 + d4, d3, 0.8F, 5.0F);
-                this.entity.playSound(SoundEvents.LAVA_POP, 1.0F, 0.4F / (this.entity.getRandom().nextFloat() * 0.4F + 0.8F));
-                this.entity.level().addFreshEntity(snowball);
+                snowball.shoot(d1, d2 + d4, d3, 0.8F, 5);
+                if (entity.level().addFreshEntity(snowball)) entity.playSound(CRUCIBLE_THROW.get(), 1, 1);
             }
         }
     }
