@@ -96,6 +96,23 @@
         ],
         "subtitle": "entity.crucible.slam"
     },
+    "entity.volatile_goop.land": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/volatile_goop/land1",
+                "volume": 1
+            },
+            {
+                "name": "hyperion:entity/volatile_goop/land2",
+                "volume": 1
+            },
+            {
+                "name": "hyperion:entity/volatile_goop/land3",
+                "volume": 1
+            }
+        ],
+        "subtitle": "entity.volatile_goop.land"
+    },
     "entity.crucible.throw": {
         "sounds": [
             {
