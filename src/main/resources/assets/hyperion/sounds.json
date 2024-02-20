@@ -87,11 +87,11 @@
         "sounds": [
             {
                 "name": "hyperion:entity/crucible/slam1",
-                "volume": 1
+                "volume": 1.5
             },
             {
                 "name": "hyperion:entity/crucible/slam2",
-                "volume": 1
+                "volume": 1.5
             }
         ],
         "subtitle": "entity.crucible.slam"
