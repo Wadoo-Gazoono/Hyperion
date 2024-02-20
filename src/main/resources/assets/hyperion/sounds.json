@@ -83,6 +83,19 @@
         ],
         "subtitle": "generic.footsteps"
     },
+    "entity.crucible.slam": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/crucible/slam1",
+                "volume": 1
+            },
+            {
+                "name": "hyperion:entity/crucible/slam2",
+                "volume": 1
+            }
+        ],
+        "subtitle": "entity.crucible.slam"
+    },
     "entity.crucible.throw": {
         "sounds": [
             {

@@ -329,7 +329,6 @@ class CrucibleSlamGoal extends Goal {
     @Override
     public void start() {
         super.start();
-        entity.playSound(CRUCIBLE_SLAM.get(), 1, 1);
         this.entity.triggerAnim("controller", "slam");
         this.entity.setAnimstate(2);
     }
@@ -346,7 +345,7 @@ class CrucibleSlamGoal extends Goal {
             this.entity.setDeltaMovement(0d,this.entity.getDeltaMovement().y,0d);
             if(tickTimer == 31){
                 CameraShakeEntity.cameraShake(this.entity.level(), this.entity.position(), 45, 0.08f, 30, 20);
-                this.entity.playSound(SoundEvents.GENERIC_EXPLODE);
+                this.entity.playSound(CRUCIBLE_SLAM.get(), 1, 1);
                 this.entity.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.AIR));
                 this.entity.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.AIR));
                 for (LivingEntity livingentity : this.entity.level().getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().move(0d,-1d,0d).inflate(7.5D, 1D, 7.5D).move(0d,-1.4d,0d))) {
