@@ -3,6 +3,7 @@ package com.wadoo.hyperion.common.entities;
 import com.wadoo.hyperion.common.entities.effects.CameraShakeEntity;
 import com.wadoo.hyperion.common.entities.projectiles.VolatileGoopProjectile;
 import com.wadoo.hyperion.common.registry.ItemHandler;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -29,6 +30,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -119,6 +121,15 @@ public class CrucibleEntity extends Monster implements GeoEntity {
 
     protected SoundEvent getDeathSound() {
         return CRUCIBLE_DEATH.get();
+    }
+
+    protected SoundEvent getStepSound() {
+        return CRUCIBLE_STEP.get();
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        playSound(getStepSound(), 1, 1);
     }
 
     @Override

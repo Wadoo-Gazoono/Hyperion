@@ -41,6 +41,48 @@
         ],
         "subtitle": "entity.crucible.hurt"
     },
+    "entity.crucible.death": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/crucible/death1",
+                "pitch": 1.1
+            },
+            {
+                "name": "hyperion:entity/crucible/death2",
+                "pitch": 1.1
+            },
+            {
+                "name": "hyperion:entity/crucible/death3",
+                "pitch": 1.1
+            },
+            {
+                "name": "hyperion:entity/crucible/death4",
+                "pitch": 1.1
+            }
+        ],
+        "subtitle": "entity.crucible.death"
+    },
+    "entity.crucible.step": {
+        "sounds": [
+            {
+                "name": "hyperion:entity/crucible/step1",
+                "volume": 0.4
+            },
+            {
+                "name": "hyperion:entity/crucible/step2",
+                "volume": 0.4
+            },
+            {
+                "name": "hyperion:entity/crucible/step3",
+                "volume": 0.4
+            },
+            {
+                "name": "hyperion:entity/crucible/step4",
+                "volume": 0.4
+            }
+        ],
+        "subtitle": "generic.footsteps"
+    },
     "entity.crucible.throw": {
         "sounds": [
             {

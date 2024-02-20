@@ -36,6 +36,7 @@ public class SoundsRegistry {
     public static final RegistryObject<SoundEvent> CRUCIBLE_DEATH = register("entity.crucible.death");
     public static final RegistryObject<SoundEvent> CRUCIBLE_THROW = register("entity.crucible.throw");
     public static final RegistryObject<SoundEvent> CRUCIBLE_SLAM = register("entity.crucible.slam");
+    public static final RegistryObject<SoundEvent> CRUCIBLE_STEP = register("entity.crucible.step");
 
     public static final RegistryObject<SoundEvent> FORGENAUT_IDLE = register("entity.forgenaut.idle");
     public static final RegistryObject<SoundEvent> FORGENAUT_HURT = register("entity.forgenaut.hurt");
